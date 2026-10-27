@@ -1,0 +1,26 @@
+# Literature background (kept local only)
+gemini_report.txt
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# Data that must never be committed (see AGENTS.md §2)
+data/raw/
+data/manual/sealed/
+
+# Credentials, cookies, secrets
+.env
+.env.*
+*.cookie
+cookies*.txt
+secrets/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
