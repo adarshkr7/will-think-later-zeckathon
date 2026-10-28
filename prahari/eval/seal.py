@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import logging
 from pathlib import Path
 
 import joblib
@@ -117,6 +118,63 @@ def evaluate_final(config: Config) -> None:
     write_real_table(pd.DataFrame(rows), config.path("benchmark_final_metrics"))
 
 
+def evaluate_final_sealed(config: Config) -> None:
+    """One final opening of a collector-prepared full-cohort feature artifact.
+
+    The collector supplies the artifact's SHA-256 and case count in the
+    registered config, without revealing cases. The artifact contains complete
+    dated cross-sections (not a tiny sealed-only ranking universe), a binary
+    is_sealed_case marker, and no outcome columns. All checks that can run
+    without reading the envelope precede its atomic, irrevocable access claim.
+    """
+    from prahari.eval.preregistration import preflight, verify
+    from prahari.data.artifacts import load_hdm_models
+    from prahari.models.scoring import score_snapshot
+    from prahari.policy.watchlist import build_watchlist
+    registration = verify(config)
+    preflight(config)
+    if not config.path("benchmark_final_metrics").is_file() or not config.path("india_metrics").is_file():
+        raise RuntimeError("Complete registered public evaluation before opening sealed cases")
+    sealed = config.section("model_config")["sealed"]
+    digest = sealed.get("input_sha256")
+    if not isinstance(digest, str) or len(digest) != 64 or not isinstance(sealed.get("expected_cases"), int) or sealed["expected_cases"] <= 0:
+        raise RuntimeError("Independent collector must declare the sealed artifact hash and case count before registration")
+    models = load_hdm_models(config)
+    claim_once(config.path("indian_sealed_ledger"))
+    # First protected access is below this line. A failed run stays consumed.
+    source = config.path("indian_sealed_input")
+    if sha256_file(source) != digest:
+        raise ValueError("Sealed artifact differs from the collector's registered hash")
+    table = pd.read_parquet(source)
+    assert_real(table)
+    if not {"is_sealed_case", "arena", "scoring_date", "max_source_date"}.issubset(table):
+        raise ValueError("Sealed artifact must contain full dated feature cross-sections and a case marker")
+    if not table.is_sealed_case.isin([0, 1]).all() or table.loc[table.is_sealed_case.eq(1), "entity_id"].nunique() != sealed["expected_cases"]:
+        raise ValueError("Sealed case marker/count mismatch")
+    table["scoring_date"] = pd.to_datetime(table.scoring_date, utc=True)
+    table["max_source_date"] = pd.to_datetime(table.max_source_date, utc=True)
+    if table.max_source_date.dropna().ge(table.loc[table.max_source_date.notna(), "scoring_date"]).any():
+        raise ValueError("Sealed feature source crosses its scoring cutoff")
+    rows = []
+    settings, policy = config.section("model_config"), config.section("policy_config")
+    for (arena, day), group in table.groupby(["arena", "scoring_date"]):
+        if arena not in ("P", "U") or group.entity_id.duplicated().any():
+            raise ValueError("Sealed cohort arena or identity ambiguity")
+        selected_ids = set(group.loc[group.is_sealed_case.eq(1), "entity_id"])
+        features = group.drop(columns="is_sealed_case").reset_index(drop=True)
+        features.attrs["as_of"] = day.isoformat()
+        scored, _ = score_snapshot(features, models, settings, arena)
+        ranked = build_watchlist(scored, policy)
+        ranked = ranked.loc[ranked.entity_id.isin(selected_ids)].copy()
+        ranked["registration_hash"], ranked["evaluation_mode"] = registration, "once_only_sealed"
+        rows.append(ranked)
+    result = pd.concat(rows, ignore_index=True)
+    write_real_table(result, config.path("indian_sealed_results"))
+    config.path("indian_sealed_ledger").write_text(json.dumps({"state": "completed", "registration_hash": registration,
+        "source_sha256": digest, "completed_at": pd.Timestamp.now(tz="UTC").isoformat()}), encoding="utf-8")
+    logging.info("Final sealed scoring completed; no fitting or tuning was performed")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", default="configs/base.yaml")
@@ -132,8 +190,7 @@ def main() -> None:
     elif args.final:
         evaluate_final(config)
     else:
-        # Do not even enumerate the sealed Indian folder before its phase exists.
-        raise NotImplementedError("Indian sealed-case scoring is gated on Phase 10 acceptance")
+        evaluate_final_sealed(config)
 
 
 if __name__ == "__main__":

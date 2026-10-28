@@ -1,0 +1,52 @@
+labels:
+  earnings_quality: Earnings and accounting quality
+  liquidity: Liquidity and cash conversion
+  solvency: Leverage and solvency
+  market: Market stress
+  governance: Governance and disclosure
+features:
+  roa: earnings_quality
+  re_ta: earnings_quality
+  ebit_ta: earnings_quality
+  sales_ta: earnings_quality
+  sales_growth: earnings_quality
+  gp_dep_tl: earnings_quality
+  dsri: earnings_quality
+  gmi: earnings_quality
+  aqi: earnings_quality
+  sgi: earnings_quality
+  depi: earnings_quality
+  sgai: earnings_quality
+  tata: earnings_quality
+  nimtaavg: earnings_quality
+  wc_ta: liquidity
+  current_ratio: liquidity
+  quick_ratio: liquidity
+  cash_ta: liquidity
+  cashmta: liquidity
+  cash_conversion_gap: liquidity
+  alm_mismatch: liquidity
+  tl_ta: solvency
+  equity_tl: solvency
+  equity_ta: solvency
+  cl_ta: solvency
+  tlmta: solvency
+  nbfc_score: solvency
+  lvgi: solvency
+  cwip_ta: solvency
+  consolidated_standalone_debt: solvency
+  sigma: market
+  exretavg: market
+  relsize: market
+  mb: market
+  price: market
+  chs_standardized: market
+  auditor_exit_8q: governance
+  rating_watch_neg_or_inc: governance
+  rating_notch_delta_4q: governance
+  pledge_jump: governance
+  pledge_pct: governance
+  pledge_delta_4q: governance
+  delayed_filing_4q: governance
+  audit_default_or_going_concern: governance
+  group_stress: governance

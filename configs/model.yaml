@@ -1,0 +1,48 @@
+version: zero-indian-label-v1
+sealed:
+  input_sha256: null
+  expected_cases: null
+primary:
+  hdm_weight: 1.0
+  chs_weight: 1.0
+  minimum_hdm_observed: 5
+  minimum_hdm_cross_section: 30
+  maximum_financial_age_months: 24
+  probability_epsilon: 0.000001
+  nbfc_logit_scale: null
+  nbfc_center: 0.5
+  priors: {4q: null, 8q: null}
+  prior_source: null
+  soft_weights:
+    auditor_exit_8q: 1.5
+    rating_watch_neg_or_inc: 1.0
+    rating_notch_delta_4q: 0.3
+    pledge_jump: 0.7
+    delayed_filing_4q: 0.7
+    audit_default_or_going_concern: 1.5
+  pledge_jump_pp: 20
+  arena_u_soft: [delayed_filing_4q]
+ablation:
+  first_training_date: '2013-04-01'
+  last_training_date: '2019-03-31'
+  forensic_weights: {z_em: -1.0, m_score: 1.0, f_score: -1.0}
+  component_signs: {hdm_logit: 1, forensic: 1, chs_standardized: 1, soft_overlay: 1}
+  minimum_case_groups: 4
+  min_calibration_positives: 50
+  logistic_c: 1.0
+  max_iter: 2000
+explanation:
+  tolerance: 0.000001
+  calibration_difference_step: 0.0001
+evaluation:
+  altman_distress_field: z_classic
+  altman_distress_threshold: 1.81
+  altman_distress_source: https://www.blackwellpublishing.com/content/BPL_images/Content_Store/Sample_Chapter/9780631225638/altman.pdf
+  sub_ig_long_grades: [BB+, BB, BB-, B+, B, B-, C+, C, C-, D]
+  sub_ig_short_grades: [A4+, A4, D]
+  confidence: 0.95
+  bootstrap_resamples: 1000
+  placebo_runs: 100
+  recall_leads: [4, 8]
+  detection_max_lead: 12
+  shadow_extra_slots: 20
