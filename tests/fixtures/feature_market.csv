@@ -1,0 +1,3 @@
+entity_id,symbol,series,exchange,close,volume,period_end,public_date,source_url,date_is_imputed,needs_verification,is_synthetic
+FIX_A,FIX_A,EQ,nse,10,100,2019-09-27,2019-09-28,fixture://price,1,0,1
+FIX_A,FIX_A,EQ,nse,11,100,2019-09-30,2019-10-01,fixture://future-price,1,0,1

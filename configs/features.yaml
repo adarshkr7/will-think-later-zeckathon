@@ -4,38 +4,125 @@ dates:
   last_quarter: '2024-03-31'
 financial_basis: standalone
 altman:
-  classic: {wc_ta: 1.2, re_ta: 1.4, ebit_ta: 3.3, me_tl: 0.6, sales_ta: 1.0}
-  em: {intercept: 3.25, wc_ta: 6.56, re_ta: 3.26, ebit_ta: 6.72, equity_tl: 1.05}
+  classic:
+    wc_ta: 1.2
+    re_ta: 1.4
+    ebit_ta: 3.3
+    me_tl: 0.6
+    sales_ta: 1.0
+  em:
+    intercept: 3.25
+    wc_ta: 6.56
+    re_ta: 3.26
+    ebit_ta: 6.72
+    equity_tl: 1.05
 hillegeist:
   intercept: -4.34
-  weights: {wc_ta: -0.08, re_ta: 0.04, ebit_ta: -0.10, me_tl: -0.22, sales_ta: 0.06}
+  weights:
+    wc_ta: -0.08
+    re_ta: 0.04
+    ebit_ta: -0.1
+    me_tl: -0.22
+    sales_ta: 0.06
 beneish:
   intercept: -4.84
-  weights: {dsri: 0.920, gmi: 0.528, aqi: 0.404, sgi: 0.892, depi: 0.115, sgai: -0.172, tata: 4.679, lvgi: -0.327}
+  weights:
+    dsri: 0.92
+    gmi: 0.528
+    aqi: 0.404
+    sgi: 0.892
+    depi: 0.115
+    sgai: -0.172
+    tata: 4.679
+    lvgi: -0.327
   flag_threshold: -1.78
 chs:
+  drawdown_months: 12
+  minimum_drawdown_observations: 200
   intercept: -9.16
-  weights: {nimtaavg: -20.26, tlmta: 1.42, exretavg: -7.13, sigma: 1.41, relsize: -0.045, cashmta: -2.13, mb: 0.075, price: -0.058}
+  weights:
+    nimtaavg: -20.26
+    tlmta: 1.42
+    exretavg: -7.13
+    sigma: 1.41
+    relsize: -0.045
+    cashmta: -2.13
+    mb: 0.075
+    price: -0.058
   monthly_decay: 0.7937005259840998
   annual_trading_days: 252
   volatility_months: 3
   minimum_daily_returns: 40
   return_months: 12
   maximum_quote_age_days: 10
-  price_cap_inr: null
-  book_equity_floor_inr: null
+  book_equity_floor_inr: 1.0
   annual_ni_divisor: 4
   standardization: cross_section_median_iqr
+  price_cap_usd: 15
+  maximum_fx_age_days: 10
+  index_ids:
+  - nifty_500
+  - nifty_50
+  preferred_exchange: nse
 soft:
   quarters_per_year: 4
   auditor_window_quarters: 8
   governance_window_quarters: 4
-  rating_order: [AAA, AA+, AA, AA-, A+, A, A-, BBB+, BBB, BBB-, BB+, BB, BB-, B+, B, B-, C+, C, C-, D]
-  short_rating_order: [A1+, A1, A2+, A2, A3+, A3, A4+, A4, D]
-  negative_watch_values: [negative, watch negative, negative implications, rating watch negative]
+  rating_order:
+  - AAA
+  - AA+
+  - AA
+  - AA-
+  - A+
+  - A
+  - A-
+  - BBB+
+  - BBB
+  - BBB-
+  - BB+
+  - BB
+  - BB-
+  - B+
+  - B
+  - B-
+  - C+
+  - C
+  - C-
+  - D
+  short_rating_order:
+  - A1+
+  - A1
+  - A2+
+  - A2
+  - A3+
+  - A3
+  - A4+
+  - A4
+  - D
+  negative_watch_values:
+  - negative
+  - watch negative
+  - negative implications
+  - rating watch negative
 nbfc:
-  weights: {leverage: 1, cp_share_of_borrowings: 1, st_liab_to_st_assets: 1, gnpa_pct: 1, gnpa_delta: 1, car_headroom: 1, nim_delta: 1, loan_growth_anomaly: 1}
-  directions: {leverage: 1, cp_share_of_borrowings: 1, st_liab_to_st_assets: 1, gnpa_pct: 1, gnpa_delta: 1, car_headroom: -1, nim_delta: -1, loan_growth_anomaly: 1}
+  weights:
+    leverage: 1
+    cp_share_of_borrowings: 1
+    st_liab_to_st_assets: 1
+    gnpa_pct: 1
+    gnpa_delta: 1
+    car_headroom: 1
+    nim_delta: 1
+    loan_growth_anomaly: 1
+  directions:
+    leverage: 1
+    cp_share_of_borrowings: 1
+    st_liab_to_st_assets: 1
+    gnpa_pct: 1
+    gnpa_delta: 1
+    car_headroom: -1
+    nim_delta: -1
+    loan_growth_anomaly: 1
   minimum_cross_section: 5
 sources:
   altman: https://doi.org/10.1111/j.1540-6261.1968.tb00843.x

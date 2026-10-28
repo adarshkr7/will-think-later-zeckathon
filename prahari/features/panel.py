@@ -49,3 +49,90 @@ def select_peers(snapshot: pd.DataFrame, focal_entity_id: str, eligible_ids: set
     result["selection_rule_version"] = settings["selection_rule_version"]
     result["matching_cutoff"] = cutoff
     return result.reset_index(drop=True)
+
+
+def build_features(config, t, arena: str = "P", *, sources=None) -> pd.DataFrame:
+    """Build a single dated cross-section; no Indian outcome enters a feature.
+
+    Every source read is filtered by data.asof, including each of the four
+    historical accounting snapshots used by CHS. Unknown observations stay
+    missing and carry explicit reasons rather than neutral score defaults.
+    """
+    import numpy as np
+    from prahari.data.feature_inputs import load_feature_sources
+    from prahari.features.chs import chs_accounting, chs_score, market_statistics, weighted_average
+    from prahari.features.common import divide, evaluate, number
+    from prahari.features.forensic import forensic_features
+    from prahari.features.nbfc import nbfc_features
+    from prahari.features.ratios import harmonized_ratios
+    from prahari.features.soft import soft_features
+
+    sources = sources if sources is not None else load_feature_sources(config)
+    settings = config.section("feature_config")
+    cutoff = pd.to_datetime(t, utc=True)
+    base, tables = sources.snapshot(config, cutoff, arena)
+    result = base.copy()
+    result.attrs.update(base.attrs)
+    source_dates = ["max_source_date"]
+    def merge(frame: pd.DataFrame, name: str) -> None:
+        nonlocal result
+        available = [column for column in frame if column not in result or column in ("entity_id", "max_source_date", "is_synthetic")]
+        frame = frame[available].rename(columns={"max_source_date": name + "_component_date", "is_synthetic": name + "_component_synthetic"})
+        result = result.merge(frame, on="entity_id", how="left", validate="one_to_one")
+        source_dates.append(name + "_component_date")
+        result["is_synthetic"] = (result.is_synthetic.eq(1) | result[name + "_component_synthetic"].eq(1)).astype(int)
+    merge(harmonized_ratios(base), "ratios")
+    merge(forensic_features(base, settings), "forensic")
+    prices = tables["market"].loc[tables["market"].entity_id.isin(base.entity_id)]
+    merge(market_statistics(prices, tables["indices"], settings["chs"]), "market")
+    merge(soft_features(base, tables["pledges"], tables["ratings"], tables["governance"], settings["soft"], coverage=tables.get("signal_coverage")), "soft")
+    merge(nbfc_features(base, settings["nbfc"]), "nbfc")
+    for name in ("nimta", "tlmta", "cashmta", "relsize", "mb", "price"):
+        computed = [chs_accounting(record, settings["chs"])[name] for record in base.to_dict(orient="records")]
+        result[name] = [value.value for value in computed]
+        result[name + "__reason"] = [value.reason for value in computed]
+    histories = []
+    for lag in range(4):
+        prior, _ = sources.snapshot(config, cutoff - pd.DateOffset(months=3 * lag), arena)
+        prior["nimta_history"] = [chs_accounting(record, settings["chs"])["nimta"].value for record in prior.to_dict(orient="records")]
+        histories.append(prior.set_index("entity_id"))
+    averages, history_dates = [], []
+    for entity in result.entity_id:
+        values = [history.loc[entity, "nimta_history"] if entity in history.index else np.nan for history in histories]
+        averages.append(weighted_average(values, settings["chs"]["monthly_decay"] ** 3))
+        dates = [history.loc[entity, "max_source_date"] for history in histories if entity in history.index]
+        history_dates.append(max((date for date in dates if pd.notna(date)), default=pd.NaT))
+    result["nimtaavg"], result["nimtaavg__reason"] = [value.value for value in averages], [value.reason for value in averages]
+    result["history_component_date"] = history_dates
+    source_dates.append("history_component_date")
+    scores = [chs_score(record, settings["chs"]) for record in result.to_dict(orient="records")]
+    result["chs_score"], result["chs_score__reason"] = [value.value for value in scores], [value.reason for value in scores]
+    chs = result.chs_score.dropna()
+    result["chs_standardized"] = np.nan
+    result["chs_center"], result["chs_scale"] = np.nan, np.nan
+    result["chs_standardized__reason"] = "insufficient_cross_section_spread"
+    if len(chs) > 1:
+        spread = chs.quantile(.75) - chs.quantile(.25)
+        if spread > 0:
+            result["chs_center"], result["chs_scale"] = chs.median(), spread
+            result["chs_standardized"] = (result.chs_score - chs.median()) / spread
+            result.loc[result.chs_standardized.notna(), "chs_standardized__reason"] = ""
+    interactions = [evaluate(lambda record=record: number(record, "pledge_pct") / 100 * number(record, "tlmta") * max(0, -number(record, "nimtaavg"))) for record in result.to_dict(orient="records")]
+    result["psp_interaction"], result["psp_interaction__reason"] = [value.value for value in interactions], [value.reason for value in interactions]
+    for column in source_dates:
+        result[column] = pd.to_datetime(result[column], utc=True)
+    result["max_source_date"] = result[source_dates].max(axis=1)
+    if result.chs_standardized.notna().any():
+        result.loc[result.chs_standardized.notna(), "max_source_date"] = result.max_source_date.max()
+        if result.is_synthetic.eq(1).any():
+            result.loc[result.chs_standardized.notna(), "is_synthetic"] = 1
+    result["scoring_date"] = cutoff
+    result["needs_verification"] = result.max_source_date.isna().astype(int)
+    for column in result:
+        if column.endswith("__reason"):
+            result[column] = result[column].fillna("not_observed_before_cutoff")
+    result = result.drop(columns=[column for column in result if "_component_" in column])
+    result.attrs["as_of"] = cutoff.isoformat()
+    if result.max_source_date.dropna().ge(cutoff).any():
+        raise AssertionError("Feature provenance crossed the scoring cutoff")
+    return result

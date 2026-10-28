@@ -1,1 +1,1 @@
-entity_id,period_end,public_date,gnpa_pct,nnpa_pct,car_pct,nim_pct,cp_share_of_borrowings,st_liab_to_st_assets,loan_book_growth,source_doc,date_is_imputed,needs_verification,is_synthetic
+entity_id,period_end,public_date,gnpa_pct,nnpa_pct,car_pct,nim_pct,cp_share_of_borrowings,st_liab_to_st_assets,loan_book_growth,source_doc,date_is_imputed,needs_verification,is_synthetic,car_minimum_pct

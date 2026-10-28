@@ -18,6 +18,8 @@ def rating_symbol(text: str, settings: dict) -> tuple[str, int] | None:
     to invent two additional grades. Withdrawn/unknown symbols stay unknown.
     """
     raw = re.sub(r"^(?:\[ICRA\]|ICRA|CARE|CRISIL|INDIA RATINGS|IND|ACUITE)\s*", "", str(text).strip().upper())
+    if re.match(r"D(?=$|[\s/(])", raw):
+        return "default", 0
     for kind, order in (("short", settings["short_rating_order"]), ("long", settings["rating_order"])):
         for symbol in sorted(order, key=len, reverse=True):
             if re.match(re.escape(symbol) + r"(?=$|[\s/(])", raw):
@@ -25,14 +27,31 @@ def rating_symbol(text: str, settings: dict) -> tuple[str, int] | None:
     return None
 
 
+def rating_change(previous: str, current: str, settings: dict) -> float:
+    old, new = rating_symbol(previous, settings), rating_symbol(current, settings)
+    if not old or not new:
+        return np.nan
+    if old[0] == new[0] == "default":
+        return 0.0
+    if old[0] == "default":
+        old = new[0], len(settings["short_rating_order"] if new[0] == "short" else settings["rating_order"])
+    if new[0] == "default":
+        new = old[0], len(settings["short_rating_order"] if old[0] == "short" else settings["rating_order"])
+    return float(new[1] - old[1]) if old[0] == new[0] else np.nan
+
+
 def soft_features(entities: pd.DataFrame, pledges: pd.DataFrame, ratings: pd.DataFrame,
-                  governance: pd.DataFrame, settings: dict) -> pd.DataFrame:
+                  governance: pd.DataFrame, settings: dict, *, coverage=None) -> pd.DataFrame:
     for table in (entities, pledges, ratings, governance):
         require_snapshot(table)
     cutoff = pd.Timestamp(entities.attrs["as_of"])
     if any(table.attrs["as_of"] != entities.attrs["as_of"] for table in (pledges, ratings, governance)):
         raise ValueError("Soft-signal cutoffs differ")
-    names = ["pledge_pct", "pledge_delta_4q", "auditor_exit_8q", "rating_notch_delta_4q", "rating_watch_neg_or_inc", "delayed_filing_4q", "audit_red_flag_count", "governance_flag_count"]
+    if coverage is not None:
+        require_snapshot(coverage)
+        if coverage.attrs["as_of"] != entities.attrs["as_of"]:
+            raise ValueError("Coverage certification cutoff differs")
+    names = ["pledge_pct", "pledge_delta_4q", "auditor_exit_8q", "rating_notch_delta_4q", "rating_watch_neg_or_inc", "rating_default_grade", "delayed_filing_4q", "audit_red_flag_count", "governance_flag_count"]
     rows = []
     for record in entities.to_dict(orient="records"):
         entity = record["entity_id"]
@@ -49,6 +68,16 @@ def soft_features(entities: pd.DataFrame, pledges: pd.DataFrame, ratings: pd.Dat
         def set_value(name: str, value: float) -> None:
             if pd.notna(value):
                 row[name], row[name + "__reason"] = float(value), ""
+        if coverage is not None:
+            certified = coverage.loc[coverage.entity_id.eq(entity)]
+            for name, quarters in (("auditor_exit_8q", settings["auditor_window_quarters"]), ("delayed_filing_4q", settings["governance_window_quarters"])):
+                window_start = cutoff - pd.DateOffset(months=3*quarters)
+                valid = certified.loc[certified.signal_name.eq(name) & pd.to_datetime(certified.coverage_start, utc=True).le(window_start)
+                    & pd.to_datetime(certified.coverage_end, utc=True).ge(cutoff-pd.Timedelta(days=1))]
+                if not valid.empty:
+                    set_value(name, 0)
+                    dates.append(valid.max_source_date.max())
+                    synthetic |= int(valid.is_synthetic.eq(1).any())
         if not p.empty:
             latest = p.iloc[-1]
             set_value("pledge_pct", latest.promoter_pledged_pct_of_promoter)
@@ -65,6 +94,10 @@ def soft_features(entities: pd.DataFrame, pledges: pd.DataFrame, ratings: pd.Dat
         # events above are directly observed rather than inferred negatives.
         if not r.empty:
             current = r.groupby(["agency", "instrument"], dropna=False).tail(1)
+            if current.is_default_grade.eq(1).any():
+                set_value("rating_default_grade", 1)
+            elif current.is_default_grade.eq(0).all():
+                set_value("rating_default_grade", 0)
             negative = current.watch.astype(str).str.casefold().isin(settings["negative_watch_values"]) | current.outlook.astype(str).str.casefold().eq("negative") | current.inc_flag.eq(1)
             known_watch = current.inc_flag.notna() & (current.watch.notna() | current.outlook.notna())
             if negative.any():
@@ -77,9 +110,9 @@ def soft_features(entities: pd.DataFrame, pledges: pd.DataFrame, ratings: pd.Dat
                              & r.period_end.le(cutoff - pd.DateOffset(years=1))]
                 if past.empty:
                     continue
-                old, new = rating_symbol(past.iloc[-1].rating_to, settings), rating_symbol(latest.rating_to, settings)
-                if old and new and old[0] == new[0]:
-                    deltas.append(new[1] - old[1])
+                delta = rating_change(past.iloc[-1].rating_to, latest.rating_to, settings)
+                if pd.notna(delta):
+                    deltas.append(delta)
             if deltas:
                 set_value("rating_notch_delta_4q", max(deltas))
         audit = [record.get(name, np.nan) for name in ("going_concern_flag", "caro_default_flag", "caro_fraud_flag")]

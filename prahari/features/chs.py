@@ -35,7 +35,7 @@ def chs_accounting(v: Mapping, settings: dict) -> dict[str, Value]:
             "cashmta": evaluate(lambda: divide(n("cash_and_st_investments"), mta(), "market_total_assets")),
             "relsize": evaluate(lambda: np.log(divide(n("market_cap"), n("universe_market_cap"), "universe_market_cap"))),
             "mb": evaluate(lambda: divide(n("market_cap"), max(n("equity"), number(settings, "book_equity_floor_inr")), "book_equity_floor")),
-            "price": evaluate(lambda: np.log(min(n("close"), number(settings, "price_cap_inr"))))}
+            "price": evaluate(lambda: np.log(min(divide(n("close"), n("inr_per_usd"), "inr_per_usd"), number(settings, "price_cap_usd"))))}
 
 
 def chs_score(values: Mapping, settings: Mapping) -> Value:
@@ -60,14 +60,21 @@ def market_statistics(prices: pd.DataFrame, indices: pd.DataFrame, settings: dic
         raise ValueError("Return and index cutoffs differ")
     rows = []
     for entity, group in prices.groupby("entity_id", sort=True):
-        daily = group.sort_values(["period_end", "exchange"]).drop_duplicates("period_end", keep="first")
+        group = group.copy()
+        group["venue_priority"] = group.exchange.ne(settings["preferred_exchange"]).astype(int)
+        daily = group.sort_values(["period_end", "venue_priority"]).drop_duplicates("period_end", keep="first")
         recent = daily.loc[daily.period_end.ge(cutoff - pd.DateOffset(months=settings["volatility_months"]))]
         returns = recent.close.pct_change(fill_method=None).dropna()
         sigma = Value(float(returns.std(ddof=1) * np.sqrt(settings["annual_trading_days"]))) if len(returns) >= settings["minimum_daily_returns"] else Value(np.nan, "insufficient_daily_returns")
         excess = Value(np.nan, "incomplete_monthly_index_or_prices")
+        window = daily.loc[daily.period_end.ge(cutoff - pd.DateOffset(months=settings["drawdown_months"]))]
+        drawdown = Value(np.nan, "incomplete_52_week_price_window")
+        if len(window) >= settings["minimum_drawdown_observations"] and window.close.gt(0).all():
+            if window.period_end.max() >= cutoff - pd.Timedelta(days=settings["maximum_quote_age_days"]):
+                drawdown = evaluate(lambda: divide(window.iloc[-1].close, window.close.max(), "52_week_high") - 1)
         # Only complete past calendar months; no current-month partial return.
         months = pd.period_range(end=(cutoff.tz_localize(None).to_period("M") - 1), periods=settings["return_months"] + 1, freq="M")
-        for index_id in ("nifty_500", "nifty_50"):
+        for index_id in settings["index_ids"]:
             benchmark = indices.loc[indices.entity_id.eq(index_id)]
             if benchmark.empty:
                 continue
@@ -86,9 +93,10 @@ def market_statistics(prices: pd.DataFrame, indices: pd.DataFrame, settings: dic
                 break
         source_date = max(group.max_source_date.max(), indices.max_source_date.max()) if not indices.empty else group.max_source_date.max()
         rows.append({"entity_id": entity, "sigma": sigma.value, "sigma__reason": sigma.reason,
+                     "drawdown_52w": drawdown.value, "drawdown_52w__reason": drawdown.reason,
                      "exretavg": excess.value, "exretavg__reason": excess.reason,
                      "market_return_basis": "unadjusted_price_returns", "max_source_date": source_date,
                      "is_synthetic": int(group.is_synthetic.eq(1).any() or indices.is_synthetic.eq(1).any())})
-    result = pd.DataFrame(rows, columns=["entity_id", "sigma", "sigma__reason", "exretavg", "exretavg__reason", "market_return_basis", "max_source_date", "is_synthetic"])
+    result = pd.DataFrame(rows, columns=["entity_id", "sigma", "sigma__reason", "drawdown_52w", "drawdown_52w__reason", "exretavg", "exretavg__reason", "market_return_basis", "max_source_date", "is_synthetic"])
     result.attrs.update(prices.attrs)
     return result

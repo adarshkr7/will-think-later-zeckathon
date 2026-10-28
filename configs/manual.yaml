@@ -1,4 +1,16 @@
 tables:
+  signal_coverage:
+    columns: [entity_id, signal_name, coverage_start, coverage_end, period_end, public_date, source_url, date_is_imputed, needs_verification, is_synthetic]
+    dates: [coverage_start, coverage_end, period_end, public_date]
+    numeric: []
+    flags: [date_is_imputed, needs_verification, is_synthetic]
+    source: source_url
+  groups:
+    columns: [entity_id, group_id, group_name, period_end, public_date, source_url, date_is_imputed, needs_verification, is_synthetic]
+    dates: [period_end, public_date]
+    numeric: []
+    flags: [date_is_imputed, needs_verification, is_synthetic]
+    source: source_url
   entity_aliases:
     columns: [entity_id, alias, period_end, public_date, source_url, source_page, date_is_imputed, needs_verification, is_synthetic]
     dates: [period_end, public_date]
@@ -60,15 +72,15 @@ tables:
     flags: [is_financial, is_stressed_survivor, date_is_imputed, needs_verification, is_synthetic]
     source: source_url
   annual_financials:
-    columns: [entity_id, fy_end, period_end, basis, total_assets, total_liabilities, current_assets, current_liabilities, inventory, receivables, cash_and_st_investments, ppe_net, cwip, total_debt, st_borrowings, commercial_paper, lt_debt, equity, retained_earnings, revenue, cogs, gross_profit, sga, depreciation, ebit, interest_expense, pbt, pat, cfo, shares_outstanding, related_party_loans_advances, related_party_revenue, auditor_opinion, going_concern_flag, caro_default_flag, caro_fraud_flag, results_public_date, annual_report_public_date, public_date, source_doc, date_is_imputed, needs_verification, is_synthetic, cash_and_cash_equivalents, finance_costs]
+    columns: [entity_id, fy_end, period_end, basis, total_assets, total_liabilities, current_assets, current_liabilities, inventory, receivables, cash_and_st_investments, ppe_net, cwip, total_debt, st_borrowings, commercial_paper, lt_debt, equity, retained_earnings, revenue, cogs, gross_profit, sga, depreciation, ebit, interest_expense, pbt, pat, cfo, shares_outstanding, related_party_loans_advances, related_party_revenue, auditor_opinion, going_concern_flag, caro_default_flag, caro_fraud_flag, results_public_date, annual_report_public_date, public_date, source_doc, date_is_imputed, needs_verification, is_synthetic, cash_and_cash_equivalents, finance_costs, income_continuing, income_before_extraordinary, current_maturities_lt_debt, equity_issued]
     dates: [fy_end, period_end, results_public_date, annual_report_public_date, public_date]
-    numeric: [total_assets, total_liabilities, current_assets, current_liabilities, inventory, receivables, cash_and_st_investments, ppe_net, cwip, total_debt, st_borrowings, commercial_paper, lt_debt, equity, retained_earnings, revenue, cogs, gross_profit, sga, depreciation, ebit, interest_expense, pbt, pat, cfo, shares_outstanding, related_party_loans_advances, related_party_revenue, cash_and_cash_equivalents, finance_costs]
+    numeric: [total_assets, total_liabilities, current_assets, current_liabilities, inventory, receivables, cash_and_st_investments, ppe_net, cwip, total_debt, st_borrowings, commercial_paper, lt_debt, equity, retained_earnings, revenue, cogs, gross_profit, sga, depreciation, ebit, interest_expense, pbt, pat, cfo, shares_outstanding, related_party_loans_advances, related_party_revenue, cash_and_cash_equivalents, finance_costs, income_continuing, income_before_extraordinary, current_maturities_lt_debt, equity_issued]
     flags: [going_concern_flag, caro_default_flag, caro_fraud_flag, date_is_imputed, needs_verification, is_synthetic]
     source: source_doc
   nbfc_metrics:
-    columns: [entity_id, period_end, public_date, gnpa_pct, nnpa_pct, car_pct, nim_pct, cp_share_of_borrowings, st_liab_to_st_assets, loan_book_growth, source_doc, date_is_imputed, needs_verification, is_synthetic]
+    columns: [entity_id, period_end, public_date, gnpa_pct, nnpa_pct, car_pct, nim_pct, cp_share_of_borrowings, st_liab_to_st_assets, loan_book_growth, source_doc, date_is_imputed, needs_verification, is_synthetic, car_minimum_pct]
     dates: [period_end, public_date]
-    numeric: [gnpa_pct, nnpa_pct, car_pct, nim_pct, cp_share_of_borrowings, st_liab_to_st_assets, loan_book_growth]
+    numeric: [gnpa_pct, nnpa_pct, car_pct, nim_pct, cp_share_of_borrowings, st_liab_to_st_assets, loan_book_growth, car_minimum_pct]
     flags: [date_is_imputed, needs_verification, is_synthetic]
     source: source_doc
   shareholding:
@@ -87,6 +99,12 @@ tables:
     columns: [entity_id, event_type, announce_date, period_end, public_date, detail, source_url, date_is_imputed, needs_verification, is_synthetic]
     dates: [announce_date, period_end, public_date]
     numeric: []
+    flags: [date_is_imputed, needs_verification, is_synthetic]
+    source: source_url
+  fx_rates:
+    columns: [entity_id, period_end, public_date, inr_per_usd, source_url, date_is_imputed, needs_verification, is_synthetic]
+    dates: [period_end, public_date]
+    numeric: [inr_per_usd]
     flags: [date_is_imputed, needs_verification, is_synthetic]
     source: source_url
 validation:
