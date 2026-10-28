@@ -1,0 +1,13 @@
+entity_id,name,sector,is_financial,event_date,matching_cutoff,financial_gate_period_start,collection_end,strict_4q_snapshot,strict_8q_snapshot,is_synthetic,report_year_start,report_year_end
+INE975G01012,IL&FS Transportation Networks Ltd,infrastructure_development,0,2018-09-28,2015-09-28,2014-09-28,2018-09-28,2017-06-30,2016-06-30,0,2014,2018
+INE202B01012,Dewan Housing Finance Corporation Ltd,housing_finance,1,2019-06-04,2016-06-04,2015-06-04,2019-06-04,2018-03-31,2017-03-31,0,2015,2019
+INE802G01018,Jet Airways (India) Ltd,airlines,0,2018-12-31,2015-12-31,2014-12-31,2018-12-31,2017-12-31,2016-12-31,0,2014,2018
+INE013A01015,Reliance Capital Ltd,nonbank_finance,1,2019-09-09,2016-09-09,2015-09-09,2019-09-09,2018-06-30,2017-06-30,0,2015,2019
+INE217K01011,Reliance Home Finance Ltd,housing_finance,1,2019-09-09,2016-09-09,2015-09-09,2019-09-09,2018-06-30,2017-06-30,0,2015,2019
+INE752P01024,Future Retail Ltd,retail,0,2020-10-28,2017-10-28,2016-10-28,2020-10-28,2019-09-30,2018-09-30,0,2016,2020
+INE335K01011,Coffee Day Enterprises Ltd (CDEL),diversified_nonfinancial,0,2019-09-10,2016-09-10,2015-09-10,2019-09-10,2018-06-30,2017-06-30,0,2015,2019
+INE330H01018,Reliance Communications Ltd (RCom),telecommunications,0,2017-05-30,2014-05-30,2013-05-30,2017-05-30,2016-03-31,2015-03-31,0,2013,2017
+INE872A01014,Srei Infrastructure Finance Ltd,nonbank_finance,1,2021-03-06,2018-03-06,2017-03-06,2021-03-06,2019-12-31,2018-12-31,0,2017,2021
+INE703A01011,Videocon Industries Ltd,consumer_electronics,0,2018-06-06,2015-06-06,2014-06-06,2018-06-06,2017-03-31,2016-03-31,0,2014,2018
+INE099J01015,Jaypee Infratech Ltd,infrastructure_development,0,2015-09-25,2012-09-25,2011-09-25,2015-09-25,2014-06-30,2013-06-30,0,2011,2015
+INE270A01011,Alok Industries Ltd,textiles,0,2017-07-18,2014-07-18,2013-07-18,2017-07-18,2016-06-30,2015-06-30,0,2013,2017

@@ -1,5 +1,7 @@
 # Data requests
 
+For team assignments and exact handoff fields, use [TEAM_DATA_COLLECTION_PLAN.md](TEAM_DATA_COLLECTION_PLAN.md).
+
 - [ ] **P0: early NSE symbol-to-ISIN evidence.** Companies: case/peer securities appearing in the original symbol-only NSE bhavcopies. Period: the early historical windows, starting April 2011. Suggested source: contemporaneous original annual-report security-identification pages or dated exchange security masters. Target: `data/manual/security_crosswalk.csv`, with `exchange=nse`, `exchange_code` equal to the exact source symbol, sourced `entity_id`, `period_end`, `public_date`, `source_url` and flags. The original early archive has no ISIN column. Parsed prices remain quarantined under exchange-qualified symbols until a dated mapping is verified; later mappings are not backdated.
 
 Independent sealed preparation: [public input contract](SEALED_INPUT_CONTRACT.md). Share only the prepared artifact hash and case count; keep identities and source contents private.

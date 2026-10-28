@@ -2,6 +2,8 @@
 
 Project documentation lives in docs/. Run commands from the repository root.
 
+Team members collecting evidence: start with [TEAM_DATA_COLLECTION_PLAN.md](docs/TEAM_DATA_COLLECTION_PLAN.md). It includes assignments, company-specific historical cutoffs, source checks and CSV headers.
+
 **P**oint-in-time **R**isk & **A**ccounting **H**azard **A**lerts, **R**anked & **I**nterpretable. *Prahari* is Hindi for "sentinel".
 
 A submission for **Zeckathon PS-02 (Risk & Fraud)**: a point-in-time early-warning research system for Indian corporate credit. Detection performance remains unassessed until the data and registration gates pass.
