@@ -47,13 +47,34 @@ uv pip install --python .venv/Scripts/python.exe -r requirements.txt
 .\run_all.ps1 -Offline -PrepareOnly
 ```
 
-The full benchmark grid is deliberately substantial. Completed tasks are cached with code/config/data fingerprints; a changed fingerprint refuses stale artifacts rather than silently reusing them. Set a new configured model directory before a fresh development run if the modelling implementation changes. Do not delete or recreate reserved partitions.
+The full benchmark grid is deliberately substantial. Completed tasks are cached with code/config/data fingerprints in separate generation directories. A changed fingerprint creates a fresh generation, preserving earlier models and reserved partitions. Cached runs restore metric/calibration tables and missing calibration plots without refitting. Do not delete or recreate reserved partitions.
 
 ```powershell
 .venv/Scripts/python.exe -m scripts.01_benchmark --offline
 .venv/Scripts/python.exe -m scripts.03_validate_manual --init-templates
 .venv/Scripts/python.exe -m scripts.03_validate_manual
 ```
+
+Phase 2 public-source commands:
+
+```powershell
+.venv/Scripts/python.exe -m scripts.02_market_data --sample
+.venv/Scripts/python.exe -m scripts.02_market_data --sample --offline
+.venv/Scripts/python.exe -m scripts.02_market_data --start 2018-07-01 --end 2018-09-30
+.venv/Scripts/python.exe -m scripts.02b_collect_sources
+.venv/Scripts/python.exe -m scripts.02b_collect_sources --offline
+.venv/Scripts/python.exe -m scripts.03_validate_manual --as-of 2018-09-30
+```
+
+The market collector uses the configured historical range when no dates are supplied; collecting that entire range is a substantial rate-limited job. It retains original zipped downloads and receipts under `data/raw/`, with parsed session caches under `data/interim/market/`. Missing official files are logged as unknown gaps, never inferred to be holidays. The offline sample command uses only existing archives; an offline range containing uncached dates fails explicitly. A complete sourced exchange calendar is still required for the market-coverage acceptance audit. The index archive is explicitly tagged as a price index, not TRI.
+
+Repeated exchange blocks stop collection and persist a manual request. To register an actual manually downloaded archive without overwriting raw data:
+
+```powershell
+.venv/Scripts/python.exe -m scripts.02_market_data --import-file <local-file> --import-url <original-source-url> --import-source nse
+```
+
+`03_validate_manual` now writes accounting coverage and explicit panel acceptance checks. Its optional as-of audit writes `outputs/coverage_parity.csv`; empty cohorts are marked unresolved. Collection progress is recorded in `outputs/collection_status.csv`, and cached original PDFs are indexed in `outputs/source_catalog.csv`. Partial event evidence remains `needs_verification=1` and is not counted as a verified event. BSE routing, complete historical market coverage, verified event dates, financial histories and actual peer selection remain outstanding Phase 2 work.
 
 Template initialization never overwrites an existing file. The validator rejects an empty panel at the acceptance gate. The full historical pipeline is not yet implemented; `run_all.ps1` announces that it runs implemented phases only.
 

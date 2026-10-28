@@ -30,7 +30,7 @@ def as_of(table: pd.DataFrame, t: str | pd.Timestamp) -> pd.DataFrame:
     source_columns = [c for c in ("source_url", "source_doc", "source_urls") if c in result]
     if not source_columns or (len(result) and not result[source_columns].notna().any(axis=1).all()):
         raise ValueError("Every visible Indian observation needs source provenance")
-    key = [c for c in ("entity_id", "field", "period_end", "basis", "instrument", "agency", "event_type")
+    key = [c for c in ("entity_id", "field", "period_end", "basis", "instrument", "agency", "event_type", "series")
            if c in result]
     if result.duplicated(key + ["public_date"]).any():
         raise ValueError("Ambiguous duplicate source versions")

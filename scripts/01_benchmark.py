@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 import sys
@@ -54,14 +55,16 @@ def main() -> None:
         return
     rows, entries, audits = [], [], {}
     fingerprint = code_fingerprint(config)
-    config.path("models").mkdir(parents=True, exist_ok=True)
+    generation = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()
+    model_directory = config.path("models") / generation
+    model_directory.mkdir(parents=True, exist_ok=True)
     for name, table in tables.items():
         tasks = [("full", variant) for variant in [*settings["models"]["imbalance_variants"], "logistic"]]
         if name in settings["hdm"]["datasets"]:
             tasks.append(("harmonized", "none"))
         for representation, variant in tasks:
             run_id = f"{name}_{representation}_{variant}"
-            artifact = config.path("models") / f"{run_id}.joblib"
+            artifact = model_directory / f"{run_id}.joblib"
             result_path = artifact.with_suffix(".development.json")
             if representation == "full":
                 X = table.drop(columns=list(META))
@@ -80,6 +83,11 @@ def main() -> None:
                 rows.extend(saved["rows"])
                 audits[run_id] = saved["folds"]
                 entries.append(saved["entry"])
+                calibration = pd.DataFrame(saved["calibration"])
+                write_real_table(calibration, config.path("benchmark_plots") / f"{run_id}.csv")
+                plot_path = config.path("benchmark_plots") / f"{run_id}.png"
+                if not plot_path.exists():
+                    calibration_plot(calibration, plot_path)
                 LOG.info("Reused development artifact %s", run_id)
                 continue
             LOG.info("Starting %s rows=%s features=%s dates_imputed=0", run_id, len(X), len(X.columns))
@@ -112,12 +120,14 @@ def main() -> None:
             calibration_plot(pd.read_csv(config.path("benchmark_plots") / f"{run_id}.csv"),
                              config.path("benchmark_plots") / f"{run_id}.png")
             result_path.write_text(json.dumps({"identity": identity, "artifact_sha256": sha256_file(artifact),
-                                               "entry": entry, "rows": task_rows, "folds": result.folds}, indent=2),
+                                               "entry": entry, "rows": task_rows, "folds": result.folds,
+                                               "calibration": calibration.astype(object).where(pd.notna(calibration), None).to_dict(orient="records")}, indent=2),
                                     encoding="utf-8")
             rows.extend(task_rows)
             entries.append(entry)
             audits[run_id] = result.folds
             write_real_table(pd.DataFrame(rows), config.path("benchmark_development_metrics"))
+    write_real_table(pd.DataFrame(rows), config.path("benchmark_development_metrics"))
     config.path("benchmark_model_manifest").write_text(json.dumps(entries, indent=2), encoding="utf-8")
     config.path("benchmark_audit").write_text(json.dumps(audits, indent=2), encoding="utf-8")
     LOG.info("Development complete: metric_rows=%s; final hold-outs unopened", len(rows))

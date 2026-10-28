@@ -3,6 +3,7 @@
 import argparse
 import logging
 import sys
+import pandas as pd
 from pathlib import Path
 
 if __package__ in (None, ""):
@@ -10,13 +11,16 @@ if __package__ in (None, ""):
 
 from prahari.config import Config
 from prahari.data.firewall import write_real_table
-from prahari.data.quality import initialize_templates, validate_manual
+from prahari.data.quality import accounting_coverage, initialize_templates, validate_manual
+from prahari.data.manual import read_manual
+from prahari.eval.panel_quality import audit_coverage, panel_acceptance
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", default="configs/base.yaml")
     parser.add_argument("--init-templates", action="store_true")
+    parser.add_argument("--as-of", help="Publication cutoff for collection-parity audit")
     args = parser.parse_args()
     config = Config(args.config)
     config.setup_logging()
@@ -26,10 +30,17 @@ def main() -> None:
     summary = validate_manual(config)
     write_real_table(summary, config.path("manual_validation"))
     settings = config.section("manual_config")["validation"]
-    counts = summary.set_index("table")["verified"]
-    if counts["events"] < settings["minimum_events"] or counts["peers"] < settings["minimum_peers"]:
-        raise SystemExit("Panel acceptance incomplete: supply verified events/peers listed in DATA_REQUESTS.md")
-    logging.info("Manual schema/count checks passed; market coverage and parity acceptance still required")
+    accounting = accounting_coverage(read_manual(config, "annual_financials"), settings["accounting_tolerance"])
+    write_real_table(accounting, config.path("accounting_coverage"))
+    market = pd.read_csv(config.path("market_coverage")) if config.path("market_coverage").exists() else pd.DataFrame()
+    checks = panel_acceptance(read_manual(config, "events"), read_manual(config, "peers"), market,
+                              accounting, config.section("india_config")["panel"], read_manual(config, "annual_financials"))
+    write_real_table(checks, config.path("panel_acceptance"))
+    if args.as_of:
+        write_real_table(audit_coverage(config, args.as_of), config.path("coverage_parity"))
+    if not checks.passed.eq(1).all():
+        raise SystemExit("Panel acceptance incomplete; inspect outputs/panel_acceptance.csv and DATA_REQUESTS.md")
+    logging.info("Panel schema, cohort, accounting and market-coverage checks passed")
 
 
 if __name__ == "__main__":

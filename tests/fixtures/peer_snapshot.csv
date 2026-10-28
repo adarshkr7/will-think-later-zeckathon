@@ -1,0 +1,9 @@
+entity_id,sector,is_financial,total_assets,total_liabilities,period_end,public_date,date_is_imputed,needs_verification,is_synthetic,source_doc
+FIX_CASE,fixture_sector,0,100,90,2016-03-31,2016-06-01,0,0,1,fixture-source
+FIX_A,fixture_sector,0,90,9,2016-03-31,2016-06-01,0,0,1,fixture-source
+FIX_B,fixture_sector,0,95,19,2016-03-31,2016-06-01,0,0,1,fixture-source
+FIX_C,fixture_sector,0,110,33,2016-03-31,2016-06-01,0,0,1,fixture-source
+FIX_D,fixture_sector,0,120,48,2016-03-31,2016-06-01,0,0,1,fixture-source
+FIX_E,fixture_sector,0,130,123.5,2016-03-31,2016-06-01,0,0,1,fixture-source
+FIX_F,fixture_sector,0,140,112,2016-03-31,2016-06-01,0,0,1,fixture-source
+FIX_OTHER,other_sector,0,100,99,2016-03-31,2016-06-01,0,0,1,fixture-source

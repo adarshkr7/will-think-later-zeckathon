@@ -9,6 +9,19 @@ paths:
   policy_config: configs/policy.yaml
   harmonized_map: configs/harmonized_map.yaml
   manual_config: configs/manual.yaml
+  india_config: configs/india.yaml
+  indian_financials: data/processed/annual_financials.parquet
+  coverage_parity: outputs/coverage_parity.csv
+  accounting_coverage: outputs/accounting_coverage.csv
+  panel_acceptance: outputs/panel_acceptance.csv
+  market_coverage: outputs/market_coverage.csv
+  market_manifest: data/manual/market_sources.csv
+  market_cache: data/interim/market
+  source_failures: outputs/source_failures.csv
+  selected_peers: outputs/selected_peers.csv
+  source_documents: data/manual/source_documents.csv
+  source_config: configs/sources.yaml
+  source_catalog: outputs/source_catalog.csv
   manual_validation: outputs/manual_validation.csv
   benchmark_development_metrics: outputs/benchmark_development_metrics.csv
   benchmark_final_metrics: outputs/benchmark_metrics.csv

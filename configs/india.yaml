@@ -1,0 +1,42 @@
+panel:
+  peers_per_case: 3
+  minimum_unique_peers: 30
+  minimum_cases: 10
+  minimum_financial_years: 3
+  target_cases: 12
+  target_peers: 36
+  stressed_fraction: 0.3333333333333333
+  stressed_quantile: 0.75
+  match_lag_quarters: 12
+  survival_quarters: 8
+  selection_rule_version: sector-assets-v1
+coverage:
+  fisher_alpha: 0.05
+  collection_causes: {}
+  # Unknown collection causes remain explicitly unresolved.
+financials:
+  annual_only_fields: [cfo, shares_outstanding, related_party_loans_advances, related_party_revenue, auditor_opinion, going_concern_flag, caro_default_flag, caro_fraud_flag]
+market:
+  start_date: '2011-04-01'
+  end_date: '2024-03-31'
+  publication_lag_days: 1
+  max_forward_fill_sessions: 5
+  series: [EQ, BE, BZ]
+  months: [JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC]
+  sample_dates: ['2018-09-28']
+  legacy_url: https://nsearchives.nseindia.com/content/historical/EQUITIES/{year}/{month}/cm{day}{month}{year}bhav.csv.zip
+  index_url: https://nsearchives.nseindia.com/content/indices/ind_close_all_{date}.csv
+  index_names: [Nifty 500, Nifty 50]
+  legacy_columns: {SYMBOL: symbol, SERIES: series, TIMESTAMP: period_end, CLOSE: close, TOTTRDQTY: volume, ISIN: entity_id}
+  index_columns: {'Index Name': name, 'Index Date': period_end, 'Closing Index Value': close}
+  # BSE archives can be provided via the source manifest; never guess era URLs.
+network:
+  interval_seconds: 3
+  timeout_seconds: 45
+  max_attempts: 5
+  block_attempts: 2
+  backoff_seconds: 3
+  headers:
+    User-Agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36'
+    Accept: '*/*'
+    Referer: https://www.nseindia.com/all-reports

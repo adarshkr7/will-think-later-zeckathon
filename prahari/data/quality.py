@@ -103,3 +103,22 @@ def validate_manual(config: Config) -> pd.DataFrame:
         table = pd.read_csv(path, dtype=str)
         rows.append(validate_table(table, name, settings))
     return pd.DataFrame(rows)
+
+
+def accounting_coverage(table: pd.DataFrame, tolerance: float) -> pd.DataFrame:
+    """Report missing inputs and accounting residuals, including unresolved rows."""
+    columns = ["entity_id", "period_end", "basis", "total_assets", "total_liabilities", "equity",
+               "identity_relative_error", "identity_status", "source_doc", "is_synthetic"]
+    rows = []
+    for record in table.to_dict(orient="records"):
+        values = [record[key] for key in ("total_assets", "total_liabilities", "equity")]
+        if any(pd.isna(value) for value in values):
+            error, status = float("nan"), "missing_inputs"
+        elif values[0] <= 0:
+            error, status = float("nan"), "invalid_assets"
+        else:
+            error = abs(values[0] - values[1] - values[2]) / values[0]
+            status = "pass" if error <= tolerance else "fail"
+        rows.append({**{key: record[key] for key in columns if key in record},
+                     "identity_relative_error": error, "identity_status": status})
+    return pd.DataFrame(rows, columns=columns)

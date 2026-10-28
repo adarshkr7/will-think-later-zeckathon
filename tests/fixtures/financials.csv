@@ -1,0 +1,2 @@
+entity_id,fy_end,basis,total_assets,total_liabilities,equity,cfo,results_public_date,annual_report_public_date,source_doc,needs_verification,is_synthetic
+FIX_CASE,2018-03-31,standalone,100,60,40,8,,,fixture-financial-document,0,1
