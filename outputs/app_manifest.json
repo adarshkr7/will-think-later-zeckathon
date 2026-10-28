@@ -101,11 +101,11 @@
     },
     {
       "label": "Financial fields",
-      "value": 135
+      "value": 234
     },
     {
       "label": "Tests passed",
-      "value": 115
+      "value": 128
     }
   ],
   "calibration_images": [
@@ -132,6 +132,7 @@
     "app_policy": "policy_parameters.csv",
     "panel_acceptance": "panel_acceptance.csv",
     "collection_status": "collection_status.csv",
+    "fx_coverage": "fx_coverage.csv",
     "source_catalog": "source_catalog.csv",
     "coverage_parity": "coverage_parity.csv",
     "feature_coverage": "feature_coverage.csv",
@@ -144,12 +145,21 @@
     "ablations": "ablation.csv",
     "cost_curve": "cost_curve.csv",
     "shadow_prices": "shadow_price.csv",
+    "threshold_scan": "threshold_scan.csv",
     "detection_curve": "detection_curve.csv",
     "placebo": "placebo.csv",
     "anti_gaming": "anti_gaming.csv",
+    "archetypes": "archetypes.csv",
+    "drift": "drift.csv",
+    "hysteresis": "hysteresis.csv",
+    "policy_scenarios": "policy_scenarios.csv",
+    "diagnostics_status": "diagnostics_status.csv",
+    "workflow": "workflow.csv",
     "amendments": "amendments.log",
     "benchmark_development_metrics": "benchmark_development_metrics.csv",
     "benchmark_final_metrics": "benchmark_metrics.csv",
-    "benchmark_plots": "benchmark_calibration"
+    "benchmark_plots": "benchmark_calibration",
+    "rating_lead_cases": "rating_lead_cases.csv",
+    "rating_lead_summary": "rating_lead_summary.csv"
   }
 }

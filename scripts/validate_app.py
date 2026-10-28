@@ -32,6 +32,9 @@ def main() -> None:
     checks["reveal_outcomes"] = not app.exception
     control("checkbox", "Reveal snapshot outcomes").check().run()
     checks["reveal_snapshot_outcomes"] = not app.exception
+    control("checkbox", "Show observed features").check().run()
+    checks["feature_evidence"] = not app.exception
+    control("checkbox", "Show observed features").uncheck().run()
     snapshots = __import__("pandas").read_parquet(config.path("app_snapshots"))
     entity = str(snapshots.entity_id.iloc[0])
     control("text_input", "ISIN, symbol or company").set_value(entity).run()

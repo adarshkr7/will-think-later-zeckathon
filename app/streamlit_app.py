@@ -101,9 +101,10 @@ def main() -> None:
                 columns += [name for name in ("verified_event_within_4q", "verified_event_within_8q") if name in selected]
                 st.caption("Verified event matches only. A missing catalog event does not certify that a borrower survived.")
             st.dataframe(selected[columns].head(settings["snapshot_rows"]), hide_index=True, width="stretch", height=390)
-        borrower = feature_frame(path, entity, arena, quarter)
         with st.expander("Inspect observed features and missing-input reasons", expanded=False):
-            st.dataframe(borrower[[name for name in ["feature", "value", "reason", "max_source_date"] if name in borrower]], hide_index=True, width="stretch")
+            if st.checkbox("Show observed features"):
+                borrower = feature_frame(path, entity, arena, quarter)
+                st.dataframe(borrower[[name for name in ["feature", "value", "reason", "max_source_date"] if name in borrower]], hide_index=True, width="stretch")
     with tabs[1]:
         st.subheader("Case timeline")
         history = snapshots.loc[snapshots.entity_id.eq(entity) & snapshots.arena.eq(arena)]

@@ -25,17 +25,28 @@ Source observations carry publication dates, conservative date-imputation flags 
 
 | item | observed | needs_verification | is_synthetic |
 | --- | --- | --- | --- |
-| market_sessions | 1107 | 0 | 0 |
-| market_observations | 1726777 | 0 | 0 |
-| distinct_isins | 2059 | 0 | 0 |
-| cached_source_pdfs | 40 | 0 | 0 |
+| market_sessions | 2196 | 0 | 0 |
+| market_observations | 3404072 | 0 | 0 |
+| distinct_isins | 2358 | 0 | 0 |
+| cached_source_pdfs | 50 | 0 | 0 |
 | unavailable_source_pdfs | 1 | 1 | 0 |
-| verified_financial_fields | 135 | 0 | 0 |
-| financial_entities | 2 | 0 | 0 |
+| verified_financial_fields | 234 | 0 | 0 |
+| financial_entities | 4 | 0 | 0 |
+| financial_evidence_rows | 323 | 0 | 0 |
+| verified_financial_evidence_rows | 318 | 0 | 0 |
+| cached_original_report_candidates | 45 | 1 | 0 |
+| cached_financial_index_windows | 53 | 0 | 0 |
+| financial_index_records | 130478 | 0 | 0 |
+| verified_identity_mappings | 27 | 0 | 0 |
+| verified_quarterly_share_counts | 15 | 0 | 0 |
+| verified_quarterly_shareholding | 14 | 0 | 0 |
+| complete_core_financial_histories | 1 | 0 | 0 |
 | verified_panel_events | 12 | 0 | 0 |
 | verified_case_isins | 12 | 0 | 0 |
 | verified_case_classifications | 12 | 0 | 0 |
 | verified_event_components | 24 | 0 | 0 |
+| verified_fx_observations | 210 | 0 | 0 |
+| quarters_with_verified_fx | 44 | 0 | 0 |
 | verified_matched_peers | 0 | 1 | 0 |
 
 Source: [collection_status](../../outputs/collection_status.csv).
@@ -53,6 +64,59 @@ Source: [collection_status](../../outputs/collection_status.csv).
 | accounting_identities | 1 | 1 | 1 | 0 |
 
 Source: [panel_acceptance](../../outputs/panel_acceptance.csv).
+
+### Original-vintage FX coverage
+
+| quarter | available | observation_date | public_date | source_url | needs_verification | is_synthetic |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2013-06-30 | 1 | 2013-06-21 00:00:00+00:00 | 2013-06-24 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20130624/ | 0 | 0 |
+| 2013-09-30 | 1 | 2013-09-20 00:00:00+00:00 | 2013-09-23 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20130923/ | 0 | 0 |
+| 2013-12-31 | 1 | 2013-12-27 00:00:00+00:00 | 2013-12-30 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20131230/ | 0 | 0 |
+| 2014-03-31 | 1 | 2014-03-21 00:00:00+00:00 | 2014-03-24 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20140324/ | 0 | 0 |
+| 2014-06-30 | 1 | 2014-06-20 00:00:00+00:00 | 2014-06-23 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20140623/ | 0 | 0 |
+| 2014-09-30 | 1 | 2014-09-26 00:00:00+00:00 | 2014-09-29 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20140929/ | 0 | 0 |
+| 2014-12-31 | 1 | 2014-12-24 00:00:00+00:00 | 2014-12-29 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20141229/ | 0 | 0 |
+| 2015-03-31 | 1 | 2015-03-27 00:00:00+00:00 | 2015-03-30 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20150330/ | 0 | 0 |
+| 2015-06-30 | 1 | 2015-06-26 00:00:00+00:00 | 2015-06-29 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20150629/ | 0 | 0 |
+| 2015-09-30 | 1 | 2015-09-25 00:00:00+00:00 | 2015-09-28 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20150928/ | 0 | 0 |
+| 2015-12-31 | 1 | 2015-12-24 00:00:00+00:00 | 2015-12-28 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20151228/ | 0 | 0 |
+| 2016-03-31 | 1 | 2016-03-25 00:00:00+00:00 | 2016-03-28 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20160328/ | 0 | 0 |
+| 2016-06-30 | 1 | 2016-06-24 00:00:00+00:00 | 2016-06-27 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20160627/ | 0 | 0 |
+| 2016-09-30 | 1 | 2016-09-23 00:00:00+00:00 | 2016-09-26 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20160926/ | 0 | 0 |
+| 2016-12-31 | 1 | 2016-12-23 00:00:00+00:00 | 2016-12-27 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20161227/ | 0 | 0 |
+| 2017-03-31 | 1 | 2017-03-24 00:00:00+00:00 | 2017-03-27 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20170327/ | 0 | 0 |
+| 2017-06-30 | 1 | 2017-06-23 00:00:00+00:00 | 2017-06-26 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20170626/ | 0 | 0 |
+| 2017-09-30 | 1 | 2017-09-22 00:00:00+00:00 | 2017-09-25 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20170925/ | 0 | 0 |
+| 2017-12-31 | 1 | 2017-12-22 00:00:00+00:00 | 2017-12-26 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20171226/ | 0 | 0 |
+| 2018-03-31 | 1 | 2018-03-23 00:00:00+00:00 | 2018-03-26 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20180326/ | 0 | 0 |
+| 2018-06-30 | 1 | 2018-06-22 00:00:00+00:00 | 2018-06-25 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20180625/ | 0 | 0 |
+| 2018-09-30 | 1 | 2018-09-21 00:00:00+00:00 | 2018-09-24 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20180924/ | 0 | 0 |
+| 2018-12-31 | 1 | 2018-12-21 00:00:00+00:00 | 2018-12-26 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20181226/ | 0 | 0 |
+| 2019-03-31 | 1 | 2019-03-22 00:00:00+00:00 | 2019-03-25 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20190325/ | 0 | 0 |
+| 2019-06-30 | 1 | 2019-06-21 00:00:00+00:00 | 2019-06-24 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20190624/ | 0 | 0 |
+| 2019-09-30 | 1 | 2019-09-20 00:00:00+00:00 | 2019-09-23 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20190923/ | 0 | 0 |
+| 2019-12-31 | 1 | 2019-12-27 00:00:00+00:00 | 2019-12-30 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20191230/ | 0 | 0 |
+| 2020-03-31 | 1 | 2020-03-27 00:00:00+00:00 | 2020-03-30 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20200330/ | 0 | 0 |
+| 2020-06-30 | 1 | 2020-06-26 00:00:00+00:00 | 2020-06-29 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20200629/ | 0 | 0 |
+| 2020-09-30 | 1 | 2020-09-25 00:00:00+00:00 | 2020-09-28 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20200928/ | 0 | 0 |
+| 2020-12-31 | 1 | 2020-12-23 00:00:00+00:00 | 2020-12-28 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20201228/ | 0 | 0 |
+| 2021-03-31 | 1 | 2021-03-26 00:00:00+00:00 | 2021-03-29 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20210329/ | 0 | 0 |
+| 2021-06-30 | 1 | 2021-06-25 00:00:00+00:00 | 2021-06-28 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20210628/ | 0 | 0 |
+| 2021-09-30 | 1 | 2021-09-24 00:00:00+00:00 | 2021-09-27 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20210927/ | 0 | 0 |
+| 2021-12-31 | 1 | 2021-12-23 00:00:00+00:00 | 2021-12-27 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20211227/ | 0 | 0 |
+| 2022-03-31 | 1 | 2022-03-25 00:00:00+00:00 | 2022-03-28 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20220328/ | 0 | 0 |
+| 2022-06-30 | 1 | 2022-06-24 00:00:00+00:00 | 2022-06-27 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20220627/ | 0 | 0 |
+| 2022-09-30 | 1 | 2022-09-23 00:00:00+00:00 | 2022-09-26 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20220926/ | 0 | 0 |
+| 2022-12-31 | 1 | 2022-12-23 00:00:00+00:00 | 2022-12-27 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20221227/ | 0 | 0 |
+| 2023-03-31 | 1 | 2023-03-24 00:00:00+00:00 | 2023-03-27 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20230327/ | 0 | 0 |
+| 2023-06-30 | 1 | 2023-06-23 00:00:00+00:00 | 2023-06-26 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20230626/ | 0 | 0 |
+| 2023-09-30 | 1 | 2023-09-22 00:00:00+00:00 | 2023-09-25 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20230925/ | 0 | 0 |
+| 2023-12-31 | 1 | 2023-12-22 00:00:00+00:00 | 2023-12-26 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20231226/ | 0 | 0 |
+| 2024-03-31 | 1 | 2024-03-22 00:00:00+00:00 | 2024-03-25 00:00:00+00:00 | https://www.federalreserve.gov/releases/h10/20240325/ | 0 | 0 |
+
+Source: [fx_coverage](../../outputs/fx_coverage.csv).
+
+FX comes from original weekly H.10 releases with actual publication dates. Revised current historical series are not substituted. Unreported source observations remain missing.
 
 The panel's current identity/classification catalog is distinct from historical matching-quarter availability. An empty event search does not establish a non-default peer or a negative governance signal.
 
@@ -105,6 +169,12 @@ Source: [app_policy](../../outputs/policy_parameters.csv).
 
 The operational review list uses the registered hard cap and deterministic tie handling. Additional-slot curves are counterfactual cost statistics and do not enlarge the operational list.
 
+Not run or not available. No numerical result is inferred.
+
+Not run or not available. No numerical result is inferred.
+
+Not run or not available. No numerical result is inferred.
+
 ## Attribution and evidence
 
 Native raw-margin TreeSHAP is rescaled to reconcile the nonlinear calibrated log-odds exactly. This path-proportional allocation is not presented as Shapley values of calibrated probability. CHS and overlay terms are linear. Single-driver probability removal effects overlap and are not additive or causal.
@@ -117,9 +187,29 @@ Not run or not available. No numerical result is inferred.
 
 Not run or not available. No numerical result is inferred.
 
+Not run or not available. No numerical result is inferred.
+
+Not run or not available. No numerical result is inferred.
+
+Rating lead compares the first pre-event watch-list flag with the earliest sourced sub-investment-grade publication. The median uses paired observed endpoints; missing cases remain listed. Incomplete rating histories do not establish the first-ever downgrade. Calendar-quarter and day differences are both exported.
+
 ## Placebo and anti-gaming
 
 Not run or not available. No numerical result is inferred.
+
+Not run or not available. No numerical result is inferred.
+
+Counterfactual intervention inputs never replace source financials or enter the app as financial observations. A scenario that changes no active primary input is labelled ineffective and cannot establish robustness.
+
+## Monitoring and counterfactual policy experiments
+
+Not run or not available. No numerical result is inferred.
+
+Not run or not available. No numerical result is inferred.
+
+Not run or not available. No numerical result is inferred.
+
+## Retrospective archetypes
 
 Not run or not available. No numerical result is inferred.
 
@@ -183,9 +273,21 @@ Case cards are exported for every reviewed case. Before registered evaluation, t
 
 ## Limitations
 
-The data acceptance table above is authoritative. Public data collection, complete peer survival evidence, historical classifications, share counts, FX and regulatory-capital inputs may remain incomplete. Raw bhavcopy returns are unadjusted for corporate actions; cached price indices are not claimed to be total-return indices. Market-only background membership is not claimed to be a debt-ranked complete universe.
+The data acceptance and source-coverage tables above are authoritative. Public data collection, complete peer survival evidence, historical classifications, share counts and regulatory-capital inputs may remain incomplete. Raw bhavcopy returns are unadjusted for corporate actions; cached price indices are not claimed to be total-return indices. Market-only background membership is not claimed to be a debt-ranked complete universe.
 
 The US CHS coefficients are not an Indian probability calibration. Annual-income proxies, universe-relative size and the plan's book-equity variant are explicit adaptations. Unknown priors do not fall back to panel prevalence. Financial-firm ranks are not called calibrated probabilities without a declared probability link.
+
+## Internal EWS workflow appendix
+
+| tier | action | internal_sla_business_days | reference_version | reference_clause | reference_url | interpretation | is_synthetic |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| tier1 | Escalate this EWS note for human fraud-risk review. Preserve the dated evidence, obtain borrower explanations and record the reviewer's decision under the bank's approved process. | 2 | RBI fraud-risk directions 2024, historical design reference | 3.1.1 | https://systemhealth.rbi.org.in/Scripts/BS_ViewMasDirections.aspx_id%3D12702%281%29.html | internal_workflow_mapping_not_automatic_fraud_classification | 0 |
+| tier2 | Request and reconcile supporting records, track unresolved discrepancies and escalate material concerns through the bank's approved EWS process. | 5 | RBI fraud-risk directions 2024, historical design reference | 3.1.1 | https://systemhealth.rbi.org.in/Scripts/BS_ViewMasDirections.aspx_id%3D12702%281%29.html | internal_workflow_mapping_not_automatic_fraud_classification | 0 |
+| tier3 | Monitor the cited signals and record follow-up evidence under the bank's approved EWS process. | 10 | RBI fraud-risk directions 2024, historical design reference | 3.1.1 | https://systemhealth.rbi.org.in/Scripts/BS_ViewMasDirections.aspx_id%3D12702%281%29.html | internal_workflow_mapping_not_automatic_fraud_classification | 0 |
+
+Source: [workflow](../../outputs/workflow.csv).
+
+This is a design mapping to the cited historical framework. PRAHARI tiers and review targets are internal settings, not RBI-prescribed classifications or deadlines. A human institution makes any red-flag or fraud determination under its applicable approved process.
 
 ## Amendments
 

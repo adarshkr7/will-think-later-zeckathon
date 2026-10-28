@@ -1,6 +1,6 @@
 {
-  "measured_at": "2026-10-28T14:21:14.853697+00:00",
-  "cold_render_seconds": 2.2670479000007617,
+  "measured_at": "2026-10-28T20:57:09.271978+00:00",
+  "cold_render_seconds": 2.3639095000107773,
   "timing_scope": "AppTest construction and first render; Streamlit test-harness import excluded",
   "checks": {
     "cold_start_under_five_seconds": true,
@@ -8,6 +8,7 @@
     "initial_render": true,
     "reveal_outcomes": true,
     "reveal_snapshot_outcomes": true,
+    "feature_evidence": true,
     "judge_search": true,
     "memo_control": true,
     "arena_P": true,
