@@ -1,0 +1,3 @@
+entity_id,is_financial,roa,tl_ta,nimtaavg,tlmta,exretavg,sigma,relsize,cashmta,mb,price,chs_center,chs_scale,delayed_filing_4q,is_synthetic
+FIX_A,0,0.1,0.6,0.01,0.5,0,0.2,-5,0.1,2,1,-9,2,0,1
+FIX_B,0,0.2,0.7,0.02,0.4,-0.1,0.3,-4,0.2,1,2,-9,2,1,1
