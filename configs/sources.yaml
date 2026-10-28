@@ -9,6 +9,76 @@ documents:
   filename: itnl_annual_2015.pdf
   url: https://ipv4.itnlindia.com/pdf/annual-reports/ITNL%20AR%202014-15.pdf
   purpose: Original earlier-year statements; pending page-level extraction review
+  financial_extraction:
+    reviewed: true
+    entity_id: INE975G01012
+    source_period_end: '2015-03-31'
+    fiscal_periods:
+    - '2015-03-31'
+    - '2014-03-31'
+    unit: INR_million
+    source_sha256: 86b662b88fa442ffbf29e73fad50d86e79e75dc9860ce7e44c27eb028514b741
+    tables:
+    - page: 116
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: T otal
+          expected_matches: 2
+          occurrence: 1
+        current_assets:
+          label: Other current assets (net)
+          columns: 4
+          positions:
+          - 1
+          - 3
+        current_liabilities:
+          label: Short-term provisions
+          columns: 4
+          positions:
+          - 1
+          - 3
+        equity:
+          label: Reserves and surplus
+          columns: 4
+          positions:
+          - 1
+          - 3
+        receivables: T rade receivables (net)
+        ppe_net:
+          label: T angible assets (net)
+          expected_matches: 2
+          occurrence: 0
+        cwip: Capital work-in-progress
+        lt_debt: Long-term borrowings
+        st_borrowings: Short-term borrowings
+        cash_and_cash_equivalents: Cash and cash equivalents
+    - page: 117
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pbt: Profit Before T axation (III-IV)
+        pat: Profit for the year (V - VI)
+        finance_costs: Finance costs
+    - page: 118
+      basis: standalone
+      columns: 2
+      fields:
+        cfo: Net Cash (used in) / generated from Operating Activities (A)
+  classification_review:
+    reviewed: true
+    entity_id: INE975G01012
+    name: IL&FS Transportation Networks Ltd
+    page: 120
+    sector: infrastructure_development
+    is_financial: 0
+    period_end: '2015-03-31'
+    public_date: null
+    evidence_markers:
+    - surface transportation infrastructure company
+    source_sha256: 86b662b88fa442ffbf29e73fad50d86e79e75dc9860ce7e44c27eb028514b741
 - name: ITNL annual report FY2016-17
   source: itnl
   filename: itnl_annual_2017.pdf
@@ -107,6 +177,18 @@ documents:
   url: https://www.icra.in/Rating/ShowRationalReportFilePdfViewer/81083
   purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
+  classification_review:
+    reviewed: true
+    entity_id: INE202B01012
+    name: Dewan Housing Finance Corporation Ltd
+    page: 2
+    sector: housing_finance
+    is_financial: 1
+    period_end: '2019-06-05'
+    public_date: '2019-06-05'
+    evidence_markers:
+    - Credit Rating Methodology for Housing Finance Companies
+    source_sha256: d2c44fed00449300f75bbb2ee3b15e0851944c304de5f344c49af278c75537a2
 - name: DHFL CIRP public announcement
   source: ibbi
   filename: verified_event_03.pdf
@@ -119,12 +201,36 @@ documents:
   url: https://www.icra.in/Rating/ShowRationalReportFilePdf/76249
   purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
+  classification_review:
+    reviewed: true
+    entity_id: INE802G01018
+    name: Jet Airways (India) Ltd
+    page: 3
+    sector: airlines
+    is_financial: 0
+    period_end: '2019-01-02'
+    public_date: '2019-01-02'
+    evidence_markers:
+    - scheduled airline status
+    source_sha256: 8842916c02c0719e0b51f854486b69587cd188bdde022546c06aeea6479e65f7
 - name: Reliance Capital CARE release 2019-09-20
   source: care
   filename: verified_event_05.pdf
   url: https://www.careratings.com/upload/CompanyFiles/PR/Reliance%20Capital%20Limited-09-20-2019.pdf
   purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
+  classification_review:
+    reviewed: true
+    entity_id: INE013A01015
+    name: Reliance Capital Ltd
+    page: 2
+    sector: nonbank_finance
+    is_financial: 1
+    period_end: '2019-09-20'
+    public_date: '2019-09-20'
+    evidence_markers:
+    - Core Investment Company
+    source_sha256: b2e9d837ed105dc0e6a9adc3c2815e05b6620b880c346ac049b9c88e0b6cdbcc
 - name: Reliance Capital CIRP public announcement
   source: ibbi
   filename: verified_event_06.pdf
@@ -137,6 +243,18 @@ documents:
   url: https://www.careratings.com/upload/CompanyFiles/PR/Reliance%20Home%20Finance%20Limited-09-12-2019.pdf
   purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
+  classification_review:
+    reviewed: true
+    entity_id: INE217K01011
+    name: Reliance Home Finance Ltd
+    page: 2
+    sector: housing_finance
+    is_financial: 1
+    period_end: '2019-09-12'
+    public_date: '2019-09-12'
+    evidence_markers:
+    - Housing Finance Companies
+    source_sha256: bc5f824f436a301bf23ed50a4b6f3a8d1898cec54251fded70e600d6aa808e70
 - name: Reliance Home Finance unreviewed CIRP scan
   source: ibbi
   filename: verified_event_08.pdf
@@ -149,6 +267,18 @@ documents:
   url: https://www.acuite.in/documents/ratings/revised/17272-RR-20201028.pdf
   purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
+  classification_review:
+    reviewed: true
+    entity_id: INE752P01024
+    name: Future Retail Ltd
+    page: 1
+    sector: retail
+    is_financial: 0
+    period_end: '2020-10-28'
+    public_date: '2020-10-28'
+    evidence_markers:
+    - retail and wholesale businesses
+    source_sha256: ff87454e863e162f8d630525195a0c654d03faa27997797c442b9bae541f24b7
 - name: Future Retail CIRP public announcement
   source: ibbi
   filename: verified_event_10.pdf
@@ -161,6 +291,19 @@ documents:
   url: https://www.icra.in/Rating/ShowRationalReportFilePdf/88300
   purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
+  classification_review:
+    reviewed: true
+    entity_id: INE335K01011
+    name: Coffee Day Enterprises Ltd (CDEL)
+    page: 3
+    sector: diversified_nonfinancial
+    is_financial: 0
+    period_end: '2019-09-10'
+    public_date: '2019-09-10'
+    evidence_markers:
+    - holding company for Coffee Day group
+    - coffee business
+    source_sha256: ce0147f5e2b00358d20ec202bafb107415f4b5a7d82024691a7c85a95c19efd1
 - name: Coffee Day Enterprises CIRP public announcement
   source: ibbi
   filename: verified_event_12.pdf
@@ -173,6 +316,18 @@ documents:
   url: https://www.icra.in/Rating/GetRationalReportFilePdf?Id=35656
   purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
+  classification_review:
+    reviewed: true
+    entity_id: INE330H01018
+    name: Reliance Communications Ltd (RCom)
+    page: 3
+    sector: telecommunications
+    is_financial: 0
+    period_end: '2017-05-30'
+    public_date: '2017-05-30'
+    evidence_markers:
+    - integrated telecommunications service provider
+    source_sha256: 485a93a6c176eeb935e9d4dd3db90ee4e8c993e5578fff74ec53f921ff6b6685
 - name: Reliance Communications reissued CIRP notice 2019
   source: ibbi
   filename: verified_event_14.pdf
@@ -197,6 +352,18 @@ documents:
   url: https://www.careratings.com/upload/CompanyFiles/PR/06032021013323_Srei_Infrastructure_Finance_Limited.pdf
   purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
+  classification_review:
+    reviewed: true
+    entity_id: INE872A01014
+    name: Srei Infrastructure Finance Ltd
+    page: 3
+    sector: nonbank_finance
+    is_financial: 1
+    period_end: '2021-03-06'
+    public_date: '2021-03-06'
+    evidence_markers:
+    - NBFC-IFC
+    source_sha256: 1cb9d31495955e44bbf6b6bcd038a3e57ec62234a711e023105eb75abe70790f
 - name: Srei Infrastructure CIRP public announcement
   source: ibbi
   filename: verified_event_18.pdf
@@ -215,9 +382,131 @@ documents:
   url: https://www.careratings.com/upload/CompanyFiles/PR/Jaypee%20Infratech%20Limited-09-25-2015.pdf
   purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
+  classification_review:
+    reviewed: true
+    entity_id: INE099J01015
+    name: Jaypee Infratech Ltd
+    page: 1
+    sector: infrastructure_development
+    is_financial: 0
+    period_end: '2015-09-25'
+    public_date: '2015-09-25'
+    evidence_markers:
+    - toll expressway
+    - real estate
+    source_sha256: c739170d7443d08c281b0764717f2e1edd11068848c15f1729948ffac1eb0fa4
 - name: Alok Industries CIRP public announcement
   source: ibbi
   filename: verified_event_21.pdf
   url: https://ibbi.gov.in//webadmin/pdf/announcement/2017/Jul/IRP_Form%20A-%20Alok%20Industries.pdf
   purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
+- name: HDFC Securities collateral list March 2018
+  source: hdfcsec
+  filename: collateral_201803.pdf
+  url: https://www.hdfcsec.com/Admin/CmsApp/MediaGalary/hsl.docs/Approved%20List%20Accepted%20As%20Collateral_March%202018-201802271236229675037.pdf
+  purpose: Identity, classification and financial-history source; pending page review
+- name: HDFC Securities collateral list September 2018
+  source: hdfcsec
+  filename: collateral_201809.pdf
+  url: https://www.hdfcsec.com/Admin/CmsApp/MediaGalary/hsl.docs/Approved%20List%20Accepted%20As%20Collateral%20September%202018-201809011229179806551.pdf
+  purpose: Identity, classification and financial-history source; pending page review
+- name: Alok Industries annual report FY2015, 18 months
+  source: alok
+  filename: alok_annual_2015.pdf
+  url: https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2013-15_18_Months.pdf
+  purpose: Identity, classification and financial-history source; pending page review
+  classification_review:
+    reviewed: true
+    entity_id: INE270A01011
+    name: Alok Industries Ltd
+    page: 54
+    sector: textiles
+    is_financial: 0
+    period_end: '2015-03-31'
+    public_date: null
+    evidence_markers:
+    - integrated textiles manufacturer
+    source_sha256: aa21e55dd1062b5b3b27a8a79d3acbdda3d1a7f168cf4e250b52a41317b634cc
+- name: Alok Industries annual report FY2017
+  source: alok
+  filename: alok_annual_2017.pdf
+  url: https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2016-17.pdf
+  purpose: Identity, classification and financial-history source; pending page review
+  financial_extraction:
+    reviewed: true
+    entity_id: INE270A01011
+    source_period_end: '2017-03-31'
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
+    unit: INR_crore
+    source_sha256: 71399b733e3b47f6c3c6a3ebb3868c80205efb374954e29e59fddd1eb398a365
+    tables:
+    - page: 120
+      basis: standalone
+      columns: 3
+      fields: &id001
+        total_assets: TOTAL ASSETS
+        ppe_net: Property, Plant and Equipment
+        cwip: Capital work-in-progress
+        inventory: Inventories
+        receivables: Trade receivables
+        cash_and_cash_equivalents: Cash and cash equivalents
+    - page: 121
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pbt: PROFIT / (LOSS) BEFORE TAX (III-IV)
+        pat: PROFIT / (LOSS) FROM CONTINUING OPERATIONS (V -VI)
+        finance_costs: Finance costs
+    - page: 123
+      basis: standalone
+      columns: 2
+      fields:
+        cfo: Net cash (used in) / generated from operating activities
+    - page: 214
+      basis: consolidated
+      columns: 3
+      fields: *id001
+    - page: 215
+      basis: consolidated
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pbt: Profit before tax from continuing operations
+        pat: Net (Loss) / Profit for the year/period
+        finance_costs: Finance costs
+    - page: 217
+      basis: consolidated
+      columns: 2
+      fields:
+        cfo: Net cash in from Operating Activities
+- name: Reliance Communications annual report FY2018
+  source: rcom
+  filename: rcom_annual_2018.pdf
+  url: https://www.rcom.co.in/Rcom/about-us/investor-relations/pdf/RCom_AR_2017-18_Final.pdf
+  purpose: Original identity, classification and financial history; pending page review
+- name: Videocon Industries annual report 2014
+  source: videocon
+  filename: videocon_annual_2014.pdf
+  url: https://www.videoconindustriesltd.com/Documents/10078.pdf
+  purpose: Original identity, classification and financial history; pending page review
+  classification_review:
+    reviewed: true
+    entity_id: INE703A01011
+    name: Videocon Industries Ltd
+    page: 14
+    sector: consumer_electronics
+    is_financial: 0
+    period_end: '2014-12-31'
+    public_date: null
+    evidence_markers:
+    - CONSUMER ELECTRONICS & HOME APPLIANCES
+    source_sha256: 34f059556fd9f03b94b04177c3c49f21e6216a2812d6c280fdd5d6c5c2c43570
+- name: Videocon Industries annual report 2015
+  source: videocon
+  filename: videocon_annual_2015.pdf
+  url: https://www.videoconindustriesltd.com/Documents/Videocon%20Industries%20Ltd_2015.pdf
+  purpose: Original identity, classification and financial history; pending page review

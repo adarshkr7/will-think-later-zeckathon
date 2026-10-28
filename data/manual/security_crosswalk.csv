@@ -1,2 +1,17 @@
 entity_id,exchange,exchange_code,period_end,public_date,source_url,date_is_imputed,needs_verification,is_synthetic
 INE975G01012,bse,533177,2018-09-28,2018-09-29,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf;https://nsearchives.nseindia.com/content/historical/EQUITIES/2018/SEP/cm28SEP2018bhav.csv.zip,1,0,0
+INE202B01012,nse,DHFL,2018-03-31,2018-04-01,https://www.hdfcsec.com/Admin/CmsApp/MediaGalary/hsl.docs/Approved%20List%20Accepted%20As%20Collateral_March%202018-201802271236229675037.pdf#page=3,1,0,0
+INE013A01015,nse,RELCAPITAL,2018-03-31,2018-04-01,https://www.hdfcsec.com/Admin/CmsApp/MediaGalary/hsl.docs/Approved%20List%20Accepted%20As%20Collateral_March%202018-201802271236229675037.pdf#page=10,1,0,0
+INE217K01011,nse,RHFL,2018-03-31,2018-04-01,https://www.hdfcsec.com/Admin/CmsApp/MediaGalary/hsl.docs/Approved%20List%20Accepted%20As%20Collateral_March%202018-201802271236229675037.pdf#page=10,1,0,0
+INE752P01024,nse,FRETAIL,2018-03-31,2018-04-01,https://www.hdfcsec.com/Admin/CmsApp/MediaGalary/hsl.docs/Approved%20List%20Accepted%20As%20Collateral_March%202018-201802271236229675037.pdf#page=4,1,0,0
+INE335K01011,nse,COFFEEDAY,2018-03-31,2018-04-01,https://www.hdfcsec.com/Admin/CmsApp/MediaGalary/hsl.docs/Approved%20List%20Accepted%20As%20Collateral_March%202018-201802271236229675037.pdf#page=3,1,0,0
+INE872A01014,nse,SREINFRA,2018-03-31,2018-04-01,https://www.hdfcsec.com/Admin/CmsApp/MediaGalary/hsl.docs/Approved%20List%20Accepted%20As%20Collateral_March%202018-201802271236229675037.pdf#page=11,1,0,0
+INE975G01012,nse,IL&FSTRANS,2018-03-31,2018-04-01,https://www.hdfcsec.com/Admin/CmsApp/MediaGalary/hsl.docs/Approved%20List%20Accepted%20As%20Collateral_March%202018-201802271236229675037.pdf#page=5,1,0,0
+INE802G01018,nse,JETAIRWAYS,2018-03-31,2018-04-01,https://www.hdfcsec.com/Admin/CmsApp/MediaGalary/hsl.docs/Approved%20List%20Accepted%20As%20Collateral_March%202018-201802271236229675037.pdf#page=6,1,0,0
+INE270A01011,nse,ALOKTEXT,2015-03-31,2015-09-27,https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2013-15_18_Months.pdf#page=6,1,0,0
+INE270A01011,bse,521070,2015-03-31,2015-09-27,https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2013-15_18_Months.pdf#page=6,1,0,0
+INE330H01018,nse,RCOM,2018-03-31,2018-09-27,https://www.rcom.co.in/Rcom/about-us/investor-relations/pdf/RCom_AR_2017-18_Final.pdf#page=74,1,0,0
+INE330H01018,bse,532712,2018-03-31,2018-09-27,https://www.rcom.co.in/Rcom/about-us/investor-relations/pdf/RCom_AR_2017-18_Final.pdf#page=74,1,0,0
+INE703A01011,nse,VIDEOIND,2018-09-28,2018-09-29,https://www.videoconindustriesltd.com/Documents/10078.pdf#page=29;https://nsearchives.nseindia.com/content/historical/EQUITIES/2018/SEP/cm28SEP2018bhav.csv.zip,1,0,0
+INE703A01011,bse,511389,2018-09-28,2018-09-29,https://www.videoconindustriesltd.com/Documents/10078.pdf#page=29;https://nsearchives.nseindia.com/content/historical/EQUITIES/2018/SEP/cm28SEP2018bhav.csv.zip,1,0,0
+INE099J01015,nse,JPINFRATEC,2018-09-28,2018-09-29,https://nsearchives.nseindia.com/content/historical/EQUITIES/2018/SEP/cm28SEP2018bhav.csv.zip,1,0,0

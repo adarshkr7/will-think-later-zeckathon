@@ -24,6 +24,7 @@ paths:
   source_config: configs/sources.yaml
   source_catalog: outputs/source_catalog.csv
   collection_status: outputs/collection_status.csv
+  identity_resolution: outputs/identity_resolution.csv
   security_crosswalk: data/manual/security_crosswalk.csv
   market_cap: outputs/market_cap.csv
   preregistration_lock: configs/preregistration.lock

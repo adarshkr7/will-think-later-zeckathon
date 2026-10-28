@@ -64,6 +64,8 @@ Phase 2 public-source commands:
 .venv/Scripts/python.exe -m scripts.02b_collect_sources
 .venv/Scripts/python.exe -m scripts.02b_collect_sources --offline
 .venv/Scripts/python.exe -m scripts.02d_extract_financials
+.venv/Scripts/python.exe -m scripts.03d_apply_identities
+.venv/Scripts/python.exe -m scripts.03e_extract_metadata
 .venv/Scripts/python.exe -m scripts.02c_market_cap --as-of 2018-09-30
 .venv/Scripts/python.exe -m scripts.03c_collection_status
 .venv/Scripts/python.exe -m scripts.03_validate_manual --as-of 2018-09-30
@@ -82,6 +84,8 @@ Repeated exchange blocks stop collection and persist a manual request. To regist
 Market collection supports `--exchange auto`, `nse` or `bse`. Unmapped BSE identities remain quarantined. Market caps require dated quarterly share counts; missing counts remain unknown. The financial extractor uses only reviewed statement mappings and pinned document hashes, preserving later publication dates for comparative figures. `scripts.03b_select_peers --write-peers` publishes eligible matches only after its data checks pass and refuses changes after registration. It currently fails on the incomplete event cohort, as intended.
 
 Template initialization never overwrites an existing file. The validator rejects an empty panel at the acceptance gate. The full historical pipeline is not yet implemented; `run_all.ps1` announces that it runs implemented phases only.
+
+Identity reconciliation reads the configured manual tables only, preserves event and publication dates, and refuses changes after registration. Classification imports verify pinned source bytes and reviewed profile text; their public date includes the later identity proof. A current classification does not imply availability at an earlier peer-matching cutoff. Older statements use explicit denomination and reviewed subtotal positions. Cash alone and finance costs remain separate reported inputs.
 
 Development artifacts:
 

@@ -1,11 +1,12 @@
 table,rows,verified,pending,dates_imputed,is_synthetic
+entity_aliases,9,9,0,9,0
 event_evidence,24,24,0,0,0
 share_counts,0,0,0,0,0
-financial_evidence,46,46,0,46,0
+financial_evidence,120,118,2,120,0
 trading_calendar,0,0,0,0,0
-entities,0,0,0,0,0
+entities,12,12,0,12,0
 peer_survival,0,0,0,0,0
-security_crosswalk,1,1,0,1,0
+security_crosswalk,16,16,0,16,0
 events,12,12,0,0,0
 peers,0,0,0,0,0
 annual_financials,0,0,0,0,0

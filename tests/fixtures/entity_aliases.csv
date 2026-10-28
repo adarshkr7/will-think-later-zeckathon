@@ -1,0 +1,3 @@
+entity_id,alias,period_end,public_date,source_url,source_page,date_is_imputed,needs_verification,is_synthetic
+IN0000000000,CASE_01,2018-03-31,2018-04-01,fixture://identity,1,1,0,1
+IN0000000001,CASE_02,2018-03-31,2018-04-01,fixture://identity,2,1,1,1

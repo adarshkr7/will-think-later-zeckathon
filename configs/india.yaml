@@ -20,30 +20,98 @@ panel:
 coverage:
   fisher_alpha: 0.05
   collection_causes: {}
-  # Unknown collection causes remain explicitly unresolved.
 financials:
-  required_nonfinancial: [total_assets, total_liabilities, current_assets, current_liabilities, equity, retained_earnings, revenue, inventory, pat]
-  required_financial: [total_assets, total_liabilities, equity, pat]
-  annual_only_fields: [cfo, shares_outstanding, related_party_loans_advances, related_party_revenue, auditor_opinion, going_concern_flag, caro_default_flag, caro_fraud_flag]
-  unit_multipliers: {INR: 1, INR_lakh: 100000, INR_crore: 10000000, INR_million: 1000000, shares: 1, shares_lakh: 100000, shares_million: 1000000, shares_crore: 10000000, flag: 1, text: 1}
+  required_nonfinancial:
+  - total_assets
+  - total_liabilities
+  - current_assets
+  - current_liabilities
+  - equity
+  - retained_earnings
+  - revenue
+  - inventory
+  - pat
+  required_financial:
+  - total_assets
+  - total_liabilities
+  - equity
+  - pat
+  annual_only_fields:
+  - cfo
+  - shares_outstanding
+  - related_party_loans_advances
+  - related_party_revenue
+  - auditor_opinion
+  - going_concern_flag
+  - caro_default_flag
+  - caro_fraud_flag
+  unit_multipliers:
+    INR: 1
+    INR_lakh: 100000
+    INR_crore: 10000000
+    INR_million: 1000000
+    shares: 1
+    shares_lakh: 100000
+    shares_million: 1000000
+    shares_crore: 10000000
+    flag: 1
+    text: 1
+  source_unit_markers:
+    INR_crore: incrore
+    INR_million: inmillion
+    INR_lakh: inlakh
 market:
   start_date: '2011-04-01'
   end_date: '2024-03-31'
   publication_lag_days: 1
   max_forward_fill_sessions: 5
-  series: [EQ, BE, BZ]
-  months: [JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC]
-  sample_dates: ['2018-09-28']
+  series:
+  - EQ
+  - BE
+  - BZ
+  months:
+  - JAN
+  - FEB
+  - MAR
+  - APR
+  - MAY
+  - JUN
+  - JUL
+  - AUG
+  - SEP
+  - OCT
+  - NOV
+  - DEC
+  sample_dates:
+  - '2018-09-28'
   legacy_url: https://nsearchives.nseindia.com/content/historical/EQUITIES/{year}/{month}/cm{day}{month}{year}bhav.csv.zip
   index_url: https://nsearchives.nseindia.com/content/indices/ind_close_all_{date}.csv
-  index_names: [Nifty 500, Nifty 50]
-  legacy_columns: {SYMBOL: symbol, SERIES: series, TIMESTAMP: period_end, CLOSE: close, TOTTRDQTY: volume, ISIN: entity_id}
-  index_columns: {'Index Name': name, 'Index Date': period_end, 'Closing Index Value': close}
+  index_names:
+  - Nifty 500
+  - Nifty 50
+  legacy_columns:
+    SYMBOL: symbol
+    SERIES: series
+    TIMESTAMP: period_end
+    CLOSE: close
+    TOTTRDQTY: volume
+    ISIN: entity_id
+  index_columns:
+    Index Name: name
+    Index Date: period_end
+    Closing Index Value: close
   bse_url: https://www.bseindia.com/download/BhavCopy/Equity/EQ{date}_CSV.ZIP
   bse_member: EQ{date}.CSV
-  bse_columns: {SC_CODE: exchange_code, SC_NAME: symbol, SC_TYPE: security_type, CLOSE: close, NO_OF_SHRS: volume}
+  bse_columns:
+    SC_CODE: exchange_code
+    SC_NAME: symbol
+    SC_TYPE: security_type
+    CLOSE: close
+    NO_OF_SHRS: volume
   bse_equity_type: Q
-  exchange_preference: [nse, bse]
+  exchange_preference:
+  - nse
+  - bse
 network:
   interval_seconds: 3
   timeout_seconds: 45
@@ -51,6 +119,7 @@ network:
   block_attempts: 2
   backoff_seconds: 3
   headers:
-    User-Agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36'
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0.0.0
+      Safari/537.36
     Accept: '*/*'
     Referer: https://www.nseindia.com/all-reports

@@ -37,6 +37,8 @@ def main() -> None:
             ("verified_financial_fields", len(fields), 0),
             ("financial_entities", fields.entity_id.nunique(), 0),
             ("verified_panel_events", events.loc[events.needs_verification.eq(0), "entity_id"].nunique(), 0),
+            ("verified_case_isins", int((events.needs_verification.eq(0) & events["isin"].astype(str).str.fullmatch(r"IN[A-Z0-9]{10}")).sum()), 0),
+            ("verified_case_classifications", int((events.needs_verification.eq(0) & events.sector.notna() & events.is_financial.isin([0, 1])).sum()), 0),
             ("verified_event_components", int(evidence.needs_verification.eq(0).sum()), 0),
             ("verified_matched_peers", peers.loc[peers.needs_verification.eq(0), "entity_id"].nunique(), 1)]
     table = pd.DataFrame([{"item": name, "observed": value, "needs_verification": pending, "is_synthetic": 0}

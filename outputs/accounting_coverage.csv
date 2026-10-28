@@ -1,4 +1,10 @@
 entity_id,period_end,basis,total_assets,total_liabilities,equity,identity_relative_error,identity_status,source_doc,is_synthetic
+INE270A01011,2016-03-31 00:00:00+00:00,consolidated,333829100000.00006,,,,missing_inputs,https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2016-17.pdf,0
+INE270A01011,2016-03-31 00:00:00+00:00,standalone,326922700000.0,,,,missing_inputs,https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2016-17.pdf,0
+INE270A01011,2017-03-31 00:00:00+00:00,consolidated,327089900000.0,,,,missing_inputs,https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2016-17.pdf,0
+INE270A01011,2017-03-31 00:00:00+00:00,standalone,323621700000.0,,,,missing_inputs,https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2016-17.pdf,0
+INE975G01012,2014-03-31 00:00:00+00:00,standalone,97270040000.0,,29821630000.0,,missing_inputs,https://ipv4.itnlindia.com/pdf/annual-reports/ITNL%20AR%202014-15.pdf,0
+INE975G01012,2015-03-31 00:00:00+00:00,standalone,131598820000.0,,35795440000.0,,missing_inputs,https://ipv4.itnlindia.com/pdf/annual-reports/ITNL%20AR%202014-15.pdf,0
 INE975G01012,2016-03-31 00:00:00+00:00,consolidated,347864500000.0,300383500000.0,47481000000.0,0.0,pass,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf,0
 INE975G01012,2016-03-31 00:00:00+00:00,standalone,144052300000.0,,27062300000.0,,missing_inputs,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf,0
 INE975G01012,2017-03-31 00:00:00+00:00,consolidated,399767600000.0,353564100000.00006,46203500000.0,1.5267659572711745e-16,pass,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf,0

@@ -1,0 +1,4 @@
+is_synthetic=1
+Reserves and surplus 2 30.00 40.00 20.00 25.00
+Total 100.00 80.00
+Total 100.00 80.00
