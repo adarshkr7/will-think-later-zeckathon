@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prahari"
+version = "0.1.0"
+description = "Point-in-time corporate credit early warning"
+requires-python = ">=3.11,<3.12"
+
+[tool.setuptools.packages.find]
+include = ["prahari*", "scripts*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+filterwarnings = ["error"]

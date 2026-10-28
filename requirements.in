@@ -1,0 +1,12 @@
+numpy
+pandas
+pyarrow
+scipy
+scikit-learn
+lightgbm
+requests
+PyYAML
+pytest
+joblib
+matplotlib
+pydantic

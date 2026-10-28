@@ -1,0 +1,54 @@
+sources:
+  polish:
+    url: https://archive.ics.uci.edu/static/public/365/polish+companies+bankruptcy+data.zip
+    documentation_url: https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data
+    archive: polish.zip
+  taiwan:
+    url: https://archive.ics.uci.edu/static/public/572/taiwanese+bankruptcy+prediction.zip
+    documentation_url: https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction
+    archive: taiwan.zip
+datasets:
+  polish_4year: {source: polish, member: 4year.arff, rows: 9792, positives: 515, horizon_quarters: 8}
+  polish_3year: {source: polish, member: 3year.arff, rows: 10503, positives: 495, horizon_quarters: 12}
+  polish_5year: {source: polish, member: 5year.arff, rows: 5910, positives: 410, horizon_quarters: 4}
+  taiwan: {source: taiwan, member: data.csv, rows: 6819, positives: 220, horizon_quarters: null}
+split:
+  holdout_frac: 0.2
+cv:
+  outer_folds: 5
+  inner_folds: 5
+  calibration_folds: 5
+  n_jobs: 4
+preprocessing:
+  lower_quantile: 0.01
+  upper_quantile: 0.99
+  correlation_threshold: 0.8
+  # An entirely missing column stays NaN; a reason is logged. Never invent zero.
+  rank_hdm: true
+models:
+  imbalance_variants: [none, class_weight]
+  # SMOTE is excluded: AGENTS.md permits synthetic rows only in tests/fixtures/.
+  lightgbm:
+    deterministic: true
+    force_col_wise: true
+    n_jobs: 2
+    verbosity: -1
+    learning_rate: 0.05
+    reg_lambda: 1.0
+  grid:
+    num_leaves: [7, 15, 31]
+    n_estimators: [100, 200]
+    min_child_samples: [20, 50]
+  logistic:
+    max_iter: 3000
+    C: 1.0
+calibration:
+  isotonic_min_positives: 50
+metrics:
+  bootstrap_resamples: 1000
+  confidence: 0.95
+  ece_bins: 10
+hdm:
+  datasets: [polish_5year, polish_4year]
+  # Use the same documented ratios in both countries. No inferred mappings.
+  shared_only: true

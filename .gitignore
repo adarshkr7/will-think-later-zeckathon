@@ -24,3 +24,9 @@ secrets/
 Thumbs.db
 .vscode/
 .idea/
+
+# Locally cached benchmark partitions/models; never inspect reserved membership.
+data/processed/
+data/interim/
+*.partial
+tests/fixtures/_runtime/

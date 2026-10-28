@@ -1,0 +1,23 @@
+sources:
+  polish: https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data
+  taiwan: https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction
+notes:
+  - Taiwan columns are distributed on transformed scales. Compare within-dataset ranks only.
+  - EBIT/TA and gross-profit-plus-depreciation/TL have no verified exact Taiwan equivalent.
+  - Sales growth is a sales ratio (current/prior), not a percentage change.
+  - Cash/TA has no verified direct Polish attribute; Attr40 is not Cash/TA.
+ratios:
+  roa: {polish: Attr1, taiwan: Net Income to Total Assets, monotone: -1}
+  tl_ta: {polish: Attr2, taiwan: 'Debt ratio %', monotone: 1}
+  wc_ta: {polish: Attr3, taiwan: Working Capital to Total Assets, monotone: -1}
+  current_ratio: {polish: Attr4, taiwan: Current Ratio, monotone: -1}
+  re_ta: {polish: Attr6, taiwan: Retained Earnings to Total Assets, monotone: -1}
+  ebit_ta: {polish: Attr7, taiwan: null, monotone: -1}
+  equity_tl: {polish: Attr8, taiwan: Equity to Liability, monotone: -1}
+  sales_ta: {polish: Attr9, taiwan: Total Asset Turnover, monotone: -1}
+  equity_ta: {polish: Attr10, taiwan: 'Net worth/Assets', monotone: -1}
+  gp_dep_tl: {polish: Attr16, taiwan: null, monotone: -1}
+  sales_growth: {polish: Attr21, taiwan: null, monotone: -1}
+  quick_ratio: {polish: Attr46, taiwan: Quick Ratio, monotone: -1}
+  cl_ta: {polish: Attr51, taiwan: Current Liability to Assets, monotone: 1}
+  cash_ta: {polish: null, taiwan: Cash/Total Assets, monotone: -1}

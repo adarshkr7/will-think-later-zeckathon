@@ -1,0 +1,6 @@
+entity_id,field,period_end,public_date,value,basis,date_is_imputed,needs_verification,is_synthetic,source_doc
+FIXTURE_A,assets,2018-03-31,2018-06-01,100,standalone,0,0,1,fixture-document
+FIXTURE_A,assets,2018-03-31,2018-09-30,120,standalone,0,0,1,fixture-restatement
+FIXTURE_A,assets,2017-03-31,2017-06-01,80,standalone,0,0,1,fixture-prior-year
+FIXTURE_A,debt,2018-03-31,2018-06-01,60,standalone,0,0,1,fixture-document
+FIXTURE_B,assets,2018-03-31,2018-07-01,200,standalone,0,0,1,fixture-other

@@ -1,0 +1,860 @@
+{
+  "polish_4year_full_none": [
+    {
+      "fold": 0,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 6267,
+      "validation_rows": 1566,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 100,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 6267,
+      "validation_rows": 1566,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "polish_4year_full_class_weight": [
+    {
+      "fold": 0,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 6267,
+      "validation_rows": 1566,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 6267,
+      "validation_rows": 1566,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "polish_4year_full_logistic": [
+    {
+      "fold": 0,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 6267,
+      "validation_rows": 1566,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 6267,
+      "validation_rows": 1566,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "polish_4year_harmonized_none": [
+    {
+      "fold": 0,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 100,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 100,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 6266,
+      "validation_rows": 1567,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 6267,
+      "validation_rows": 1566,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 6267,
+      "validation_rows": 1566,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "polish_3year_full_none": [
+    {
+      "fold": 0,
+      "train_rows": 6721,
+      "validation_rows": 1681,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 6721,
+      "validation_rows": 1681,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 6722,
+      "validation_rows": 1680,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 6722,
+      "validation_rows": 1680,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 6722,
+      "validation_rows": 1680,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "polish_3year_full_class_weight": [
+    {
+      "fold": 0,
+      "train_rows": 6721,
+      "validation_rows": 1681,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 6721,
+      "validation_rows": 1681,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 6722,
+      "validation_rows": 1680,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 6722,
+      "validation_rows": 1680,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 6722,
+      "validation_rows": 1680,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "polish_3year_full_logistic": [
+    {
+      "fold": 0,
+      "train_rows": 6721,
+      "validation_rows": 1681,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 6721,
+      "validation_rows": 1681,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 6722,
+      "validation_rows": 1680,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 6722,
+      "validation_rows": 1680,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 6722,
+      "validation_rows": 1680,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "polish_5year_full_none": [
+    {
+      "fold": 0,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 3783,
+      "validation_rows": 945,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 3783,
+      "validation_rows": 945,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "polish_5year_full_class_weight": [
+    {
+      "fold": 0,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 3783,
+      "validation_rows": 945,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 3783,
+      "validation_rows": 945,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "polish_5year_full_logistic": [
+    {
+      "fold": 0,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 3783,
+      "validation_rows": 945,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 3783,
+      "validation_rows": 945,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "polish_5year_harmonized_none": [
+    {
+      "fold": 0,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 3782,
+      "validation_rows": 946,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 3783,
+      "validation_rows": 945,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 100,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 3783,
+      "validation_rows": 945,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "taiwan_full_none": [
+    {
+      "fold": 0,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 100,
+        "model__num_leaves": 7
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "taiwan_full_class_weight": [
+    {
+      "fold": 0,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 100,
+        "model__num_leaves": 15
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {
+        "model__min_child_samples": 20,
+        "model__n_estimators": 100,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {
+        "model__min_child_samples": 50,
+        "model__n_estimators": 200,
+        "model__num_leaves": 31
+      },
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ],
+  "taiwan_full_logistic": [
+    {
+      "fold": 0,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 1,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 2,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 3,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    },
+    {
+      "fold": 4,
+      "train_rows": 4364,
+      "validation_rows": 1091,
+      "best_params": {},
+      "calibration": "isotonic",
+      "empty_features": [],
+      "fit_validation_overlap": 0
+    }
+  ]
+}

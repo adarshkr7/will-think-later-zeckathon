@@ -1,0 +1,8 @@
+cost_fn: 20
+cost_fp: 1
+alert_frac: 0.05
+tier1_pd: 0.15
+threshold_grid:
+  start: 0.01
+  stop: 0.5
+  count: 100

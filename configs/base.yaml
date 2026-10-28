@@ -1,0 +1,36 @@
+seed: 42
+paths:
+  raw: data/raw
+  processed: data/processed
+  manual: data/manual
+  outputs: outputs
+  models: data/interim/models
+  benchmark_config: configs/benchmark.yaml
+  policy_config: configs/policy.yaml
+  harmonized_map: configs/harmonized_map.yaml
+  manual_config: configs/manual.yaml
+  manual_validation: outputs/manual_validation.csv
+  benchmark_development_metrics: outputs/benchmark_development_metrics.csv
+  benchmark_final_metrics: outputs/benchmark_metrics.csv
+  benchmark_audit: outputs/benchmark_audit.json
+  benchmark_lock: configs/benchmark.lock
+  benchmark_model_manifest: data/interim/models/manifest.json
+  benchmark_ledger: data/interim/benchmark_access.json
+  benchmark_seal_dir: data/processed/benchmark_seals
+  benchmark_training_dir: data/processed/benchmark_training
+  benchmark_plots: outputs/benchmark_calibration
+  data_requests: DATA_REQUESTS.md
+logging:
+  level: INFO
+  format: '%(asctime)s %(levelname)s %(name)s: %(message)s'
+downloads:
+  timeout_seconds: 90
+  max_attempts: 5
+  backoff_seconds: 3
+  user_agent: 'PRAHARI research/0.1 (public UCI benchmark; requests)'
+dates:
+  results_lag_days: 90
+  annual_report_lag_days: 180
+pipeline:
+  modules: [scripts.01_benchmark]
+  # Later phases are added only after their acceptance checks pass.
