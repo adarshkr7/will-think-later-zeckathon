@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 import logging
+import json
+import re
 import sys
 from pathlib import Path
 
@@ -26,6 +28,7 @@ def main() -> None:
     parser.add_argument("--start")
     parser.add_argument("--end")
     parser.add_argument("--sample", action="store_true")
+    parser.add_argument("--cached-only", action="store_true", help="Rebuild only receipted archives already on disk; never requests a missing session")
     parser.add_argument("--exchange", choices=["auto", "nse", "bse"], default="auto")
     parser.add_argument("--import-file", type=Path)
     parser.add_argument("--import-url")
@@ -38,6 +41,32 @@ def main() -> None:
         args.start or settings["start_date"], args.end or settings["end_date"], freq="B").strftime("%Y-%m-%d")
     downloader = CachedDownloader(config)
     try:
+        if args.cached_only:
+            for receipt in sorted((config.path("raw") / "nse").glob("*.receipt.json")):
+                filename = receipt.name.removesuffix(".receipt.json")
+                match = re.fullmatch(r"cm(\d{2})([A-Z]{3})(\d{4})bhav\.csv\.zip", filename)
+                if match is None:
+                    raise ValueError("Unrecognized cached NSE filename")
+                day, month, year = match.groups()
+                date = pd.Timestamp(int(year), settings["months"].index(month)+1, int(day))
+                cache_session(config, downloader, str(date.date()), offline=True)
+            for receipt in sorted((config.path("raw") / "nse_index").glob("*.receipt.json")):
+                filename = receipt.name.removesuffix(".receipt.json")
+                metadata = json.loads(receipt.read_text(encoding="utf-8"))
+                raw = downloader.fetch("nse_index", metadata["source_url"], filename, offline=True)
+                table = parse_index(raw.read_bytes(), metadata["source_url"], settings)
+                date = table.period_end.iloc[0]
+                if not table.period_end.eq(date).all():
+                    raise ValueError("Cached index spans multiple sessions")
+                write_real_table(table, config.path("market_cache") / f"index_{date:%Y%m%d}.parquet")
+            for receipt in sorted((config.path("raw") / "bse").glob("*.receipt.json")):
+                filename = receipt.name.removesuffix(".receipt.json")
+                match = re.fullmatch(r"EQ(\d{6})_CSV\.ZIP", filename, re.IGNORECASE)
+                if match is None:
+                    raise ValueError("Unrecognized cached BSE filename")
+                date = pd.to_datetime(match.group(1), format="%d%m%y")
+                cache_bse_session(config, downloader, str(date.date()), offline=True)
+            return
         if args.import_file:
             if not args.import_url or not args.import_source:
                 parser.error("Manual import requires --import-url and --import-source")

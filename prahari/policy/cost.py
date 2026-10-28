@@ -38,3 +38,20 @@ def cost_curve(probabilities: np.ndarray, settings: dict, extra_slots: int, *, i
         rows.append({"k": count, "registered_cap": cap, "expected_cost": cost, "next_slot_benefit": marginal,
                      "is_counterfactual_budget": int(count > cap), "needs_verification": int(not np.isfinite(p).all()), "is_synthetic": is_synthetic})
     return pd.DataFrame(rows)
+
+
+def threshold_scan(probabilities, labels, settings, *, is_synthetic):
+    """Descriptive uncapped scan; cannot change the registered operational cap."""
+    from prahari.policy.threshold import bayes_threshold
+    grid = settings["threshold_grid"]
+    tau = bayes_threshold(settings["cost_fn"], settings["cost_fp"])
+    thresholds = np.unique(np.r_[np.linspace(grid["start"], grid["stop"], grid["count"]), tau])
+    p = np.asarray(probabilities, dtype=float)
+    rows = []
+    for threshold in thresholds:
+        selected = p >= threshold
+        rows.append({"threshold": threshold, "is_tau_star": int(threshold == tau), "review_count": int(selected.sum()),
+                     "expected_cost": expected_cost(p, selected, settings), "realized_cost": realized_cost(labels, selected, settings),
+                     "is_counterfactual_uncapped": 1, "needs_verification": int(not np.isfinite(p).all() or not np.isin(labels, [0, 1]).all()),
+                     "is_synthetic": is_synthetic})
+    return pd.DataFrame(rows)

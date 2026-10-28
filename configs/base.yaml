@@ -44,6 +44,7 @@ paths:
   ablations: outputs/ablation.csv
   cost_curve: outputs/cost_curve.csv
   shadow_prices: outputs/shadow_price.csv
+  threshold_scan: outputs/threshold_scan.csv
   amendments: outputs/amendments.log
   preregistration_history: outputs/preregistration_history.json
   indian_sealed_ledger: data/interim/indian_sealed_access.json
@@ -98,6 +99,7 @@ pipeline:
   auto_commit_registration: true
   preparation:
   - {module: scripts.02b_collect_sources, offline: true}
+  - {module: scripts.02_market_data, arguments: [--cached-only]}
   - {module: scripts.02d_extract_financials}
   - {module: scripts.03c_collection_status}
   data_validation: scripts.03_validate_manual

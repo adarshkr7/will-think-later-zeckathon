@@ -91,7 +91,10 @@ def main() -> None:
             st.info("No exported snapshot exists for this arena and quarter.")
         else:
             columns = [name for name in settings["tables"]["snapshot"] if name in selected]
-            st.dataframe(selected[columns], hide_index=True, width="stretch", height=390)
+            if st.checkbox("Reveal snapshot outcomes"):
+                columns += [name for name in ("verified_event_within_4q", "verified_event_within_8q") if name in selected]
+                st.caption("Verified event matches only. A missing catalog event does not certify that a borrower survived.")
+            st.dataframe(selected[columns].head(settings["snapshot_rows"]), hide_index=True, width="stretch", height=390)
         details = frame(path, "app_features")
         borrower = details.loc[details.entity_id.eq(entity) & details.arena.eq(arena) & details.scoring_date.astype(str).str.startswith(quarter)]
         with st.expander("Inspect observed features and missing-input reasons", expanded=False):
@@ -101,6 +104,10 @@ def main() -> None:
         history = snapshots.loc[snapshots.entity_id.eq(entity) & snapshots.arena.eq(arena)]
         if history.pd_4q.notna().any():
             figure = {"data": [{"type": "scatter", "mode": "lines", "x": history.quarter.tolist(), "y": history[name].tolist(), "name": name, "connectgaps": False} for name in ("pd_4q", "pd_8q")], "layout": {"yaxis": {"title": "Model probability"}, "xaxis": {"title": "Scoring cutoff"}}}
+            parameters = frame(path, "app_policy").set_index("parameter").value
+            figure["data"].append({"type": "scatter", "mode": "lines", "x": history.quarter.tolist(), "y": history.rank_percentile.tolist(), "name": "Rank / universe", "yaxis": "y2", "connectgaps": False})
+            figure["layout"]["yaxis2"] = {"title": "Rank fraction", "overlaying": "y", "side": "right", "range": [1, 0]}
+            figure["layout"]["shapes"] = [{"type": "line", "xref": "paper", "x0": 0, "x1": 1, "y0": parameters["tau_star"], "y1": parameters["tau_star"], "line": {"dash": "dot", "color": palette["amber"]}}]
             st.plotly_chart(figure, width="stretch")
         else:
             st.info("No registered probability path exists for this borrower. The table shows the stored evidence coverage instead.")
@@ -124,6 +131,12 @@ def main() -> None:
             st.download_button("Download memo", text, file_name=f"{entity}_{quarter}.md", mime="text/markdown")
         else:
             st.info("No memo has been exported for this borrower and quarter.")
+        st.subheader("Evidence chain")
+        chain = output.frame_at("provenance", arena, quarter, entity + ".parquet")
+        if chain.empty:
+            st.info("No scored source-by-source chain is exported for this selection. Missing score endpoints do not imply zero document effects.")
+        else:
+            st.dataframe(chain, hide_index=True, width="stretch")
     with tabs[3]:
         st.subheader("Protocol and evidence status")
         st.dataframe(frame(path, "run_status"), hide_index=True, width="stretch")
@@ -138,10 +151,12 @@ def main() -> None:
             with st.expander("Development calibration plot"):
                 picture = st.selectbox("Benchmark reliability plot", manifest["calibration_images"])
                 st.image(str(output.path("benchmark_plots", picture)))
-        for key, title in [("benchmark_final_metrics", "Final benchmark"), ("india_metrics", "Indian recall with intervals"), ("ablations", "Ablation results"), ("detection_curve", "Detection against ratings"), ("placebo", "Placebo"), ("anti_gaming", "Anti-gaming")]:
+        for key, title in [("benchmark_final_metrics", "Final benchmark"), ("india_metrics", "Indian recall with intervals"), ("india_operating_metrics", "Operational metrics and outcome coverage"), ("cost_curve", "Cost curve"), ("shadow_prices", "Shadow price"), ("ablations", "Ablation results"), ("detection_curve", "Detection against ratings"), ("placebo", "Placebo"), ("anti_gaming", "Anti-gaming")]:
             table = frame(path, key)
             if not table.empty:
                 st.subheader(title)
+                if key == "detection_curve":
+                    st.plotly_chart({"data": [{"type": "scatter", "mode": "lines+markers", "name": f"{a}: {field}", "x": g.lead_quarters.tolist(), "y": g[field].tolist(), "connectgaps": False} for a, g in table.groupby("arena") for field in ("recall", "rating_sub_ig_recall", "altman_distress_recall")], "layout": {"xaxis": {"title": "Quarters before qualifying event", "autorange": "reversed"}, "yaxis": {"title": "Share of verified cases"}}}, width="stretch")
                 st.dataframe(table, hide_index=True, width="stretch")
         with st.expander("Coverage, sources and amendments"):
             for key in ("panel_acceptance", "collection_status", "coverage_parity", "source_catalog"):

@@ -21,7 +21,10 @@ class OutputStore:
         return path
 
     def frame(self, key: str) -> pd.DataFrame:
-        path = self.path(key)
+        return self.frame_at(key)
+
+    def frame_at(self, key: str, *parts: str) -> pd.DataFrame:
+        path = self.path(key, *parts)
         if not path.is_file():
             return pd.DataFrame()
         table = pd.read_parquet(path) if path.suffix == ".parquet" else pd.read_csv(path)

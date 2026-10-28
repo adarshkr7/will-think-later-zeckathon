@@ -39,6 +39,8 @@ def build_bundle(config: Config) -> dict:
         snapshot["missing_features"] = features[reasons].ne("").sum(axis=1)
         snapshot["score_status"], snapshot["tier"] = "readiness_only_unregistered", "unscored"
         snapshot["pd_4q"], snapshot["pd_8q"], snapshot["rank"] = np.nan, np.nan, np.nan
+        snapshot["universe_n"] = len(snapshot)
+        snapshot["rank_percentile"] = np.nan
         prediction_path = config.path("india_replay") / arena / (day + ".parquet")
         if registered and prediction_path.exists():
             predictions = pd.read_parquet(prediction_path)
@@ -48,6 +50,12 @@ def build_bundle(config: Config) -> dict:
             snapshot = snapshot.drop(columns=["pd_4q", "pd_8q", "rank", "tier", "score_status"]).merge(
                 predictions[["entity_id", "pd_4q", "pd_8q", "rank", "tier"]], on="entity_id", validate="one_to_one")
             snapshot["score_status"] = np.where(snapshot.pd_4q.notna(), "registered_scored", "registered_missing_inputs")
+            snapshot["rank_percentile"] = snapshot["rank"] / len(snapshot)
+        event_dates = pd.to_datetime(cases.set_index("entity_id").event_date, utc=True)
+        dated_events = pd.to_datetime(snapshot.entity_id.map(event_dates), utc=True)
+        cutoff = pd.Timestamp(day, tz="UTC")
+        for lead in (4, 8):
+            snapshot[f"verified_event_within_{lead}q"] = (dated_events.gt(cutoff) & dated_events.le(cutoff+pd.DateOffset(months=3*lead))).astype(int)
         # Current catalog names are display labels only and never model inputs.
         labels = cases.set_index("entity_id")["name"]
         snapshot["name"] = snapshot.name.fillna(snapshot.entity_id.map(labels))
@@ -102,6 +110,6 @@ def build_bundle(config: Config) -> dict:
                          {"label": "Financial fields", "value": count("verified_financial_fields")},
                          {"label": "Tests passed", "value": tests.get("passed")}],
                 "calibration_images": [path.name for path in sorted(config.path("benchmark_plots").glob("*.png"))],
-                "files": {key: relative(key) for key in ("app_snapshots", "app_features", "case_catalog", "run_status", "app_policy", "panel_acceptance", "collection_status", "source_catalog", "coverage_parity", "feature_coverage", "memos", "case_cards", "india_metrics", "ablations", "cost_curve", "shadow_prices", "detection_curve", "placebo", "anti_gaming", "amendments", "benchmark_development_metrics", "benchmark_final_metrics", "benchmark_plots")}}
+                "files": {key: relative(key) for key in ("app_snapshots", "app_features", "case_catalog", "run_status", "app_policy", "panel_acceptance", "collection_status", "source_catalog", "coverage_parity", "feature_coverage", "memos", "provenance", "case_cards", "india_metrics", "india_operating_metrics", "evaluation_status", "ablations", "cost_curve", "shadow_prices", "detection_curve", "placebo", "anti_gaming", "amendments", "benchmark_development_metrics", "benchmark_final_metrics", "benchmark_plots")}}
     config.path("app_manifest").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     return manifest

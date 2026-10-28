@@ -1,4 +1,5 @@
 title: PRAHARI
+snapshot_rows: 40
 subtitle: Point-in-time credit review desk
 demo_quarter: '2018-09-30'
 port: 8501

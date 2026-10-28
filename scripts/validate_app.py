@@ -30,6 +30,8 @@ def main() -> None:
         return next(item for item in getattr(app, kind) if item.label == label)
     control("checkbox", "Reveal verified outcomes").check().run()
     checks["reveal_outcomes"] = not app.exception
+    control("checkbox", "Reveal snapshot outcomes").check().run()
+    checks["reveal_snapshot_outcomes"] = not app.exception
     snapshots = __import__("pandas").read_parquet(config.path("app_snapshots"))
     entity = str(snapshots.entity_id.iloc[0])
     control("text_input", "ISIN, symbol or company").set_value(entity).run()

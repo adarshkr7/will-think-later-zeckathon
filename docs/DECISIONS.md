@@ -1,5 +1,15 @@
 # Decisions
 
+- 2026-10-28: Apply the published CHS USD price cap only after a dated INR/USD conversion; declare a one-INR numerical book-equity floor as an adaptation, not observed financial data. Missing FX remains missing. This supersedes the earlier note that these numerical settings were unset.
+- 2026-10-28: Use the original market-equity Altman score and its published 1.81 distress cutoff for the distress-zone detection line; never apply that cutoff to the EM variant with its additional intercept. Source: Altman's author chapter, https://www.blackwellpublishing.com/content/BPL_images/Content_Store/Sample_Chapter/9780631225638/altman.pdf.
+- 2026-10-28: Rescale native margin TreeSHAP along the calibrated log-odds path for exact reconciliation; explicitly reject calling that allocation Shapley values of the calibrated probability function.
+- 2026-10-28: A negative auditor-exit or delayed-filing indicator requires source-backed coverage of its complete window. Missing searches remain unknown; positive observed events override a negative certification.
+- 2026-10-28: Evaluate false alarms and realized cost only on reviewed outcome windows; an absent background event label does not establish survival. Report unknown outcome coverage.
+- 2026-10-28: The placebo relocates lead snapshots within each case's replayed pre-event history with the configured seed; export aggregate randomization statistics only, preserving original event records. Incomplete score histories abort that null comparison.
+- 2026-10-28: Sealed scoring accepts a collector-hashed full-cohort feature artifact with a case marker, never a tiny sealed-only ranking universe. Public registration/evaluation preconditions precede the irrevocable access claim. No envelope has been opened.
+- 2026-10-28: Readiness mode is an explicitly incomplete-data offline build, not production acceptance. It never creates registration, replays Indian outcomes or opens final evaluations.
+- 2026-10-28: Provenance prefixes that become unscorable after rolling old evidence forward retain an unavailable chain; no stale-price bypass or invented document contribution is used to force telescoping.
+
 - 2026-10-28: Keep AGENTS.md and README.md at repository root per the user's correction; all other project documentation stays under docs/.
 
 - 2026-10-28: The user's instruction to build all steps authorizes implementing later modules while data collection continues; reject claiming unmet data acceptance checks passed. Production replay and evaluation remain gated, and missing data are never replaced by invented values.

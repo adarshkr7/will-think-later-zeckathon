@@ -4,16 +4,16 @@ Project documentation lives in docs/. Run commands from the repository root.
 
 **P**oint-in-time **R**isk & **A**ccounting **H**azard **A**lerts, **R**anked & **I**nterpretable. *Prahari* is Hindi for "sentinel".
 
-A submission for **Zeckathon PS-02 (Risk & Fraud)**: an early-warning system for Indian corporate credit that would have caught IL&FS.
+A submission for **Zeckathon PS-02 (Risk & Fraud)**: a point-in-time early-warning research system for Indian corporate credit. Detection performance remains unassessed until the data and registration gates pass.
 
 ## What it does
 
-PRAHARI is a "credit-desk time machine". Pick any past quarter and it rebuilds what the market and filings showed on that date, using only documents published by then. It ranks ~800 indebted listed borrowers and produces a watch-list capped at 5% of the universe, each name with a short, template-generated credit memo. We then check which later defaulters were already flagged 4 and 8 quarters before default.
+PRAHARI is a "credit-desk time machine". Pick any past quarter and it rebuilds what the market and filings showed on that date, using only documents published by then. The intended debt-ranked universe uses a market-only membership fallback while financial coverage is incomplete. Registered scoring produces a watch-list under the configured review cap and deterministic credit memos; the current readiness view leaves unscored probabilities and ranks blank. We then check which later defaulters were already flagged 4 and 8 quarters before default.
 
 Key properties:
 
 - **No look-ahead.** Every feature row carries a `public_date`; scoring at date *t* only sees rows published before *t*, enforced by tests.
-- **Pre-registered evaluation.** Configs, weights and peer lists are hashed and committed before Indian labels are read.
+- **Pre-registered evaluation.** Configs, weights and peer lists are hashed and committed before the first scored Indian replay. The reviewed public panel labels are already known; they never train the primary model.
 - **Cost-optimal policy under a hard cap.** Threshold minimises `20·FN + FP` while never exceeding the 5% review budget.
 - **Exact, auditable explanations.** Additive log-odds attributions grouped into credit pillars, rendered by deterministic templates. No LLMs in the pipeline.
 - **Separate scorecard for financial firms** (NBFCs, HFCs), where Altman/Beneish don't apply.
@@ -31,7 +31,16 @@ Key properties:
 
 Phase 1 development is implemented: cached UCI ingestion, sealed stratified partitions, fold-local preprocessing, nested cross-validation, unweighted/weighted LightGBM, logistic regression, out-of-fold calibration, monotone harmonized models and a cross-country transfer test. Final benchmark hold-outs remain unopened. Development results are explicitly distinguished from final results.
 
-Phase 2 has public-source caching, reviewed financial-field extraction, NSE/BSE ingestion, dated market-cap joins, peer selection and explicit acceptance checks. Panel evidence remains incomplete. Feature layers, primary scoring, replay, memos, app and report remain pending. See [PROGRESS.md](docs/PROGRESS.md) for acceptance status and [DATA_REQUESTS.md](docs/DATA_REQUESTS.md) for missing evidence.
+Phase 2 has public-source caching, reviewed financial-field extraction, NSE/BSE ingestion, dated market-cap joins, peer selection and explicit acceptance checks. Panel evidence remains incomplete. Dated feature builders, frozen primary scoring, capped replay, separate OOF ablations, explanation/memo exports, a four-tab app and a generated report are implemented. Production acceptance and Indian performance remain gated. See [PROGRESS.md](docs/PROGRESS.md) and [DATA_REQUESTS.md](docs/DATA_REQUESTS.md).
+
+Build the cached incomplete-data demo and launch it:
+
+```powershell
+./run_all.ps1 -Offline -Readiness
+./run_app.ps1
+```
+
+Readiness mode preserves missing values and makes no hit/miss claims. Strict `./run_all.ps1 -Offline` stops on incomplete panel acceptance. When the data gate eventually passes, the runner freezes and commits the Indian registration lock alone before replay. Final benchmark and sealed-envelope openings are always separate explicit commands. The app reads exported files under `outputs/` only; all documentation except this README and AGENTS.md lives under `docs/`.
 
 **Horizon correction:** UCI documents `5year.arff` as a one-year forecast and `4year.arff` as two years. The benchmark retains `3year` and `4year` comparisons, and uses `5year`/`4year` for the intended 4Q/8Q HDM heads. The original plan's horizon labels are off by one year. Source: [UCI Polish dataset documentation](https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data).
 

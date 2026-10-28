@@ -1,0 +1,6 @@
+parameter,value,is_synthetic
+cost_fn,20.0,0
+cost_fp,1.0,0
+alert_frac,0.05,0
+tier1_pd,0.15,0
+tau_star,0.047619047619047616,0

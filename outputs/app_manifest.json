@@ -1,0 +1,155 @@
+{
+  "mode": "readiness_only",
+  "settings": {
+    "title": "PRAHARI",
+    "snapshot_rows": 40,
+    "subtitle": "Point-in-time credit review desk",
+    "demo_quarter": "2018-09-30",
+    "port": 8501,
+    "address": "127.0.0.1",
+    "palette": {
+      "navy": "#10233f",
+      "teal": "#047d78",
+      "amber": "#a85e00",
+      "background": "#f5f7fb"
+    },
+    "tables": {
+      "benchmark": [
+        "dataset",
+        "representation",
+        "variant",
+        "horizon_quarters",
+        "pr_auc",
+        "pr_auc_ci_low",
+        "pr_auc_ci_high",
+        "base_rate",
+        "brier",
+        "evaluation_split"
+      ],
+      "snapshot": [
+        "rank",
+        "name",
+        "symbols",
+        "sector",
+        "tier",
+        "pd_4q",
+        "pd_8q",
+        "known_features",
+        "missing_features",
+        "score_status"
+      ]
+    }
+  },
+  "quarters": [
+    "2013-06-30",
+    "2013-09-30",
+    "2013-12-31",
+    "2014-03-31",
+    "2014-06-30",
+    "2014-09-30",
+    "2014-12-31",
+    "2015-03-31",
+    "2015-06-30",
+    "2015-09-30",
+    "2015-12-31",
+    "2016-03-31",
+    "2016-06-30",
+    "2016-09-30",
+    "2016-12-31",
+    "2017-03-31",
+    "2017-06-30",
+    "2017-09-30",
+    "2017-12-31",
+    "2018-03-31",
+    "2018-06-30",
+    "2018-09-30",
+    "2018-12-31",
+    "2019-03-31",
+    "2019-06-30",
+    "2019-09-30",
+    "2019-12-31",
+    "2020-03-31",
+    "2020-06-30",
+    "2020-09-30",
+    "2020-12-31",
+    "2021-03-31",
+    "2021-06-30",
+    "2021-09-30",
+    "2021-12-31",
+    "2022-03-31",
+    "2022-06-30",
+    "2022-09-30",
+    "2022-12-31",
+    "2023-03-31",
+    "2023-06-30",
+    "2023-09-30",
+    "2023-12-31",
+    "2024-03-31"
+  ],
+  "arenas": [
+    "P",
+    "U"
+  ],
+  "kpis": [
+    {
+      "label": "Verified cases",
+      "value": 12
+    },
+    {
+      "label": "Matched peers",
+      "value": 0
+    },
+    {
+      "label": "Financial fields",
+      "value": 118
+    },
+    {
+      "label": "Tests passed",
+      "value": 111
+    }
+  ],
+  "calibration_images": [
+    "polish_3year_full_class_weight.png",
+    "polish_3year_full_logistic.png",
+    "polish_3year_full_none.png",
+    "polish_4year_full_class_weight.png",
+    "polish_4year_full_logistic.png",
+    "polish_4year_full_none.png",
+    "polish_4year_harmonized_none.png",
+    "polish_5year_full_class_weight.png",
+    "polish_5year_full_logistic.png",
+    "polish_5year_full_none.png",
+    "polish_5year_harmonized_none.png",
+    "taiwan_full_class_weight.png",
+    "taiwan_full_logistic.png",
+    "taiwan_full_none.png"
+  ],
+  "files": {
+    "app_snapshots": "app_snapshots.parquet",
+    "app_features": "app_features.parquet",
+    "case_catalog": "case_catalog.csv",
+    "run_status": "run_status.csv",
+    "app_policy": "policy_parameters.csv",
+    "panel_acceptance": "panel_acceptance.csv",
+    "collection_status": "collection_status.csv",
+    "source_catalog": "source_catalog.csv",
+    "coverage_parity": "coverage_parity.csv",
+    "feature_coverage": "feature_coverage.csv",
+    "memos": "memos",
+    "provenance": "provenance",
+    "case_cards": "case_cards",
+    "india_metrics": "india_metrics.csv",
+    "india_operating_metrics": "india_operating_metrics.csv",
+    "evaluation_status": "evaluation_status.csv",
+    "ablations": "ablation.csv",
+    "cost_curve": "cost_curve.csv",
+    "shadow_prices": "shadow_price.csv",
+    "detection_curve": "detection_curve.csv",
+    "placebo": "placebo.csv",
+    "anti_gaming": "anti_gaming.csv",
+    "amendments": "amendments.log",
+    "benchmark_development_metrics": "benchmark_development_metrics.csv",
+    "benchmark_final_metrics": "benchmark_metrics.csv",
+    "benchmark_plots": "benchmark_calibration"
+  }
+}

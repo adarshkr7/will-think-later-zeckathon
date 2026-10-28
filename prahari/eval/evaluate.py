@@ -10,10 +10,10 @@ from prahari.data.manual import read_manual
 from prahari.eval.ablation import ablation_results
 from prahari.eval.detection_curve import detection_curve
 from prahari.eval.india_metrics import recall_table, strict_lead_observations, clustered_recall
-from prahari.eval.operating_metrics import operating_metrics
+from prahari.eval.operating_metrics import operating_metrics, verified_window_labels
 from prahari.eval.placebo import within_firm_placebo
 from prahari.eval.preregistration import verify
-from prahari.policy.cost import cost_curve
+from prahari.policy.cost import cost_curve, threshold_scan
 from prahari.explain.templates import case_card
 
 
@@ -23,7 +23,7 @@ def evaluate(config) -> None:
     events, peers = read_manual(config, "events"), read_manual(config, "peers")
     survival, memberships = read_manual(config, "peer_survival"), read_manual(config, "groups")
     ratings = read_manual(config, "rating_actions")
-    metrics, operating, observations, detection, placebo, curves, ablations = [], [], [], [], [], [], []
+    metrics, operating, observations, detection, placebo, curves, ablations, thresholds = [], [], [], [], [], [], [], []
     status = []
     for arena in ("P", "U"):
         source = config.path("india_predictions") / (arena + ".parquet")
@@ -61,9 +61,11 @@ def evaluate(config) -> None:
             ordered = quarter.sort_values("rank", na_position="last")
             curve = cost_curve(ordered.pd_4q.to_numpy(), policy, settings["evaluation"]["shadow_extra_slots"], is_synthetic=0, ordered=True)
             curves.append(curve.assign(arena=arena, scoring_date=day))
+            labels = verified_window_labels(quarter, events, survival, 4)
+            thresholds.append(threshold_scan(quarter.pd_4q.to_numpy(), labels.to_numpy(), policy, is_synthetic=0).assign(arena=arena, scoring_date=day))
         status.append({"arena": arena, "component": "evaluation", "status": "registered_evaluated", "reason": "Unknown scores retained in denominators; incomplete coverage flagged", "is_synthetic": 0})
     for key, frames in [("india_metrics", metrics), ("india_operating_metrics", operating), ("india_case_observations", observations),
-                        ("detection_curve", detection), ("placebo", placebo), ("ablations", ablations), ("cost_curve", curves)]:
+                        ("detection_curve", detection), ("placebo", placebo), ("ablations", ablations), ("cost_curve", curves), ("threshold_scan", thresholds)]:
         if frames:
             write_real_table(pd.concat(frames, ignore_index=True), config.path(key))
     if curves:

@@ -1,0 +1,196 @@
+# PRAHARI
+
+Readiness report: production evaluation is incomplete
+
+## Problem and decision design
+
+PRAHARI reconstructs information available before each historical scoring cutoff. The primary model uses Polish-trained distress heads, a published market-risk layer and fixed soft-signal weights. Indian cases are evaluation outcomes, not primary training labels.
+
+## Current execution status
+
+| component | status | reason | is_synthetic |
+| --- | --- | --- | --- |
+| benchmark | development_only | Development results are not untouched hold-out performance. | 0 |
+| panel | incomplete | unique_verified_peers, peers_per_case, stressed_survivors, panel_market_coverage, financial_year_coverage | 0 |
+| features | partial_data | Missing inputs remain explicit; existing quarter files do not imply complete coverage. | 0 |
+| registration | blocked | Pre-registration and accepted panel evidence are required before scored replay. | 0 |
+| india_evaluation | not_run | No unregistered performance claims. | 0 |
+| sealed_evaluation | not_opened | Once-only final boundary; no sealed contents read for readiness. | 0 |
+
+Source: [run_status](../../outputs/run_status.csv).
+
+## Data and point-in-time design
+
+Source observations carry publication dates, conservative date-imputation flags and document references. Every feature source passes the as-of boundary. Later comparative statements retain the later source report's publication lag. Missing inputs retain explicit reasons.
+
+| item | observed | needs_verification | is_synthetic |
+| --- | --- | --- | --- |
+| market_sessions | 768 | 0 | 0 |
+| market_observations | 1178816 | 0 | 0 |
+| distinct_isins | 2057 | 0 | 0 |
+| cached_source_pdfs | 39 | 0 | 0 |
+| unavailable_source_pdfs | 1 | 1 | 0 |
+| verified_financial_fields | 118 | 0 | 0 |
+| financial_entities | 2 | 0 | 0 |
+| verified_panel_events | 12 | 0 | 0 |
+| verified_case_isins | 12 | 0 | 0 |
+| verified_case_classifications | 12 | 0 | 0 |
+| verified_event_components | 24 | 0 | 0 |
+| verified_matched_peers | 0 | 1 | 0 |
+
+Source: [collection_status](../../outputs/collection_status.csv).
+
+| check | observed | required | passed | is_synthetic |
+| --- | --- | --- | --- | --- |
+| verified_events | 12 | 10 | 1 | 0 |
+| case_identity_and_classification | 1 | 1 | 1 | 0 |
+| unique_verified_peers | 0 | 30 | 0 | 0 |
+| disjoint_cases_peers | 0 | 0 | 1 | 0 |
+| peers_per_case | 0 | 1 | 0 | 0 |
+| stressed_survivors | 0 | 0 | 0 | 0 |
+| panel_market_coverage | 0 | 1 | 0 | 0 |
+| financial_year_coverage | 0 | 1 | 0 | 0 |
+| accounting_identities | 1 | 1 | 1 | 0 |
+
+Source: [panel_acceptance](../../outputs/panel_acceptance.csv).
+
+The panel's current identity/classification catalog is distinct from historical matching-quarter availability. An empty event search does not establish a non-default peer or a negative governance signal.
+
+## Benchmark development
+
+The following are nested outer-fold or explicitly marked transfer development results. They are not untouched hold-out estimates. Bootstrap intervals condition on fitted predictions and do not cover model-selection uncertainty or correlated firm histories.
+
+| dataset | representation | variant | horizon_quarters | pr_auc | pr_auc_ci_low | pr_auc_ci_high | base_rate | brier | evaluation_split |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| polish_4year | full | none | 8 | 0.64363 | 0.59925 | 0.68591 | 0.052598 | 0.0275 | nested_outer_oof |
+| polish_4year | full | class_weight | 8 | 0.63505 | 0.58931 | 0.68066 | 0.052598 | 0.02848 | nested_outer_oof |
+| polish_4year | full | logistic | 8 | 0.43676 | 0.38613 | 0.49019 | 0.052598 | 0.0367 | nested_outer_oof |
+| polish_4year | harmonized | none | 8 | 0.15456 | 0.13298 | 0.18502 | 0.052598 | 0.047018 | nested_outer_oof |
+| polish_4year | harmonized | none | 8 | 0.24037 | 0.19477 | 0.29682 | 0.032264 | 0.027761 | transfer_development |
+| polish_3year | full | none | 12 | 0.5546 | 0.50508 | 0.59993 | 0.047132 | 0.028798 | nested_outer_oof |
+| polish_3year | full | class_weight | 12 | 0.54581 | 0.4963 | 0.58931 | 0.047132 | 0.029167 | nested_outer_oof |
+| polish_3year | full | logistic | 12 | 0.3008 | 0.25468 | 0.35093 | 0.047132 | 0.037291 | nested_outer_oof |
+| polish_5year | full | none | 4 | 0.77607 | 0.7353 | 0.81765 | 0.069374 | 0.027847 | nested_outer_oof |
+| polish_5year | full | class_weight | 4 | 0.75942 | 0.71588 | 0.80229 | 0.069374 | 0.029343 | nested_outer_oof |
+| polish_5year | full | logistic | 4 | 0.65415 | 0.6037 | 0.70293 | 0.069374 | 0.037294 | nested_outer_oof |
+| polish_5year | harmonized | none | 4 | 0.31499 | 0.27051 | 0.37443 | 0.069374 | 0.054319 | nested_outer_oof |
+| polish_5year | harmonized | none | 4 | 0.26548 | 0.21267 | 0.33071 | 0.032264 | 0.028235 | transfer_development |
+| taiwan | full | none | unavailable | 0.41225 | 0.34736 | 0.48947 | 0.032264 | 0.023231 | nested_outer_oof |
+| taiwan | full | class_weight | unavailable | 0.42287 | 0.3472 | 0.50352 | 0.032264 | 0.022946 | nested_outer_oof |
+| taiwan | full | logistic | unavailable | 0.35979 | 0.29412 | 0.43875 | 0.032264 | 0.024262 | nested_outer_oof |
+
+Source: [benchmark_development_metrics](../../outputs/benchmark_development_metrics.csv).
+
+## Final benchmark
+
+Not run or not available. No numerical result is inferred.
+
+## Indian panel evaluation
+
+Not run or not available. No numerical result is inferred.
+
+Scored production replay requires an accepted panel, independently sourced horizon priors and a matching pre-registration lock committed alone before replay. Unscored cases cannot be silently removed to flatter recall.
+
+## Policy and cost
+
+| parameter | value | is_synthetic |
+| --- | --- | --- |
+| cost_fn | 20 | 0 |
+| cost_fp | 1 | 0 |
+| alert_frac | 0.05 | 0 |
+| tier1_pd | 0.15 | 0 |
+| tau_star | 0.047619 | 0 |
+
+Source: [app_policy](../../outputs/policy_parameters.csv).
+
+The operational review list uses the registered hard cap and deterministic tie handling. Additional-slot curves are counterfactual cost statistics and do not enlarge the operational list.
+
+## Attribution and evidence
+
+Native raw-margin TreeSHAP is rescaled to reconcile the nonlinear calibrated log-odds exactly. This path-proportional allocation is not presented as Shapley values of calibrated probability. CHS and overlay terms are linear. Single-driver probability removal effects overlap and are not additive or causal.
+
+Source deltas distinguish borrower documents from roll-forward and peer/universe-context effects, and must telescope between scored endpoints. A missing endpoint produces no invented evidence chain.
+
+## Ablation and detection
+
+Not run or not available. No numerical result is inferred.
+
+Not run or not available. No numerical result is inferred.
+
+## Placebo and anti-gaming
+
+Not run or not available. No numerical result is inferred.
+
+Not run or not available. No numerical result is inferred.
+
+## Coverage parity
+
+| feature | case_missing | case_present | peer_missing | peer_present | fisher_p | collection_cause | arena_u_eligible | reason | needs_verification | is_synthetic |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| total_assets | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| total_liabilities | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| current_assets | 11 | 1 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| current_liabilities | 11 | 1 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| inventory | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| receivables | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| cash_and_st_investments | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| ppe_net | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| cwip | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| total_debt | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| st_borrowings | 11 | 1 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| commercial_paper | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| lt_debt | 11 | 1 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| equity | 11 | 1 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| retained_earnings | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| revenue | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| cogs | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| gross_profit | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| sga | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| depreciation | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| ebit | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| interest_expense | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| pbt | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| pat | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| cfo | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| shares_outstanding | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| related_party_loans_advances | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| related_party_revenue | 12 | 0 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| cash_and_cash_equivalents | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+| finance_costs | 10 | 2 | 0 | 0 | unavailable | unknown | 0 | insufficient_cohorts | 1 | 0 |
+
+Source: [coverage_parity](../../outputs/coverage_parity.csv).
+
+## Case catalog
+
+| entity_id | name | sector | event_date | public_date | needs_verification |
+| --- | --- | --- | --- | --- | --- |
+| INE975G01012 | IL&FS Transportation Networks Ltd | infrastructure_development | 2018-09-28 | 2018-09-28 | 0 |
+| INE202B01012 | Dewan Housing Finance Corporation Ltd | housing_finance | 2019-06-04 | 2019-06-05 | 0 |
+| INE802G01018 | Jet Airways (India) Ltd | airlines | 2018-12-31 | 2019-01-02 | 0 |
+| INE013A01015 | Reliance Capital Ltd | nonbank_finance | 2019-09-09 | 2019-09-20 | 0 |
+| INE217K01011 | Reliance Home Finance Ltd | housing_finance | 2019-09-09 | 2019-09-12 | 0 |
+| INE752P01024 | Future Retail Ltd | retail | 2020-10-28 | 2020-10-28 | 0 |
+| INE335K01011 | Coffee Day Enterprises Ltd (CDEL) | diversified_nonfinancial | 2019-09-10 | 2019-09-10 | 0 |
+| INE330H01018 | Reliance Communications Ltd (RCom) | telecommunications | 2017-05-30 | 2017-05-30 | 0 |
+| INE872A01014 | Srei Infrastructure Finance Ltd | nonbank_finance | 2021-03-06 | 2021-03-06 | 0 |
+| INE703A01011 | Videocon Industries Ltd | consumer_electronics | 2018-06-06 | 2018-06-09 | 0 |
+| INE099J01015 | Jaypee Infratech Ltd | infrastructure_development | 2015-09-25 | 2015-09-25 | 0 |
+| INE270A01011 | Alok Industries Ltd | textiles | 2017-07-18 | 2017-07-19 | 0 |
+
+Source: [case_catalog](../../outputs/case_catalog.csv).
+
+Case cards are exported for every reviewed case. Before registered evaluation, their status is not assessed rather than an invented hit or miss.
+
+## Limitations
+
+The data acceptance table above is authoritative. Public data collection, complete peer survival evidence, historical classifications, share counts, FX and regulatory-capital inputs may remain incomplete. Raw bhavcopy returns are unadjusted for corporate actions; cached price indices are not claimed to be total-return indices. Market-only background membership is not claimed to be a debt-ranked complete universe.
+
+The US CHS coefficients are not an Indian probability calibration. Annual-income proxies, universe-relative size and the plan's book-equity variant are explicit adaptations. Unknown priors do not fall back to panel prevalence. Financial-firm ranks are not called calibrated probabilities without a declared probability link.
+
+## Amendments
+
+No amendment log has been created.
+
+## Reproducibility
+
+Run `run_tests.ps1`, then `run_all.ps1 -Offline -Readiness` for a cached readiness build. Strict production execution preserves all data, registration and final-evaluation gates. Start the offline interface with `run_app.ps1`. The app reads only the exported output bundle.
