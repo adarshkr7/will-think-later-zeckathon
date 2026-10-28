@@ -1,5 +1,7 @@
 # Decisions
 
+- 2026-10-28: Keep AGENTS.md and README.md at repository root per the user's correction; all other project documentation stays under docs/.
+
 - 2026-10-28: The user's instruction to build all steps authorizes implementing later modules while data collection continues; reject claiming unmet data acceptance checks passed. Production replay and evaluation remain gated, and missing data are never replaced by invented values.
 - 2026-10-28: Move project documentation, the problem PDF and local literature background under docs/ as requested; update the configured human-request path. Keep independent-collector material local and sealed data unopened.
 - 2026-10-28: Normalize historical CNX Nifty/CNX 500 index names using the official IISL 2015 rename notice, retaining source_index_name and price-index basis. Accept explicitly day-first slash/hyphen date variants and still require the requested session date to match.

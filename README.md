@@ -1,6 +1,6 @@
 # PRAHARI
 
-Project documentation lives in this folder. Run commands from the repository root.
+Project documentation lives in docs/. Run commands from the repository root.
 
 **P**oint-in-time **R**isk & **A**ccounting **H**azard **A**lerts, **R**anked & **I**nterpretable. *Prahari* is Hindi for "sentinel".
 
@@ -22,16 +22,16 @@ Key properties:
 
 | File | Purpose |
 |---|---|
-| `ps.pdf` | Problem statement and judging criteria |
-| `PROJECT_IDEA.md` | What we are building and why |
-| `IMPLEMENTATION_PLAN.md` | Phases, modules, tests and acceptance checks |
+| `docs/ps.pdf` | Problem statement and judging criteria |
+| `docs/PROJECT_IDEA.md` | What we are building and why |
+| `docs/IMPLEMENTATION_PLAN.md` | Phases, modules, tests and acceptance checks |
 | `AGENTS.md` | Operating rules for coding agents working on this repo |
 
 ## Status
 
 Phase 1 development is implemented: cached UCI ingestion, sealed stratified partitions, fold-local preprocessing, nested cross-validation, unweighted/weighted LightGBM, logistic regression, out-of-fold calibration, monotone harmonized models and a cross-country transfer test. Final benchmark hold-outs remain unopened. Development results are explicitly distinguished from final results.
 
-Phase 2 has public-source caching, reviewed financial-field extraction, NSE/BSE ingestion, dated market-cap joins, peer selection and explicit acceptance checks. Panel evidence remains incomplete. Feature layers, primary scoring, replay, memos, app and report remain pending. See [PROGRESS.md](PROGRESS.md) for acceptance status and [DATA_REQUESTS.md](DATA_REQUESTS.md) for missing evidence.
+Phase 2 has public-source caching, reviewed financial-field extraction, NSE/BSE ingestion, dated market-cap joins, peer selection and explicit acceptance checks. Panel evidence remains incomplete. Feature layers, primary scoring, replay, memos, app and report remain pending. See [PROGRESS.md](docs/PROGRESS.md) for acceptance status and [DATA_REQUESTS.md](docs/DATA_REQUESTS.md) for missing evidence.
 
 **Horizon correction:** UCI documents `5year.arff` as a one-year forecast and `4year.arff` as two years. The benchmark retains `3year` and `4year` comparisons, and uses `5year`/`4year` for the intended 4Q/8Q HDM heads. The original plan's horizon labels are off by one year. Source: [UCI Polish dataset documentation](https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data).
 
