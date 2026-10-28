@@ -2,6 +2,8 @@
 
 Prepared for PRAHARI on 2026-10-28. Work from the repository root. This plan is for evidence collection; Codex will import files, create cache receipts, validate schemas, select peers, rebuild features and run the registered pipeline.
 
+Update 2026-10-29: Codex now owns ordinary public-source collection and importing, as requested by the user. This document remains a handoff/schema reference; team members do not need to transcribe the ordinary data. See [AUTOMATED_DATA_RECOVERY_PLAN.md](AUTOMATED_DATA_RECOVERY_PLAN.md). Independent sealed preparation remains separate.
+
 ## 1. What needs to be unblocked
 
 Current generated status: **12 reviewed cases; 0 verified matched peers.** The panel still fails peer, stressed-survivor, market and complete-financial-history acceptance. See the linked outputs for the latest counts; cached sources and partial fields are not complete histories.

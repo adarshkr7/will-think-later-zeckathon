@@ -1,0 +1,3 @@
+source,source_url,status,target,needs_verification,is_synthetic,resolution,resolved_on
+nse,https://nsearchives.nseindia.com/content/historical/EQUITIES/2019/JUL/cm01JUL2019bhav.csv.zip,,data\raw\nse\cm01JUL2019bhav.csv.zip,0,0,DNS recovered; original archive cached with verified receipt,2026-10-28T19:37:58.602963+00:00
+coffee_day,https://www.coffeeday.com/stakeholders.html,,data\raw\coffee_day\stakeholders_20261029.html,1,0,,

@@ -35,3 +35,14 @@ def test_reviewed_amount_only_subtotal_offset_and_ligatures():
     assert reviewed_values(text, "Net Profit for the year", 2, 1) == [10]
     with pytest.raises(ValueError, match="amount-only"):
         reviewed_values(text, {"label": "Reserves and surplus", "line_offset": 2}, 2, 2)
+
+
+def test_reviewed_sum_uses_only_complete_printed_components():
+    text = (FIXTURES / "statement_sum.txt").read_text()
+    rule = {"sum": ["Total non-current liabilities", "Total current liabilities"]}
+    assert reviewed_values(text, rule, 3, 3) == [80.75, 60, None]
+    assert amount_columns(text, "Spaced total", 2) == [10757247, 7154635]
+    with pytest.raises(ValueError, match="twice"):
+        reviewed_values(text, {"sum": ["Total current liabilities", "Total current liabilities"]}, 3, 3)
+    with pytest.raises(ValueError, match="ambiguous"):
+        reviewed_values(text, {"sum": ["Absent component", "Total current liabilities"]}, 3, 3)

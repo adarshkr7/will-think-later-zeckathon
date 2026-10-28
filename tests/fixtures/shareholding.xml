@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<x:xbrl xmlns:x="http://www.xbrl.org/2003/instance" xmlns:d="http://xbrl.org/2006/xbrldi" xmlns:s="urn:fixture-shp" is_synthetic="1">
+  <x:context id="total"><x:entity><x:identifier scheme="fixture">FIX_SHP</x:identifier></x:entity><x:period><x:instant>2018-03-31</x:instant></x:period><x:scenario><d:explicitMember dimension="s:CategoryOfShareholdersAxis">s:ShareholdingPatternMember</d:explicitMember></x:scenario></x:context>
+  <x:context id="promoter"><x:entity><x:identifier scheme="fixture">FIX_SHP</x:identifier></x:entity><x:period><x:instant>2018-03-31</x:instant></x:period><x:scenario><d:explicitMember dimension="s:CategoryOfShareholdersAxis">s:ShareholdingOfPromoterAndPromoterGroupMember</d:explicitMember></x:scenario></x:context>
+  <x:context id="dr"><x:entity><x:identifier scheme="fixture">FIX_SHP</x:identifier></x:entity><x:period><x:instant>2018-03-31</x:instant></x:period><x:scenario><d:explicitMember dimension="s:CategoryOfShareholdersAxis">s:CustodianOrDRHolderMember</d:explicitMember></x:scenario></x:context>
+  <s:ISIN>FIX_SHP</s:ISIN><s:DateOfReport>2018-03-31</s:DateOfReport>
+  <s:NumberOfShares contextRef="total">110</s:NumberOfShares>
+  <s:NumberOfShares contextRef="promoter">80</s:NumberOfShares>
+  <s:NumberOfShares contextRef="dr">10</s:NumberOfShares>
+  <s:PledgedOrEncumberedNumberOfShares contextRef="promoter">32</s:PledgedOrEncumberedNumberOfShares>
+</x:xbrl>

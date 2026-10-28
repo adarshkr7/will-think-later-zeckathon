@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import csv
-from datetime import date
+from datetime import date, datetime
 import logging
 from typing import Literal
 
@@ -34,7 +34,7 @@ def validate_table(table: pd.DataFrame, name: str, settings: dict) -> dict:
     fields = {}
     for column in spec["columns"]:
         if column in spec["dates"]:
-            kind = date
+            kind = (date | datetime) if column == "public_date" else date
         elif column in spec["numeric"]:
             kind = float
         elif column in spec["flags"]:
@@ -64,7 +64,10 @@ def validate_table(table: pd.DataFrame, name: str, settings: dict) -> dict:
                 continue
             if row[key] is None:
                 raise ValueError(f"{name}: verified row lacks {key}")
-        if name != "trading_calendar" and row["public_date"] is not None and row["public_date"] < row["period_end"]:
+        if isinstance(row["public_date"], datetime) and row["public_date"].tzinfo is None:
+            raise ValueError(f"{name}: publication timestamps require an explicit timezone")
+        if (name != "trading_calendar" and row["public_date"] is not None
+                and pd.to_datetime(row["public_date"], utc=True) < pd.to_datetime(row["period_end"], utc=True)):
             raise ValueError(f"{name}: public date precedes observation period")
         if name == "events":
             # Event verification and matching metadata have separate acceptance

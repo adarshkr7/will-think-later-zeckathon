@@ -1,0 +1,7 @@
+source: nse_financial_index
+url: https://www.nseindia.com/api/corporates-financial-results
+index: equities
+period: Quarterly
+window_days: 90
+filename: 'results_{start}_{end}_quarterly.json'
+timezone: Asia/Kolkata

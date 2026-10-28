@@ -1,0 +1,21 @@
+snapshot_date: '2026-10-29'
+pre_event_only: true
+timezone: Asia/Kolkata
+live_index_source: nse_shp_index
+xml_source: nse_shp
+archive_source: nse_membership
+live_index_url: https://www.nseindia.com/api/corporate-share-holdings-master
+archive_index_url: https://raw.githubusercontent.com/yurukatsu/nse-historical-membership/6695e8468c42ed5222265a5078a53a298cec88f7/shareholding_history/data/filings_index/{symbol}.json
+index_filename: '{entity_id}_{snapshot_date}_index.json'
+archive_filename: '{entity_id}_archived_index.json'
+xbrl_namespace: http://www.xbrl.org/2003/instance
+dimensions_namespace: http://xbrl.org/2006/xbrldi
+category_axis: CategoryOfShareholdersAxis
+total_member: ShareholdingPatternMember
+promoter_member: ShareholdingOfPromoterAndPromoterGroupMember
+dr_member: CustodianOrDRHolderMember
+shares_tag: NumberOfShares
+pledged_tags: [PledgedOrEncumberedNumberOfShares, NumberOfSharesEncumberedUnderPledged, NumberOfSharesEncumbered]
+isin_tag: ISIN
+report_date_tag: DateOfReport
+percentage_scale: 100

@@ -1,0 +1,70 @@
+sources:
+- name: Financial Distress (Kaggle)
+  url: https://www.kaggle.com/datasets/shebrahimi/financial-distress/data
+  cache_source: kaggle
+  filename: shebrahimi_financial-distress_v1.zip
+  metadata: shebrahimi_financial-distress_metadata.json
+  inspect: anonymous_financial
+  decision: discovery_only
+  reason: Anonymous company/time identifiers and x-fields cannot establish the Indian panel or dated original filings; outside the declared foreign benchmark.
+- name: NSE shares 2021–2025 (Kaggle)
+  url: https://www.kaggle.com/datasets/amritanshukush/nse-shares-data-2021-2025
+  cache_source: kaggle
+  filename: amritanshukush_nse-shares-data-2021-2025_v1.zip
+  metadata: amritanshukush_nse-shares-data-2021-2025_metadata.json
+  inspect: selected_prices
+  decision: discovery_only
+  reason: Selected current stocks and a later date window do not replace survivorship-aware bhavcopies; no dated ISIN mapping or documented adjustment basis in the supplied schema.
+- name: Indian company financial dataset (Kaggle)
+  url: https://www.kaggle.com/datasets/sayujsreenivasan/indian-company-financial-dataset
+  cache_source: kaggle
+  filename: sayujsreenivasan_indian-company-financial-dataset_v1.zip
+  metadata: sayujsreenivasan_indian-company-financial-dataset_metadata.json
+  inspect: indian_financial
+  decision: discovery_only
+  reason: No filing timestamps, original period-end dates, ISIN, denomination or accounting basis. Total Liabilities is the funding-side total including equity, so it cannot map to PRAHARI total_liabilities. Verify candidate names against original statements.
+- name: Top Indian stocks market insights (Kaggle)
+  url: https://www.kaggle.com/datasets/rameshmaity/top-indian-stocks-market-insights-dataset
+  cache_source: kaggle
+  filename: rameshmaity_top-indian-stocks-market-insights-dataset_v1.zip
+  metadata: rameshmaity_top-indian-stocks-market-insights-dataset_metadata.json
+  inspect: snapshot
+  decision: discovery_only
+  reason: A current cross-sectional snapshot does not establish historical quarterly financial vintages, listing eligibility or pre-event availability.
+- name: nse2r
+  url: https://github.com/rsquaredacademy/nse2r
+  cache_source: github_reference
+  filename: nse2r_README.md
+  inspect: documentation
+  decision: reference_only
+  reason: R retrieval package documentation, not a frozen historical dataset; existing Python collectors cache original exchange files with receipts. Downloaded reference code is not executed.
+- name: Taiwanese bankruptcy prediction (UCI)
+  url: https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction
+  cache_source: taiwan
+  filename: taiwan.zip
+  receipt_suffix: .receipt.json
+  inspect: protected_benchmark_archive
+  decision: original_benchmark_already_integrated
+  reason: Original predeclared foreign benchmark. This source review checks archive integrity only; it does not open numeric rows or reserved membership.
+- name: Company bankruptcy prediction (Kaggle)
+  url: https://www.kaggle.com/datasets/fedesoriano/company-bankruptcy-prediction
+  cache_source: kaggle
+  filename: fedesoriano_company-bankruptcy-prediction_v2.zip
+  metadata: fedesoriano_company-bankruptcy-prediction_metadata.json
+  inspect: protected_benchmark_archive
+  decision: duplicate_benchmark
+  reason: Uploader describes the same Taiwanese bankruptcy source, not an independent validation population. Numeric rows are not opened by this review.
+- name: IL&FS Financial Services annual report FY2018
+  url: https://www.ilfsifin.com/pdf/IFIN-Annual-Report-2017-18.pdf
+  cache_source: ilfsifin
+  filename: ifin_annual_2018.pdf
+  inspect: original_pdf
+  decision: separate_entity_original
+  reason: Genuine original report for IL&FS Financial Services. This legal entity is separate from the listed ITNL case; its financial values cannot be substituted for ITNL.
+- name: IIFCL annual report FY2017
+  url: https://www.iifcl.in/images/FileUploaded/AnnualReport1pdf05122019132624.pdf
+  cache_source: iifcl
+  filename: iifcl_user_annual_report.pdf
+  inspect: original_pdf
+  decision: separate_entity_original
+  reason: Original India Infrastructure Finance Company FY2016–17 report. IIFCL is distinct from IL&FS, IFIN and ITNL; no case substitution or group membership is inferred.

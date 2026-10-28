@@ -23,7 +23,7 @@ def amount_columns(text: str, label: str, count: int, *, occurrence: int = 0,
 
     Labels are compared without typography/spacing so PDF word fragments do
     not shift column positions. Ambiguity and unexpected token counts fail.
-    No arithmetic synthesizes financial statement inputs here.
+    Printed amounts are read without estimating missing components.
     """
     normalized = lambda value: re.sub("[^a-z]", "", unicodedata.normalize("NFKD", value).lower())
     matches = [line for line in text.splitlines() if normalized(line).endswith(normalized(label))]
@@ -31,7 +31,9 @@ def amount_columns(text: str, label: str, count: int, *, occurrence: int = 0,
         raise ValueError(f"Source row label is missing or ambiguous: {label}")
     line = matches[occurrence]
     last_letter = max(match.end() for match in re.finditer("[A-Za-z]", line))
-    tokens = re.findall(r"\(?-?\d[\d,]*(?:\.\d+)?\)?|(?<!\S)[—–-](?!\S)", line[last_letter:])
+    # Some PDF font runs insert whitespace immediately before a thousands comma.
+    amounts_text = re.sub(r"(?<=\d)\s+(?=,\d)", "", line[last_letter:])
+    tokens = re.findall(r"\(?-?\d[\d,]*(?:\.\d+)?\)?|(?<!\S)[—–-](?!\S)", amounts_text)
     if len(tokens) not in (count, count + 1):
         raise ValueError(f"Unexpected amount columns for {label}: {len(tokens)}")
     amounts = []
@@ -52,6 +54,18 @@ def reviewed_values(text: str, rule: str | dict, columns: int, periods: int) -> 
     Repeated labels require an exact expected count and a reviewed occurrence.
     """
     details = {"label": rule} if isinstance(rule, str) else rule
+    if "sum" in details:
+        components = details["sum"]
+        if (not isinstance(components, list) or len(components) < 2
+                or any(isinstance(component, dict) and "sum" in component for component in components)):
+            raise ValueError("Reviewed sums require distinct non-nested source rows")
+        labels = [component if isinstance(component, str) else component["label"] for component in components]
+        if len(set(labels)) != len(labels):
+            raise ValueError("Reviewed sums must not count a source row twice")
+        columns_by_component = [reviewed_values(text, component, columns, periods) for component in components]
+        return [None if any(value is None for value in values) else
+                float(sum(Decimal(str(value)) for value in values))
+                for values in zip(*columns_by_component, strict=True)]
     count = details.get("columns", columns)
     if "line_offset" in details:
         lines = text.splitlines()

@@ -17,6 +17,22 @@ from prahari.data.uci import sha256_file
 LOG = logging.getLogger(__name__)
 
 
+def merge_reviewed_entities(current: pd.DataFrame, fresh: pd.DataFrame) -> pd.DataFrame:
+    """Append earlier proven metadata while preserving existing equivalent rows.
+
+    Another identity source can support the same classification at the same
+    instant. Preserve the existing provenance in that case; changed company
+    classifications or symbols at an identical key require an explicit review.
+    """
+    keys = ["entity_id", "period_end", "public_date"]
+    content = ["name", "symbols", "sector", "is_financial", "needs_verification", "is_synthetic"]
+    joined = pd.concat([current, fresh], ignore_index=True)
+    for _, versions in joined.groupby(keys, dropna=False):
+        if len(versions[content].drop_duplicates()) > 1:
+            raise ValueError("Classification conflicts with existing metadata; no human inputs replaced")
+    return joined.drop_duplicates(keys, keep="first")
+
+
 def require_reviewed_text(text: str, markers: list[str]) -> None:
     """Typography normalization only; every reviewed literal must be present."""
     normalize = lambda value: re.sub(r"[^a-z0-9]", "", value.lower())

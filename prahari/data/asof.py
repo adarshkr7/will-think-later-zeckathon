@@ -20,7 +20,7 @@ def as_of(table: pd.DataFrame, t: str | pd.Timestamp) -> pd.DataFrame:
         if table[column].isna().any() or not table[column].isin([0, 1]).all():
             raise ValueError(f"Invalid {column} flags")
     result = table.copy()
-    result["public_date"] = pd.to_datetime(result["public_date"], errors="raise", utc=True)
+    result["public_date"] = pd.to_datetime(result["public_date"], errors="raise", utc=True, format="mixed")
     result["period_end"] = pd.to_datetime(result["period_end"], errors="raise", utc=True)
     if result[["entity_id", "period_end", "public_date"]].isna().any().any():
         raise ValueError("Unknown dates must be conservatively imputed before as_of")

@@ -10,7 +10,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from prahari.config import Config
-from prahari.data.entity_review import reviewed_entities
+from prahari.data.entity_review import merge_reviewed_entities, reviewed_entities
 from prahari.data.firewall import write_real_table
 from prahari.data.manual import read_manual
 from prahari.data.quality import validate_table
@@ -29,9 +29,7 @@ def main() -> None:
     for frame in (fresh, current):
         for column in ("period_end", "public_date"):
             frame[column] = pd.to_datetime(frame[column], utc=True)
-    combined = pd.concat([current, fresh], ignore_index=True).drop_duplicates()
-    if combined.duplicated(["entity_id", "period_end", "public_date"]).any():
-        raise ValueError("Classification conflicts with existing metadata; no human inputs replaced")
+    combined = merge_reviewed_entities(current, fresh)
     events = read_manual(config, "events")
     latest = fresh.sort_values("public_date").drop_duplicates("entity_id", keep="last").set_index("entity_id")
     for field in ("sector", "is_financial"):

@@ -1,0 +1,7 @@
+snapshot_date: '2026-10-29'
+public_page_source: screener_public
+public_page_url: https://www.screener.in/company/{symbol}/
+public_page_filename: '{entity_id}_{symbol}_documents_{snapshot_date}.html'
+report_source: bse_reports
+report_filename: '{entity_id}_annual_{year}.pdf'
+annual_label_pattern: '^Annual Report (\d{4})$'

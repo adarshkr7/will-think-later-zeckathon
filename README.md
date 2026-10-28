@@ -101,6 +101,19 @@ Template initialization never overwrites an existing file. The validator rejects
 
 Identity reconciliation reads the configured manual tables only, preserves event and publication dates, and refuses changes after registration. Classification imports verify pinned source bytes and reviewed profile text; their public date includes the later identity proof. A current classification does not imply availability at an earlier peer-matching cutoff. Older statements use explicit denomination and reviewed subtotal positions. Cash alone and finance costs remain separate reported inputs.
 
+Public-source recovery commands are available individually and use the same checked raw cache:
+
+```powershell
+.venv/Scripts/python.exe -m scripts.02g_collect_financial_indexes --offline
+.venv/Scripts/python.exe -m scripts.03f_import_filing_identities
+.venv/Scripts/python.exe -m scripts.03e_extract_metadata
+.venv/Scripts/python.exe -m scripts.02f_collect_shareholding --offline
+.venv/Scripts/python.exe -m scripts.02h_discover_reports --offline
+.venv/Scripts/python.exe -m scripts.02i_review_supplied_sources
+```
+
+Remove `--offline` only to acquire uncached public files. Financial indexes establish exact historical security identities and dissemination timestamps; they do not certify statement values. Shareholding imports verify original XML counts and use the promoter denominator stated by the filing categories, preserving unavailable components. Report discovery uses public document lists to cache original PDF candidates; every candidate still needs statement and publication review. Supplied-source suitability and integrity are recorded in [docs/SOURCE_REVIEW.md](docs/SOURCE_REVIEW.md). Ordinary collection is assigned to Codex in [docs/AUTOMATED_DATA_RECOVERY_PLAN.md](docs/AUTOMATED_DATA_RECOVERY_PLAN.md); independently prepared sealed cases remain private.
+
 Development artifacts:
 
 - `outputs/benchmark_development_metrics.csv`: nested outer-fold metrics plus separately marked transfer development results; PR-AUC is average precision, with trapezoidal PR area also recorded.

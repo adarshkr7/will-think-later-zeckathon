@@ -1,0 +1,4 @@
+entity_id,name,symbols,sector,is_financial,period_end,public_date,source_url,date_is_imputed,needs_verification,is_synthetic
+FIX_ENTITY,Fixture company,FIX_SYMBOL,fixture_sector,0,2015-03-31,2018-04-01,fixture://old_identity,1,0,1
+FIX_ENTITY,Fixture company,FIX_SYMBOL,fixture_sector,0,2015-03-31,2018-04-01,fixture://alternate_identity,0,0,1
+FIX_ENTITY,Fixture company,FIX_SYMBOL,fixture_sector,0,2015-03-31,2015-09-27,fixture://earlier_identity,1,0,1

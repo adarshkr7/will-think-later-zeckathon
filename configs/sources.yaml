@@ -1,4 +1,219 @@
 documents:
+- name: ITNL annual report FY2015-16 alternate publisher host
+  source: itnl
+  filename: itnl_annual_2016_alternate.pdf
+  url: https://ipv4.itnlindia.com/pdf/annual-reports/ITNLAnnualReport2015-16.pdf
+  purpose: Reviewed original standalone FY2016 statements and FY2015 comparatives; recovered publisher host
+  financial_extraction:
+    reviewed: true
+    entity_id: INE975G01012
+    source_period_end: '2016-03-31'
+    fiscal_periods: ['2016-03-31', '2015-03-31']
+    unit: INR_crore
+    unit_marker: crore
+    source_sha256: 827e8ab0bd996be11cd7df4a3d0c157c8ec97f6bce03e56a4de3b346bacfaa3b
+    tables:
+    - page: 114
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
+        current_assets: {label: Other current assets (net), columns: 4, positions: [1, 3]}
+        current_liabilities: {label: Short-term provisions, columns: 4, positions: [1, 3]}
+        equity: {label: Reserves and surplus, columns: 4, positions: [1, 3]}
+        inventory: Inventories
+        receivables: Trade receivables (net)
+        ppe_net: {label: Tangible assets (net), expected_matches: 2, occurrence: 0}
+        cwip: Capital work-in-progress
+        lt_debt: Long-term borrowings
+        st_borrowings: Short-term borrowings
+    - page: 115
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: Profit for the year (V - VI)
+        pbt: Profit Before Taxation (III-IV)
+        finance_costs: Finance costs
+        depreciation: Depreciation and amortisation expense
+    - page: 116
+      basis: standalone
+      columns: 2
+      fields:
+        cfo: Net Cash used in Operating Activities (A)
+    - page: 117
+      basis: standalone
+      columns: 2
+      fields:
+        cash_and_cash_equivalents: Cash and Cash Equivalents at the end of the year
+- name: IL&FS Financial Services annual report FY2017-18
+  source: ilfsifin
+  filename: ifin_annual_2018.pdf
+  url: https://www.ilfsifin.com/pdf/IFIN-Annual-Report-2017-18.pdf
+  purpose: User-supplied original IFIN report; separate legal entity from ITNL, not a substitute for its statements
+- name: IIFCL annual report FY2016-17
+  source: iifcl
+  filename: iifcl_user_annual_report.pdf
+  url: https://www.iifcl.in/images/FileUploaded/AnnualReport1pdf05122019132624.pdf
+  purpose: User-supplied original India Infrastructure Finance Company report; separate legal entity from IL&FS and ITNL
+- name: Srei Infrastructure Finance annual report FY2017-18
+  source: srei
+  filename: srei_annual_2018.pdf
+  url: https://www.srei.com/storage/app/media/annual-report-and-agm-notice-of-srei-for-the-fy-2017-18.pdf
+  purpose: Original financial-firm statements and classification; extraction and dissemination review pending
+- name: Srei Infrastructure Finance annual report FY2018-19
+  source: srei
+  filename: srei_annual_2019.pdf
+  url: https://www.srei.com/storage/app/media/annual-report-and-agm-notice-of-srei-for-the-fy-2018-19.pdf
+  purpose: Original financial-firm statements and stated capital requirements; extraction and dissemination review pending
+- name: DHFL annual report FY2015-16
+  source: bse_reports
+  filename: dhfl_annual_2016.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511072/5110720316.pdf
+  purpose: Reviewed standalone housing-finance statements; publication date unknown
+  financial_extraction:
+    reviewed: true
+    entity_id: INE202B01012
+    source_period_end: '2016-03-31'
+    fiscal_periods: ['2016-03-31', '2015-03-31']
+    unit: INR_lakh
+    source_sha256: dc64db91f0207a247024fbb9fb9b4896d4c40a7c1d7ca50ef1d438dedb9f56f1
+    tables:
+    - page: 145
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
+        total_liabilities: {sum: [Total Non-Current Liabilities, Total Current Liabilities]}
+        equity: Total Shareholders' Funds
+        current_assets: Total Current Assets
+        current_liabilities: Total Current Liabilities
+        lt_debt: Long-Term Borrowings
+        st_borrowings: Short Term Borrowings
+        ppe_net: {label: Tangible Assets, expected_matches: 2, occurrence: 0}
+        cwip: Capital Work in Progress
+        receivables: Trade Receivables
+    - page: 146
+      basis: standalone
+      columns: 2
+      fiscal_periods: ['2016-03-31']
+      fields:
+        revenue: Revenue from Operations
+        pat: Profit For The Year
+        pbt: Profit Before Tax
+        finance_costs: Interest & Finance Cost
+        depreciation: Depreciation & Amortisation
+- name: DHFL annual report FY2014-15
+  source: bse_reports
+  filename: dhfl_annual_2015.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511072/5110720315.pdf
+  purpose: Reviewed original FY2015 balance sheet and historical HFC classification
+  classification_review:
+    reviewed: true
+    entity_id: INE202B01012
+    name: Dewan Housing Finance Corporation Ltd
+    page: 54
+    sector: housing_finance
+    is_financial: 1
+    period_end: '2015-03-31'
+    evidence_markers: [deposit-taking housing finance, registered with the National Housing Bank]
+    source_sha256: 2c4190ef1f0e0485ef4266764ea26e86fb760a37ad9b089583f74d86b269db08
+  financial_extraction:
+    reviewed: true
+    entity_id: INE202B01012
+    source_period_end: '2015-03-31'
+    fiscal_periods: ['2015-03-31']
+    unit: INR_lakh
+    source_sha256: 2c4190ef1f0e0485ef4266764ea26e86fb760a37ad9b089583f74d86b269db08
+    tables:
+    - page: 140
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
+        total_liabilities: {sum: [Total Non-Current Liabilities, Total Current Liabilities]}
+        equity: Total Shareholders' Funds
+        current_assets: Total Current Assets
+        current_liabilities: Total Current Liabilities
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+- name: DHFL annual report FY2016-17
+  source: bse_reports
+  filename: dhfl_annual_2017.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511072/5110720317.pdf
+  purpose: Reviewed standalone FY2017 statements and separately dated FY2016 comparatives
+  financial_extraction:
+    reviewed: true
+    entity_id: INE202B01012
+    source_period_end: '2017-03-31'
+    fiscal_periods: ['2017-03-31', '2016-03-31']
+    unit: INR_lakh
+    source_sha256: ee226c8cc7a852d5cd37764fa8682e86f12c238b0b1fc3ade1274e9f59ab6e57
+    tables:
+    - page: 162
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
+        total_liabilities: {sum: [Total Non-Current Liabilities, Total Current Liabilities]}
+        equity: Total Shareholders' Funds
+        current_assets: Total Current Assets
+        current_liabilities: Total Current Liabilities
+        lt_debt: Long-Term Borrowings
+        st_borrowings: Short-Term Borrowings
+        ppe_net: {label: Tangible Assets, expected_matches: 2, occurrence: 0}
+        cwip: Capital Work-in-Progress
+        receivables: Trade Receivables
+    - page: 163
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: Profit For The Year
+        pbt: Profit Before Tax And After Exceptional Item
+        finance_costs: Finance Cost
+        depreciation: Depreciation and Amortisation
+- name: DHFL annual report FY2017-18
+  source: bse_reports
+  filename: dhfl_annual_2018.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511072/5110720318.pdf
+  purpose: Reviewed standalone FY2018 statements and separately dated FY2017 comparatives
+  financial_extraction:
+    reviewed: true
+    entity_id: INE202B01012
+    source_period_end: '2018-03-31'
+    fiscal_periods: ['2018-03-31', '2017-03-31']
+    unit: INR_lakh
+    source_sha256: 02316ea93c96179b08fad690e928912c19936ecc3d31388e0e43291cf3e9cf59
+    tables:
+    - page: 156
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
+        total_liabilities: {sum: [Total Non-Current Liabilities, Total Current Liabilities]}
+        equity: Total Shareholders' Funds
+        current_assets: Total Current Assets
+        current_liabilities: Total Current Liabilities
+        lt_debt: Long-Term Borrowings
+        st_borrowings: Short-Term Borrowings
+        ppe_net: Property, Plant and Equipment
+        cwip: Capital Work in Progress
+        receivables: Trade Receivables
+    - page: 157
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: Profit For The Year
+        pbt: Profit Before Tax
+        finance_costs: Finance Cost
+        depreciation: Depreciation and Amortisation
+- name: DHFL annual report FY2018-19
+  source: bse_reports
+  filename: dhfl_annual_2019.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511072/5110720319.pdf
+  purpose: Original cached candidate; no reviewed financial fields imported
 - name: ITNL annual report FY2015-16
   source: itnl
   filename: itnl_annual_2016.pdf

@@ -16,6 +16,15 @@ paths:
   workflow_config: configs/workflow.yaml
   fx_config: configs/fx.yaml
   fx_coverage: outputs/fx_coverage.csv
+  shareholding_config: configs/shareholding.yaml
+  shareholding_import_review: outputs/shareholding_import_review.csv
+  financial_index_config: configs/financial_results.yaml
+  financial_index_coverage: outputs/financial_results_index.csv
+  supplied_source_review: outputs/supplied_source_review.csv
+  supplied_sources_config: configs/supplied_sources.yaml
+  supplied_sources_document: docs/SOURCE_REVIEW.md
+  report_discovery_config: configs/report_discovery.yaml
+  report_discovery_audit: outputs/report_discovery.csv
   workflow: outputs/workflow.csv
   drift: outputs/drift.csv
   hysteresis: outputs/hysteresis.csv
@@ -113,8 +122,12 @@ pipeline:
   auto_commit_registration: true
   preparation:
   - {module: scripts.02b_collect_sources, offline: true}
+  - {module: scripts.02g_collect_financial_indexes, offline: true}
+  - {module: scripts.03f_import_filing_identities}
+  - {module: scripts.03e_extract_metadata}
   - {module: scripts.02_market_data, arguments: [--cached-only]}
   - {module: scripts.02d_extract_financials}
+  - {module: scripts.02f_collect_shareholding, offline: true}
   - {module: scripts.02e_collect_fx, offline: true}
   - {module: scripts.03c_collection_status}
   data_validation: scripts.03_validate_manual

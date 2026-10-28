@@ -1,0 +1,4 @@
+is_synthetic=1
+Total non-current liabilities 60.25 45.10 -
+Total current liabilities 20.50 14.90 12.00
+Spaced total 10,757 ,247 7 ,154,635
