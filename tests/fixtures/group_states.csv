@@ -1,0 +1,4 @@
+entity_id,pd_4q,hard_trigger,max_source_date,is_synthetic
+FIX_A,0.9,0,2019-09-29,1
+FIX_B,0.1,1,2019-09-29,1
+FIX_C,0.1,0,2019-09-29,1

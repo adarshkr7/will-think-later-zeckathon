@@ -1,0 +1,4 @@
+entity_id,group_id,group_name,membership_complete,period_end,public_date,source_url,date_is_imputed,needs_verification,is_synthetic
+FIX_A,GROUP_AB,Fixture AB,1,2019-09-01,2019-09-02,fixture://groups,0,0,1
+FIX_B,GROUP_AB,Fixture AB,1,2019-09-01,2019-09-02,fixture://groups,0,0,1
+FIX_C,GROUP_C,Fixture C,1,2019-09-01,2019-09-02,fixture://groups,0,0,1

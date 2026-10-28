@@ -1,5 +1,15 @@
 # Decisions
 
+- 2026-10-28: Report rating lead using earliest sourced pre-event sub-IG publication and first pre-event operational flag, retaining unpaired cases; reject backdating a later disclosure to its action date or calling incomplete rating history a first-ever downgrade. Export both calendar-quarter and day differences with an explicitly paired-observed median.
+
+- 2026-10-28: Use original archived Federal Reserve H.10 weekly releases for historical INR/USD, recording their actual publication dates. Reject current revised FRED histories as a substitute for old vintages. Preserve ND cells as unknown and exclude any release on/after a scoring cutoff.
+
+- 2026-10-28: Compute median/IQR-standardized CHS through centered log market equity: the unknown common log-universe-capitalization offset cancels exactly. Preserve raw RSIZE and raw CHS as unknown when their denominator is missing; do not estimate a market total. Unit tests verify equality for multiple denominators and currency units.
+- 2026-10-28: Keep the optional sourced group overlay disabled by default and limited to Arena P; derive it from pre-overlay label-free scores and dated hard triggers, with no recursive same-quarter contagion. Unknown/partial rosters cannot establish a negative sibling state.
+- 2026-10-28: Run drift, hysteresis, budget/cost scenarios and anti-gaming only after registered public replay. Counterfactual inputs remain tainted in memory and are never persisted as borrower observations; analysis outputs are explicitly counterfactual and retain failures/ineffective interventions.
+- 2026-10-28: Use the cited 2024 RBI framework as historical design context only. PRAHARI's tiers and review targets are internal settings, not prescribed regulatory classifications or deadlines.
+- 2026-10-28: Normalize the observed S&P CNX Nifty/S&P CNX 500 archive names to their later index identities, retaining source_index_name; do not treat the unrelated S&P 500 as equivalent. The original archive and official index-history references remain source evidence.
+
 - 2026-10-28: Use the later sourced NSE dissemination dates for Alok annual-report evidence (FY2016: 2016-10-04; FY2017: 2017-10-06), rather than the earlier generic lag dates. Preserve all reviewed numeric values and human-verified event dates. Record the date correction in outputs/financial_date_review.csv.
 - 2026-10-28: Import Alok FY2016 annual flows only; the FY2015 comparatives cover eighteen months and are excluded from annual-flow inputs. Reviewed balance-sheet comparatives remain usable with the FY2016 report's publication date.
 - 2026-10-28: Read printed amount-only subtotals only through hash-pinned reviewed anchor/line offsets; reject unexpected labels, offsets or nonnumeric rows. Never synthesize missing balance-sheet subtotals by guessing components.

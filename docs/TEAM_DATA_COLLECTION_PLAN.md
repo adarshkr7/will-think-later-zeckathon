@@ -177,6 +177,8 @@ entity_id,signal_name,coverage_start,coverage_end,period_end,public_date,source_
 
 If collecting ending shares via field-level financial evidence, retain the printed share-count unit and source page. Tell Codex to populate the market-cap share-count input from that verified evidence; do not manually duplicate inconsistent conversions.
 
+For the matched-panel MVP, prioritize ending shares for the assigned cases and peers. The standardized CHS implementation cancels the common universe-size offset algebraically, so the panel is not blocked on manually obtaining every background company's share count. Raw universe-relative size remains unknown when the complete market total is unavailable.
+
 Do not record a negative flag just because a release does not mention it. Supply the complete coverage proof or keep the field unknown. Do not change the already human-verified event catalog: a D rating later cured before the final default is excluded under the global rule, and RCom's original CIRP commencement remains the reviewed date in the catalog.
 
 ## 8. Financial-sector and reference-data packets
@@ -214,7 +216,7 @@ entity_id,group_id,group_name,membership_complete,period_end,public_date,source_
 
 For a group row, `membership_complete=1` certifies a documented complete roster; `0` records known partial coverage. A single collected member is not proof that the company has no siblings. Do not infer an ISIN from a similar name or apply a later security mapping to an earlier cutoff without contemporaneous proof.
 
-Do not manually collect daily equity prices or compute model scores, thresholds, weights or metrics. Codex is handling public market archives and model implementation. If a source is blocked or unavailable, hand over the original document/official download rather than a copied unsourced figure.
+Do not manually collect daily equity prices or compute model scores, thresholds, weights or metrics. Codex is handling public market archives and model implementation. Original-vintage FX collection is complete for the configured quarters; see `outputs/fx_coverage.csv`, and do not duplicate that task. Historical regulatory minima are still needed. If a source is blocked or unavailable, hand over the original document/official download rather than a copied unsourced figure.
 
 ## 9. Handoff convention
 

@@ -1,0 +1,10 @@
+source: fed_h10
+calendar_url: https://www.federalreserve.gov/releases/h10/releaseDates.json
+calendar_filename: release_dates.json
+release_url: https://www.federalreserve.gov/releases/h10/{date}/
+release_filename: '{date}.html'
+entity_id: USDINR
+country: INDIA
+currency: RUPEE
+maximum_release_lag_days: 14
+missing_tokens: [ND, NA, N/A, '']

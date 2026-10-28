@@ -1,8 +1,8 @@
 {
   "status": "passed",
   "exit_code": 0,
-  "duration_seconds": 16.822242000002007,
-  "passed": 115,
+  "duration_seconds": 27.814102399999683,
+  "passed": 123,
   "failed": 0,
   "skipped": 0
 }

@@ -12,11 +12,21 @@ paths:
   india_config: configs/india.yaml
   feature_config: configs/features.yaml
   model_config: configs/model.yaml
+  diagnostics_config: configs/diagnostics.yaml
+  workflow_config: configs/workflow.yaml
+  fx_config: configs/fx.yaml
+  fx_coverage: outputs/fx_coverage.csv
+  workflow: outputs/workflow.csv
+  drift: outputs/drift.csv
+  hysteresis: outputs/hysteresis.csv
+  policy_scenarios: outputs/policy_scenarios.csv
+  diagnostics_status: outputs/diagnostics_status.csv
   pillars_config: configs/pillars.yaml
   attributions: outputs/attributions
   memos: outputs/memos
   provenance: outputs/provenance
   case_cards: outputs/case_cards
+  archetypes: outputs/archetypes.csv
   case_catalog: outputs/case_catalog.csv
   test_summary: outputs/test_summary.json
   ui_validation: outputs/ui_validation.json
@@ -31,6 +41,8 @@ paths:
   slides_outline: docs/slides_outline.md
   app_entrypoint: app/streamlit_app.py
   detection_curve: outputs/detection_curve.csv
+  rating_lead_cases: outputs/rating_lead_cases.csv
+  rating_lead_summary: outputs/rating_lead_summary.csv
   placebo: outputs/placebo.csv
   anti_gaming: outputs/anti_gaming.csv
   evaluation_status: outputs/evaluation_status.csv
@@ -82,6 +94,8 @@ paths:
   benchmark_training_dir: data/processed/benchmark_training
   benchmark_plots: outputs/benchmark_calibration
   data_requests: docs/DATA_REQUESTS.md
+  team_collection_plan: docs/TEAM_DATA_COLLECTION_PLAN.md
+  team_collection_windows: outputs/team_collection_windows.csv
 logging:
   level: INFO
   format: '%(asctime)s %(levelname)s %(name)s: %(message)s'
@@ -95,12 +109,13 @@ dates:
   annual_report_lag_days: 180
 pipeline:
   arenas: [P, U]
-  readiness_universe_dates: ['2018-09-30']
+  readiness_universe_dates: null
   auto_commit_registration: true
   preparation:
   - {module: scripts.02b_collect_sources, offline: true}
   - {module: scripts.02_market_data, arguments: [--cached-only]}
   - {module: scripts.02d_extract_financials}
+  - {module: scripts.02e_collect_fx, offline: true}
   - {module: scripts.03c_collection_status}
   data_validation: scripts.03_validate_manual
   benchmark: scripts.01_benchmark
@@ -109,6 +124,7 @@ pipeline:
   registration: scripts.05b_seal
   replay: scripts.06_replay
   evaluation: scripts.07_evaluate
+  diagnostics: scripts.10_diagnostics
   bundle: scripts.08_build_bundle
   report: scripts.09_build_report
   tests: scripts.test_runner

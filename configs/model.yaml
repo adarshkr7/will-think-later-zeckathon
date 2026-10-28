@@ -3,6 +3,10 @@ sealed:
   input_sha256: null
   expected_cases: null
 primary:
+  group_enabled: false
+  group_arenas: [P]
+  group_weight: 0.8
+  group_pd_quantile: 0.9
   hdm_weight: 1.0
   chs_weight: 1.0
   minimum_hdm_observed: 5

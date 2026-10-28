@@ -29,6 +29,8 @@ def main() -> None:
     cached = documents.status.eq("cached")
     events, peers = read_manual(config, "events"), read_manual(config, "peers")
     evidence = read_manual(config, "event_evidence")
+    fx = read_manual(config, "fx_rates")
+    fx_coverage = pd.read_csv(config.path("fx_coverage")) if config.path("fx_coverage").exists() else pd.DataFrame(columns=["available"])
     rows = [("market_sessions", market.period_end.nunique(), 0),
             ("market_observations", len(market), 0),
             ("distinct_isins", market.entity_id.nunique(), 0),
@@ -40,6 +42,8 @@ def main() -> None:
             ("verified_case_isins", int((events.needs_verification.eq(0) & events["isin"].astype(str).str.fullmatch(r"IN[A-Z0-9]{10}")).sum()), 0),
             ("verified_case_classifications", int((events.needs_verification.eq(0) & events.sector.notna() & events.is_financial.isin([0, 1])).sum()), 0),
             ("verified_event_components", int(evidence.needs_verification.eq(0).sum()), 0),
+            ("verified_fx_observations", int(fx.needs_verification.eq(0).sum()), 0),
+            ("quarters_with_verified_fx", int(fx_coverage.available.eq(1).sum()), 0),
             ("verified_matched_peers", peers.loc[peers.needs_verification.eq(0), "entity_id"].nunique(), 1)]
     table = pd.DataFrame([{"item": name, "observed": value, "needs_verification": pending, "is_synthetic": 0}
                           for name, value, pending in rows])

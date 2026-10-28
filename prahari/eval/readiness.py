@@ -12,7 +12,7 @@ from prahari.data.artifacts import read_features
 from prahari.data.firewall import assert_real, write_real_table
 from prahari.data.manual import read_manual
 from prahari.eval.preregistration import verify
-from prahari.explain.templates import case_unavailable, memo
+from prahari.explain.templates import case_unavailable, memo, workflow_text
 from prahari.policy.threshold import bayes_threshold
 
 
@@ -82,6 +82,13 @@ def build_bundle(config: Config) -> dict:
     parameters = [{"parameter": key, "value": policy[key], "is_synthetic": 0} for key in ("cost_fn", "cost_fp", "alert_frac", "tier1_pd")]
     parameters.append({"parameter": "tau_star", "value": bayes_threshold(policy["cost_fn"], policy["cost_fp"]), "is_synthetic": 0})
     write_real_table(pd.DataFrame(parameters), config.path("app_policy"))
+    workflow = config.section("workflow_config")
+    records = [{"tier": tier, "action": workflow_text(row["action_code"]),
+        "internal_sla_business_days": row["internal_sla_business_days"], "reference_version": workflow["reference_version"],
+        "reference_clause": workflow["reference_clause"], "reference_url": workflow["reference_url"],
+        "interpretation": "internal_workflow_mapping_not_automatic_fraud_classification", "is_synthetic": 0}
+        for tier, row in workflow["tiers"].items()]
+    write_real_table(pd.DataFrame(records), config.path("workflow"))
     checks = pd.read_csv(config.path("panel_acceptance"))
     assert_real(checks)
     status = [
@@ -110,6 +117,10 @@ def build_bundle(config: Config) -> dict:
                          {"label": "Financial fields", "value": count("verified_financial_fields")},
                          {"label": "Tests passed", "value": tests.get("passed")}],
                 "calibration_images": [path.name for path in sorted(config.path("benchmark_plots").glob("*.png"))],
-                "files": {key: relative(key) for key in ("app_snapshots", "app_features", "case_catalog", "run_status", "app_policy", "panel_acceptance", "collection_status", "source_catalog", "coverage_parity", "feature_coverage", "memos", "provenance", "case_cards", "india_metrics", "india_operating_metrics", "evaluation_status", "ablations", "cost_curve", "shadow_prices", "detection_curve", "placebo", "anti_gaming", "amendments", "benchmark_development_metrics", "benchmark_final_metrics", "benchmark_plots")}}
-    config.path("app_manifest").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+                "files": {key: relative(key) for key in ("app_snapshots", "app_features", "case_catalog", "run_status", "app_policy", "panel_acceptance", "collection_status", "fx_coverage", "source_catalog", "coverage_parity", "feature_coverage", "memos", "provenance", "case_cards", "india_metrics", "india_operating_metrics", "evaluation_status", "ablations", "cost_curve", "shadow_prices", "threshold_scan", "detection_curve", "placebo", "anti_gaming", "archetypes", "drift", "hysteresis", "policy_scenarios", "diagnostics_status", "workflow", "amendments", "benchmark_development_metrics", "benchmark_final_metrics", "benchmark_plots")}}
+    manifest["files"].update({key: relative(key) for key in ("rating_lead_cases", "rating_lead_summary")})
+    path = config.path("app_manifest")
+    temporary = path.with_suffix(path.suffix+".partial")
+    temporary.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    temporary.replace(path)
     return manifest

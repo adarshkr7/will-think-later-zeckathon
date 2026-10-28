@@ -47,6 +47,49 @@ def chs_score(values: Mapping, settings: Mapping) -> Value:
     return evaluate(lambda: settings["intercept"] + sum(weight * number(values, name) for name, weight in settings["weights"].items()))
 
 
+def relative_chs_features(table: pd.DataFrame, settings: Mapping) -> pd.DataFrame:
+    """Exactly identify median/IQR-standardized CHS without inventing universe ME.
+
+    CHS (2008), Table IV, is linear in RSIZE=log(ME_i)-log(ME_universe).
+    Replacing RSIZE with log(ME_i)-median(log(ME)) adds one common constant
+    to every otherwise eligible score. Subtracting the cross-section median
+    removes that constant, and IQR is translation invariant. This is an
+    algebraic identity, not a missing-value zero or an estimated market total.
+    Raw RSIZE and raw CHS remain unknown when their denominator is unknown.
+    """
+    require_snapshot(table)
+    weights = settings["weights"]
+    other_names = [name for name in weights if name != "relsize"]
+    other = table.reindex(columns=other_names).apply(pd.to_numeric, errors="raise").replace([np.inf, -np.inf], np.nan)
+    capital = pd.to_numeric(table.market_cap, errors="raise").replace([np.inf, -np.inf], np.nan)
+    logs = np.log(capital.where(capital.gt(0)))
+    eligible = other.notna().all(axis=1) & logs.notna()
+    center = logs.loc[eligible].median() if eligible.any() else np.nan
+    result = table[["entity_id", "max_source_date", "is_synthetic"]].copy()
+    result["market_size_centered"] = (logs-center).where(eligible)
+    result["market_size_centered__reason"] = np.where(eligible, "", "incomplete_chs_inputs_or_market_equity")
+    projection = (settings["intercept"] + other.mul(pd.Series({name: weights[name] for name in other_names})).sum(axis=1, min_count=len(other_names))
+                  + weights["relsize"]*result.market_size_centered).where(eligible)
+    result["chs_relative_score"] = projection
+    result["chs_relative_score__reason"] = np.where(eligible, "", "incomplete_chs_inputs_or_market_equity")
+    result["chs_center"], result["chs_scale"], result["chs_standardized"] = np.nan, np.nan, np.nan
+    result["chs_standardized__reason"] = "insufficient_cross_section_spread"
+    known = projection.dropna()
+    if len(known) > 1:
+        spread = known.quantile(.75)-known.quantile(.25)
+        if spread > 0:
+            result["chs_center"], result["chs_scale"] = known.median(), spread
+            result["chs_standardized"] = (projection-known.median())/spread
+            result.loc[eligible, "chs_standardized__reason"] = ""
+    result["chs_standardization_basis"] = "centered_market_size"
+    if eligible.any():
+        result.loc[eligible, "max_source_date"] = table.max_source_date.max()
+        if table.is_synthetic.eq(1).any():
+            result.loc[eligible, "is_synthetic"] = 1
+    result.attrs.update(table.attrs)
+    return result
+
+
 def market_statistics(prices: pd.DataFrame, indices: pd.DataFrame, settings: dict) -> pd.DataFrame:
     """Past-only raw-price log excess returns and annualized daily volatility.
 

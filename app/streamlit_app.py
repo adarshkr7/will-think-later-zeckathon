@@ -163,11 +163,23 @@ def main() -> None:
                 if key == "detection_curve":
                     st.plotly_chart({"data": [{"type": "scatter", "mode": "lines+markers", "name": f"{a}: {field}", "x": g.lead_quarters.tolist(), "y": g[field].tolist(), "connectgaps": False} for a, g in table.groupby("arena") for field in ("recall", "rating_sub_ig_recall", "altman_distress_recall")], "layout": {"xaxis": {"title": "Quarters before qualifying event", "autorange": "reversed"}, "yaxis": {"title": "Share of verified cases"}}}, width="stretch")
                 st.dataframe(table, hide_index=True, width="stretch")
+        for key in ("rating_lead_summary", "rating_lead_cases"):
+            table = frame(path, key)
+            if not table.empty:
+                st.subheader(key.replace("_", " ").title())
+                st.dataframe(table, hide_index=True, width="stretch")
         with st.expander("Coverage, sources and amendments"):
-            for key in ("panel_acceptance", "collection_status", "coverage_parity", "source_catalog"):
+            for key in ("panel_acceptance", "collection_status", "fx_coverage", "coverage_parity", "source_catalog"):
                 st.write(key.replace("_", " ").title())
                 st.dataframe(frame(path, key), hide_index=True, width="stretch")
             st.text(output.text("amendments") or "No amendment log has been created.")
+        with st.expander("Registered diagnostics and internal review workflow"):
+            for key in ("drift", "hysteresis", "policy_scenarios", "diagnostics_status", "archetypes", "workflow"):
+                table = frame(path, key)
+                if not table.empty:
+                    st.subheader(key.replace("_", " ").title())
+                    st.dataframe(table, hide_index=True, width="stretch")
+            st.caption("Counterfactual budgets and turnover experiments do not change the operational review cap. Review tiers and targets are internal workflow settings; no automatic regulatory fraud classification is made.")
 
 
 if __name__ == "__main__":

@@ -28,6 +28,7 @@ TEMPLATES = {
     "exretavg": ("Weighted excess price return is {value}.", "Investigate sustained underperformance and funding access."),
     "sigma": ("Observed annualized equity volatility is {value}.", "Review abrupt market dislocations and corporate actions."),
     "relsize": ("Log market equity relative to the observed universe is {value}.", "Assess market access and concentration."),
+    "market_size_centered": ("Log market equity relative to the eligible cohort median is {value}.", "Assess relative market access; the common universe-size offset cancels exactly in standardized CHS."),
     "mb": ("The market-to-book equity input is {value}.", "Inspect book-equity quality and the configured floor."),
     "price": ("The capped log-price input is {value}.", "Verify price units, cap assumptions and corporate actions."),
     "auditor_exit_8q": ("The observed auditor-exit signal is {value}.", "Obtain the resignation letter and unresolved audit issues."),
@@ -73,11 +74,16 @@ def memo(header: Mapping, drivers: list[Mapping], evidence: list[Mapping]) -> st
         label = header.get("symbols")
     if pd.isna(label):
         label = header["entity_id"]
-    lines = [f"# Credit review: {label}",
+    title = "EWS trigger note" if header.get("tier") == "tier1" else "Credit review"
+    lines = [f"# {title}: {label}",
              f"Scoring date: {display(header.get('scoring_date'))}",
              f"Rank: {display(header.get('rank'))}; tier: {display(header.get('tier'))}",
              f"Model probability (4Q): {display(header.get('pd_4q'))}; (8Q): {display(header.get('pd_8q'))}",
              f"Observed hard trigger: {display(header.get('hard_trigger'))}"]
+    if header.get("workflow_action_code"):
+        lines += [workflow_text(header["workflow_action_code"]),
+                  f"Internal review target: {display(header.get('sla_business_days'))} business days. This is a PRAHARI workflow setting, not a prescribed RBI deadline.",
+                  f"Historical framework reference: {display(header.get('workflow_reference'))}."]
     for driver in drivers:
         lines.append("- " + driver_text(driver["feature"], driver) + f" Removal effect: {display(driver.get('pd_points'))} percentage points.")
     lines.append("Single-driver probability removal effects overlap and do not add up to total probability. They describe model sensitivity, not causation.")
@@ -110,3 +116,21 @@ def case_card(record: Mapping, observations: list[Mapping], path: list[Mapping])
         lines.append("| " + " | ".join(display(row.get(name)) for name in ("scoring_date", "pd_4q", "rank", "review_cap", "tier")) + " |")
     lines += ["", "Incomplete score coverage is retained in the evaluation denominator. No causal explanation is inferred from a missed or unavailable score.", ""]
     return "\n".join(lines)
+
+
+def archetype_text(result: Mapping) -> str:
+    if result.get("reason"):
+        return "No eligible cross-case archetype is available: " + str(result["reason"]) + ".\n"
+    return (f"Explanation-pattern match: {display(result.get('archetype'))}; normalized distance {display(result.get('distance'))}. "
+            "This retrospective comparison excludes the borrower and its case-peer component. It is not a historical score input or a causal claim.\n")
+
+
+def workflow_text(code: str) -> str:
+    actions = {
+        "escalate_ews": "Escalate this EWS note for human fraud-risk review. Preserve the dated evidence, obtain borrower explanations and record the reviewer's decision under the bank's approved process.",
+        "verify_evidence": "Request and reconcile supporting records, track unresolved discrepancies and escalate material concerns through the bank's approved EWS process.",
+        "monitor_evidence": "Monitor the cited signals and record follow-up evidence under the bank's approved EWS process.",
+    }
+    if code not in actions:
+        raise ValueError("Unknown deterministic workflow action")
+    return actions[code]

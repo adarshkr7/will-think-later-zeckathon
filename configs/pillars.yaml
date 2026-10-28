@@ -38,6 +38,7 @@ features:
   sigma: market
   exretavg: market
   relsize: market
+  market_size_centered: market
   mb: market
   price: market
   chs_standardized: market

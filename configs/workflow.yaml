@@ -1,0 +1,7 @@
+reference_version: RBI fraud-risk directions 2024, historical design reference
+reference_url: https://systemhealth.rbi.org.in/Scripts/BS_ViewMasDirections.aspx_id%3D12702%281%29.html
+reference_clause: '3.1.1'
+tiers:
+  tier1: {action_code: escalate_ews, internal_sla_business_days: 2}
+  tier2: {action_code: verify_evidence, internal_sla_business_days: 5}
+  tier3: {action_code: monitor_evidence, internal_sla_business_days: 10}

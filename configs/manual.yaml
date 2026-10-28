@@ -6,10 +6,10 @@ tables:
     flags: [date_is_imputed, needs_verification, is_synthetic]
     source: source_url
   groups:
-    columns: [entity_id, group_id, group_name, period_end, public_date, source_url, date_is_imputed, needs_verification, is_synthetic]
+    columns: [entity_id, group_id, group_name, membership_complete, period_end, public_date, source_url, date_is_imputed, needs_verification, is_synthetic]
     dates: [period_end, public_date]
     numeric: []
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    flags: [membership_complete, date_is_imputed, needs_verification, is_synthetic]
     source: source_url
   entity_aliases:
     columns: [entity_id, alias, period_end, public_date, source_url, source_page, date_is_imputed, needs_verification, is_synthetic]

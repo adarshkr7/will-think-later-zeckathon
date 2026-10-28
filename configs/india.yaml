@@ -37,6 +37,7 @@ financials:
   - equity
   - pat
   annual_only_fields:
+  - equity_issued
   - cfo
   - shares_outstanding
   - related_party_loans_advances
@@ -119,6 +120,8 @@ market:
   - nse
   - bse
   index_aliases:
+    S&P CNX Nifty: Nifty 50
+    S&P CNX 500: Nifty 500
     CNX Nifty: Nifty 50
     CNX 500: Nifty 500
 network:

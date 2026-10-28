@@ -123,7 +123,7 @@ def validate_table(table: pd.DataFrame, name: str, settings: dict) -> dict:
             if row["field"] == "auditor_opinion":
                 if row["unit"] != "text" or row["text_value"] not in settings["validation"]["audit_opinions"]:
                     raise ValueError("Auditor opinion evidence needs a recognized sourced opinion")
-            elif row["field"] in ("going_concern_flag", "caro_default_flag", "caro_fraud_flag"):
+            elif row["field"] in ("going_concern_flag", "caro_default_flag", "caro_fraud_flag", "equity_issued"):
                 if row["unit"] != "flag" or row["numeric_value"] not in (0, 1):
                     raise ValueError("Audit flags require explicit binary source evidence")
             elif row["field"] == "shares_outstanding":
@@ -135,6 +135,8 @@ def validate_table(table: pd.DataFrame, name: str, settings: dict) -> dict:
             raise ValueError("Incomplete numerical row must set needs_verification=1")
         if name == "share_counts" and (row["shares_outstanding"] is None or row["shares_outstanding"] <= 0):
             raise ValueError("Shareholding share counts need a positive sourced count")
+        if name == "fx_rates" and (row["inr_per_usd"] is None or row["inr_per_usd"] <= 0):
+            raise ValueError("FX observations need a positive sourced INR/USD rate")
         verified += 1
     missing = table.isna().sum().loc[lambda series: series.gt(0)].to_dict()
     LOG.info("%s rows=%s dates_imputed=%s missing=%s verified=%s pending=%s",

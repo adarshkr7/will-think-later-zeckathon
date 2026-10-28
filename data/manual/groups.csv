@@ -1,1 +1,1 @@
-entity_id,group_id,group_name,period_end,public_date,source_url,date_is_imputed,needs_verification,is_synthetic
+entity_id,group_id,group_name,membership_complete,period_end,public_date,source_url,date_is_imputed,needs_verification,is_synthetic

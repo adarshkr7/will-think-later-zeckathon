@@ -1,0 +1,2 @@
+entity_id,pat,cfo,receivables,current_assets,current_liabilities,total_assets,total_liabilities,equity,retained_earnings,total_debt,consolidated_total_debt,commercial_paper,st_borrowings,lt_debt,is_synthetic
+FIX_A,10,12,20,40,25,100,60,40,10,50,70,5,20,30,1

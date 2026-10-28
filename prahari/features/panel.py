@@ -60,7 +60,7 @@ def build_features(config, t, arena: str = "P", *, sources=None, history_cache: 
     """
     import numpy as np
     from prahari.data.feature_inputs import load_feature_sources
-    from prahari.features.chs import chs_accounting, chs_score, market_statistics, weighted_average
+    from prahari.features.chs import chs_accounting, chs_score, market_statistics, weighted_average, relative_chs_features
     from prahari.features.common import divide, evaluate, number
     from prahari.features.forensic import forensic_features
     from prahari.features.nbfc import nbfc_features
@@ -116,16 +116,14 @@ def build_features(config, t, arena: str = "P", *, sources=None, history_cache: 
     source_dates.append("history_component_date")
     scores = [chs_score(record, settings["chs"]) for record in result.to_dict(orient="records")]
     result["chs_score"], result["chs_score__reason"] = [value.value for value in scores], [value.reason for value in scores]
-    chs = result.chs_score.dropna()
-    result["chs_standardized"] = np.nan
-    result["chs_center"], result["chs_scale"] = np.nan, np.nan
-    result["chs_standardized__reason"] = "insufficient_cross_section_spread"
-    if len(chs) > 1:
-        spread = chs.quantile(.75) - chs.quantile(.25)
-        if spread > 0:
-            result["chs_center"], result["chs_scale"] = chs.median(), spread
-            result["chs_standardized"] = (result.chs_score - chs.median()) / spread
-            result.loc[result.chs_standardized.notna(), "chs_standardized__reason"] = ""
+    for column in source_dates:
+        result[column] = pd.to_datetime(result[column], utc=True)
+    result["max_source_date"] = result[source_dates].max(axis=1)
+    result.attrs["as_of"] = cutoff.isoformat()
+    relative = relative_chs_features(result, settings["chs"])
+    for column in relative:
+        if column != "entity_id":
+            result[column] = relative[column]
     interactions = [evaluate(lambda record=record: number(record, "pledge_pct") / 100 * number(record, "tlmta") * max(0, -number(record, "nimtaavg"))) for record in result.to_dict(orient="records")]
     result["psp_interaction"], result["psp_interaction__reason"] = [value.value for value in interactions], [value.reason for value in interactions]
     for column in source_dates:

@@ -49,7 +49,7 @@ def main() -> None:
         raise RuntimeError("Production pipeline stopped at panel acceptance; see outputs/panel_acceptance.csv and docs/DATA_REQUESTS.md")
     if not registered:
         for arena in stages["arenas"]:
-            dates = stages["readiness_universe_dates"] if args.readiness and arena == "U" else [None]
+            dates = (stages["readiness_universe_dates"] or [None]) if args.readiness and arena == "U" else [None]
             for day in dates:
                 options = ["--arena", arena, *(["--date", day] if day else [])]
                 run(config, stages["universe"], *options)
@@ -64,6 +64,8 @@ def main() -> None:
         for arena in stages["arenas"]:
             run(config, stages["replay"], "--arena", arena)
         run(config, stages["evaluation"])
+        if config.section("diagnostics_config")["enabled_after_registration"]:
+            run(config, stages["diagnostics"])
     else:
         logging.info("Readiness mode: no registration, replay, Indian performance evaluation or sealed opening")
     run(config, stages["tests"])

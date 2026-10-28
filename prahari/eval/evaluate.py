@@ -8,13 +8,14 @@ from prahari.data.asof import as_of
 from prahari.data.firewall import assert_real, write_real_table
 from prahari.data.manual import read_manual
 from prahari.eval.ablation import ablation_results
-from prahari.eval.detection_curve import detection_curve
+from prahari.eval.detection_curve import detection_curve, rating_lead_comparison
 from prahari.eval.india_metrics import recall_table, strict_lead_observations, clustered_recall
 from prahari.eval.operating_metrics import operating_metrics, verified_window_labels
 from prahari.eval.placebo import within_firm_placebo
 from prahari.eval.preregistration import verify
 from prahari.policy.cost import cost_curve, threshold_scan
 from prahari.explain.templates import case_card
+from prahari.eval.archetypes import export_archetypes
 
 
 def evaluate(config) -> None:
@@ -24,6 +25,7 @@ def evaluate(config) -> None:
     survival, memberships = read_manual(config, "peer_survival"), read_manual(config, "groups")
     ratings = read_manual(config, "rating_actions")
     metrics, operating, observations, detection, placebo, curves, ablations, thresholds = [], [], [], [], [], [], [], []
+    rating_lead_cases, rating_lead_summaries = [], []
     status = []
     for arena in ("P", "U"):
         source = config.path("india_predictions") / (arena + ".parquet")
@@ -35,6 +37,7 @@ def evaluate(config) -> None:
         if not predictions.registration_hash.eq(registration).all():
             raise ValueError("Evaluation predictions do not match the current registration")
         metrics.append(recall_table(predictions, events, settings["evaluation"], arena))
+        export_archetypes(config, predictions, events, peers, arena)
         operating.append(operating_metrics(predictions, events, survival, peers, policy, arena))
         for lead in settings["evaluation"]["recall_leads"]:
             obs = strict_lead_observations(predictions, events, lead).assign(arena=arena)
@@ -55,6 +58,10 @@ def evaluate(config) -> None:
             destination.write_text(case_card(case, case_observations.to_dict(orient="records"), history.to_dict(orient="records")), encoding="utf-8")
         detection.append(detection_curve(predictions, events, settings["evaluation"], arena,
             rating_actions=ratings, rating_settings=config.section("feature_config")["soft"]))
+        lead_cases, lead_summary = rating_lead_comparison(predictions, events, ratings,
+            settings["evaluation"], config.section("feature_config")["soft"], arena)
+        rating_lead_cases.append(lead_cases)
+        rating_lead_summaries.append(lead_summary)
         placebo.append(within_firm_placebo(predictions, events, settings["evaluation"], config.seed, arena))
         ablations.append(ablation_results(predictions, events, peers, survival, settings, policy, config.seed, arena))
         for day, quarter in predictions.groupby("scoring_date"):
@@ -65,7 +72,8 @@ def evaluate(config) -> None:
             thresholds.append(threshold_scan(quarter.pd_4q.to_numpy(), labels.to_numpy(), policy, is_synthetic=0).assign(arena=arena, scoring_date=day))
         status.append({"arena": arena, "component": "evaluation", "status": "registered_evaluated", "reason": "Unknown scores retained in denominators; incomplete coverage flagged", "is_synthetic": 0})
     for key, frames in [("india_metrics", metrics), ("india_operating_metrics", operating), ("india_case_observations", observations),
-                        ("detection_curve", detection), ("placebo", placebo), ("ablations", ablations), ("cost_curve", curves), ("threshold_scan", thresholds)]:
+                        ("detection_curve", detection), ("rating_lead_cases", rating_lead_cases), ("rating_lead_summary", rating_lead_summaries),
+                        ("placebo", placebo), ("ablations", ablations), ("cost_curve", curves), ("threshold_scan", thresholds)]:
         if frames:
             write_real_table(pd.concat(frames, ignore_index=True), config.path(key))
     if curves:

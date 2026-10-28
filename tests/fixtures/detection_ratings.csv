@@ -1,0 +1,5 @@
+entity_id,period_end,public_date,agency,instrument,rating_to,source_url,date_is_imputed,needs_verification,is_synthetic
+FIX_A,2019-06-01,2019-06-03,fixture,long,BB,fixture://rating_a,0,0,1
+FIX_A,2018-06-01,2020-02-01,fixture,long,B,fixture://later_publication,0,0,1
+FIX_B,2018-06-01,2018-06-04,fixture,long,BBB,fixture://rating_b,0,0,1
+FIX_B,2020-01-16,2020-01-17,fixture,long,BB,fixture://post_event_rating,0,0,1

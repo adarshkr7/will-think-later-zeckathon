@@ -10,7 +10,7 @@ import pandas as pd
 from prahari.policy.threshold import bayes_threshold
 
 
-def build_watchlist(scores: pd.DataFrame, settings: dict, *, probability: str = "pd_4q") -> pd.DataFrame:
+def build_watchlist(scores: pd.DataFrame, settings: dict, *, probability: str = "pd_4q", priority_columns: tuple[str, ...] = ()) -> pd.DataFrame:
     """Expected-cost ordering subject to floor(alert_frac*N); hard triggers first.
 
     No unscored borrower fills a spare slot without an observed hard trigger.
@@ -25,7 +25,9 @@ def build_watchlist(scores: pd.DataFrame, settings: dict, *, probability: str = 
     hard = result["hard_trigger"].eq(1) if "hard_trigger" in result else pd.Series(False, index=result.index)
     result["observed_hard_trigger"] = hard.astype(int)
     limit = math.floor(settings["alert_frac"] * len(result))
-    result = result.sort_values(["observed_hard_trigger", probability, "entity_id"], ascending=[False, False, True], na_position="last", kind="stable")
+    if any(name not in result for name in priority_columns):
+        raise ValueError("Unknown declared ranking priority")
+    result = result.sort_values(["observed_hard_trigger", *priority_columns, probability, "entity_id"], ascending=[False]*(len(priority_columns)+2)+[True], na_position="last", kind="stable")
     eligible = result[probability].notna() | result.observed_hard_trigger.eq(1)
     result["rank"] = pd.Series(np.arange(1, len(result) + 1), index=result.index).where(eligible).astype("Int64")
     chosen = result.loc[eligible].head(limit).index

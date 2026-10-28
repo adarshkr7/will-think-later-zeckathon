@@ -120,4 +120,5 @@ def load_feature_sources(config: Config) -> FeatureSources:
               "governance": read_manual(config, "governance_events"), "nbfc": read_manual(config, "nbfc_metrics")}
     tables["fx"] = read_manual(config, "fx_rates")
     tables["signal_coverage"] = read_manual(config, "signal_coverage")
+    tables["groups"] = read_manual(config, "groups")
     return FeatureSources(tables, ids)

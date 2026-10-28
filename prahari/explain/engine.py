@@ -44,11 +44,17 @@ def explain_snapshot(config, features, watchlist, models, designs, sources) -> p
                 from scipy.special import logit
                 intercept = float(logit(primary["priors"][horizon]) - primary["nbfc_logit_scale"] * primary["nbfc_center"])
                 contributions = {"nbfc_score": primary["nbfc_logit_scale"] * values["nbfc_score"]}
-            chs_base, chs_terms = linear_chs_allocation(values, chs, values["chs_center"], values["chs_scale"], primary["chs_weight"])
+            chs_terms_settings = chs
+            if values.get("chs_standardization_basis") == "centered_market_size":
+                chs_terms_settings = {**chs, "weights": {("market_size_centered" if name == "relsize" else name): weight for name, weight in chs["weights"].items()}}
+            chs_base, chs_terms = linear_chs_allocation(values, chs_terms_settings, values["chs_center"], values["chs_scale"], primary["chs_weight"])
             intercept += chs_base
             for name, value in chs_terms.items():
                 contributions[name] = contributions.get(name, 0) + value
             contributions.update(soft_contributions(values, primary, arena))
+            if primary.get("group_enabled") and arena in primary["group_arenas"]:
+                values["group_stress"] = scored["group_stress"]
+                contributions["group_stress"] = primary["group_weight"] * scored["group_stress"]
             reconcile(intercept, contributions, scored[f"logit_{horizon}"], spec["tolerance"])
             pd_points = marginal_pd_points(scored[f"logit_{horizon}"], contributions)
             aggregate = pillar_contributions(contributions, pillars)
@@ -69,7 +75,10 @@ def explain_snapshot(config, features, watchlist, models, designs, sources) -> p
             if horizon == "4q" and scored["deep_review"] == 1:
                 evidence = evidence_items(sources, values["entity_id"], features.attrs["as_of"])
                 ranked = sorted(drivers, key=lambda row: (-row["logit_contribution"], row["feature"]))[:3]
-                text = memo({**scored, "pillars": aggregate}, ranked, evidence.to_dict(orient="records"))
+                workflow = config.section("workflow_config")
+                tier = workflow["tiers"].get(scored["tier"], {})
+                text = memo({**scored, "pillars": aggregate, "workflow_action_code": tier.get("action_code"),
+                    "sla_business_days": tier.get("internal_sla_business_days"), "workflow_reference": workflow["reference_url"]}, ranked, evidence.to_dict(orient="records"))
                 target = config.path("memos") / arena / quarter / (values["entity_id"] + ".md")
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_text(text, encoding="utf-8")

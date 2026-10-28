@@ -1,0 +1,18 @@
+enabled_after_registration: true
+drift:
+  bins: 10
+  smoothing_count: 0.5
+  minimum_observations: 30
+  features: [roa, tl_ta, wc_ta, chs_score, sigma, exretavg]
+  source: https://documentation.sas.com/api/collections/mdlmgrcdc/v_053/docsets/mdlmgrug/content/mdlmgrug.pdf
+hysteresis:
+  release_threshold_multiplier: 0.8
+scenarios:
+  review_slots: [20, 40, 60]
+  false_negative_cost_ratios: [10, 20, 50]
+anti_gaming:
+  pat_inflation_fraction: 0.3
+  debt_reduction_fraction: 0.4
+  cp_rollover_fraction: 1.0
+  relative_pd_drop_limit: 0.1
+  scenarios: [accrual_inflation, spv_debt_shift, cp_rollover]

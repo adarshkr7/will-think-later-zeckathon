@@ -62,6 +62,8 @@ def primary_logit(values: Mapping, hdm_probability: float, training_prior: float
             raise MissingInput("invalid_financial_classification")
         contributions["chs_standardized"] = settings["chs_weight"] * number(values, "chs_standardized")
         contributions.update(soft_contributions(values, settings, arena))
+        if settings.get("group_enabled") and arena in settings["group_arenas"]:
+            contributions["group_stress"] = settings["group_weight"] * number(values, "group_stress")
         return sum(contributions.values())
     value = evaluate(calculate)
     return value, contributions if not value.reason else {}

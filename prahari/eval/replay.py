@@ -7,6 +7,7 @@ import pandas as pd
 from prahari.config import Config
 from prahari.data.artifacts import load_hdm_models, read_features
 from prahari.data.feature_inputs import load_feature_sources
+from prahari.data.asof import as_of
 from prahari.data.firewall import write_real_table
 from prahari.eval.preregistration import verify
 from prahari.models.scoring import score_snapshot
@@ -26,7 +27,7 @@ def replay(config: Config, arena: str) -> pd.DataFrame:
     previous_features, previous_scores = None, None
     for day in pd.date_range(dates["first_quarter"], dates["last_quarter"], freq="QE-MAR"):
         features = read_features(config, str(day.date()), arena)
-        scored, designs = score_snapshot(features, models, settings, arena)
+        scored, designs = score_snapshot(features, models, settings, arena, groups=as_of(sources.tables["groups"], day))
         watchlist = build_watchlist(scored, policy)
         research_8q = build_watchlist(scored, policy, probability="pd_8q").set_index("entity_id")
         for field in ("deep_review", "rank", "tier"):

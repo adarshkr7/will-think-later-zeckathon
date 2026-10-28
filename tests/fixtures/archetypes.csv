@@ -1,0 +1,4 @@
+entity_id,case_group,liquidity,solvency,is_synthetic
+FIX_A,GROUP_A,1,0,1
+FIX_B,GROUP_A,1,0,1
+FIX_C,GROUP_B,0,1,1
