@@ -2,9 +2,10 @@ item,observed,needs_verification,is_synthetic
 market_sessions,61,0,0
 market_observations,101383,0,0
 distinct_isins,1718,0,0
-cached_source_pdfs,6,0,0
+cached_source_pdfs,27,0,0
 unavailable_source_pdfs,1,1,0
 verified_financial_fields,46,0,0
 financial_entities,1,0,0
-verified_panel_events,0,1,0
+verified_panel_events,12,0,0
+verified_event_components,24,0,0
 verified_matched_peers,0,1,0

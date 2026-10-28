@@ -1,4 +1,10 @@
 tables:
+  event_evidence:
+    columns: [entity_id, event_type, period_end, public_date, cured_before_final_default, source_url, verified_on, verification_method, event_rule_version, date_is_imputed, needs_verification, is_synthetic]
+    dates: [period_end, public_date, verified_on]
+    numeric: []
+    flags: [cured_before_final_default, date_is_imputed, needs_verification, is_synthetic]
+    source: source_url
   share_counts:
     columns: [entity_id, period_end, public_date, shares_outstanding, source_doc, date_is_imputed, needs_verification, is_synthetic]
     dates: [period_end, public_date]

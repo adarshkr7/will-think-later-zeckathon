@@ -28,6 +28,7 @@ def main() -> None:
     documents = pd.read_csv(config.path("source_catalog"))
     cached = documents.status.eq("cached")
     events, peers = read_manual(config, "events"), read_manual(config, "peers")
+    evidence = read_manual(config, "event_evidence")
     rows = [("market_sessions", market.period_end.nunique(), 0),
             ("market_observations", len(market), 0),
             ("distinct_isins", market.entity_id.nunique(), 0),
@@ -35,7 +36,8 @@ def main() -> None:
             ("unavailable_source_pdfs", int((~cached).sum()), 1),
             ("verified_financial_fields", len(fields), 0),
             ("financial_entities", fields.entity_id.nunique(), 0),
-            ("verified_panel_events", events.loc[events.needs_verification.eq(0), "entity_id"].nunique(), 1),
+            ("verified_panel_events", events.loc[events.needs_verification.eq(0), "entity_id"].nunique(), 0),
+            ("verified_event_components", int(evidence.needs_verification.eq(0).sum()), 0),
             ("verified_matched_peers", peers.loc[peers.needs_verification.eq(0), "entity_id"].nunique(), 1)]
     table = pd.DataFrame([{"item": name, "observed": value, "needs_verification": pending, "is_synthetic": 0}
                           for name, value, pending in rows])

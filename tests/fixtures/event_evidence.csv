@@ -1,0 +1,7 @@
+entity_id,event_type,period_end,public_date,cured_before_final_default,source_url,verified_on,verification_method,event_rule_version,date_is_imputed,needs_verification,is_synthetic
+FIX_A,D_rating,2010-01-01,2010-01-02,1,fixture://a-cured,2026-10-28,human_fixture,uncured-d-v1,0,0,1
+FIX_A,payment_default,2019-01-01,2019-01-03,,fixture://a-payment,2026-10-28,human_fixture,uncured-d-v1,0,0,1
+FIX_A,D_rating,2019-01-03,2019-01-03,0,fixture://a-final,2026-10-28,human_fixture,uncured-d-v1,0,0,1
+FIX_A,cirp,2020-01-01,2020-01-05,,fixture://a-cirp,2026-10-28,human_fixture,uncured-d-v1,0,0,1
+FIX_B,D_rating,2011-01-01,2011-01-02,1,fixture://b-cured,2026-10-28,human_fixture,uncured-d-v1,0,0,1
+FIX_B,D_rating,2021-01-01,2021-01-02,0,fixture://b-final,2026-10-28,human_fixture,uncured-d-v1,0,0,1

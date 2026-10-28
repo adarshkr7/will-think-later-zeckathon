@@ -67,14 +67,21 @@ def validate_table(table: pd.DataFrame, name: str, settings: dict) -> dict:
         if name != "trading_calendar" and row["public_date"] is not None and row["public_date"] < row["period_end"]:
             raise ValueError(f"{name}: public date precedes observation period")
         if name == "events":
-            if any(row[key] is None for key in ("name", "sector", "is_financial")):
-                raise ValueError("Verified events need sourced company classification")
-            if row["nse_symbol"] is None and row["bse_code"] is None:
-                raise ValueError("The listed panel needs a sourced exchange identifier")
+            # Event verification and matching metadata have separate acceptance
+            # checks. Human-verified dates do not license guessed classifications.
+            if row["name"] is None:
+                raise ValueError("Verified events need a company name")
             dates = [row[key] for key in ("first_payment_default_date", "first_D_rating_date", "cirp_admission_date")
                      if row[key] is not None]
             if not dates or row["event_date"] != min(dates):
                 raise ValueError("Event date must be the earliest verified candidate date")
+        if name == "event_evidence":
+            if row["event_type"] not in ("payment_default", "D_rating", "cirp"):
+                raise ValueError("Unrecognized event component")
+            if any(row[key] is None for key in ("verified_on", "verification_method", "event_rule_version")):
+                raise ValueError("Verified event evidence needs review provenance")
+            if row["event_type"] == "D_rating" and row["cured_before_final_default"] is None:
+                raise ValueError("Verified D evidence needs an explicit cure determination")
         if name == "annual_financials":
             if row["basis"] not in settings["validation"]["fiscal_basis"]:
                 raise ValueError("Unrecognized accounting basis")
@@ -143,6 +150,10 @@ def validate_manual(config: Config) -> pd.DataFrame:
         path = config.path("manual") / f"{name}.csv"
         table = pd.read_csv(path, dtype=str)
         rows.append(validate_table(table, name, settings))
+    from prahari.data.events import validate_event_evidence
+    from prahari.data.manual import read_manual
+    validate_event_evidence(read_manual(config, "events"), read_manual(config, "event_evidence"),
+                            config.section("india_config")["events"])
     return pd.DataFrame(rows)
 
 

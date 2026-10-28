@@ -1,5 +1,6 @@
 check,observed,required,passed,is_synthetic
-verified_events,0,10,0,0
+verified_events,12,10,1,0
+case_identity_and_classification,0,1,0,0
 unique_verified_peers,0,30,0,0
 disjoint_cases_peers,0,0,1,0
 peers_per_case,0,1,0,0

@@ -18,6 +18,8 @@ def select_panel(config: Config) -> pd.DataFrame:
         raise ValueError("Duplicate verified cases")
     if events.empty:
         raise ValueError("No verified earliest events; peer selection has not been published")
+    if events[["sector", "is_financial"]].isna().any().any():
+        raise ValueError("Verified events still need sourced classifications before matching peers")
     evidence = read_manual(config, "peer_survival")
     rows = []
     for case in events.to_dict(orient="records"):

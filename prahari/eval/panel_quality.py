@@ -21,6 +21,8 @@ def panel_acceptance(events: pd.DataFrame, peers: pd.DataFrame, market: pd.DataF
     events = events.loc[events.needs_verification.eq(0)]
     peers = peers.loc[peers.needs_verification.eq(0)]
     case_ids, peer_ids = set(events.entity_id), set(peers.entity_id)
+    metadata = events.reindex(columns=["sector", "is_financial", "nse_symbol", "bse_code", "isin"])
+    metadata_ok = bool(case_ids) and metadata[["sector", "is_financial"]].notna().all().all() and metadata[["nse_symbol", "bse_code", "isin"]].notna().any(axis=1).all()
     adequate_matches = all(peers.loc[peers.matched_to.eq(entity)].entity_id.nunique() >= settings["peers_per_case"]
                            for entity in case_ids) and bool(case_ids)
     stressed = peers.drop_duplicates("entity_id").is_stressed_survivor.eq(1).sum()
@@ -32,6 +34,7 @@ def panel_acceptance(events: pd.DataFrame, peers: pd.DataFrame, market: pd.DataF
     if financials is not None and not financials.empty:
         financial_ok = bool(case_ids) and financials.complete.eq(1).all() and (case_ids | peer_ids).issubset(set(financials.entity_id))
     checks = [("verified_events", len(case_ids), settings["minimum_cases"], len(case_ids) >= settings["minimum_cases"]),
+              ("case_identity_and_classification", int(metadata_ok), 1, metadata_ok),
               ("unique_verified_peers", len(peer_ids), settings["minimum_unique_peers"], len(peer_ids) >= settings["minimum_unique_peers"]),
               ("disjoint_cases_peers", len(case_ids & peer_ids), 0, not case_ids.intersection(peer_ids)),
               ("peers_per_case", int(adequate_matches), 1, adequate_matches),
@@ -104,13 +107,16 @@ def audit_financial_histories(config: Config) -> pd.DataFrame:
                 financial = case["is_financial"]
             else:
                 financial = peers.loc[peers.entity_id.eq(entity), "is_financial"].iloc[0]
-            required = set(settings["financials"]["required_financial" if financial else "required_nonfinancial"])
+            classification_known = pd.notna(financial)
+            required = set(settings["financials"]["required_financial" if classification_known and financial else "required_nonfinancial"])
             available = known.loc[known.entity_id.eq(entity) & known.basis.eq("standalone")]
             periods = available.groupby("period_end").field.agg(set)
-            complete_years = sum(required.issubset(fields) for fields in periods)
+            complete_years = sum(required.issubset(fields) for fields in periods) if classification_known else 0
             rows.append({"entity_id": entity, "matched_to": case["entity_id"], "cutoff": cutoff,
                          "complete_years": complete_years, "required_years": settings["panel"]["minimum_financial_years"],
                          "complete": int(complete_years >= settings["panel"]["minimum_financial_years"]),
                          "needs_verification": int(complete_years < settings["panel"]["minimum_financial_years"]),
+                         "missing_reason": "classification_unknown" if not classification_known else (
+                             "" if complete_years >= settings["panel"]["minimum_financial_years"] else "insufficient_complete_financial_years"),
                          "is_synthetic": int(case["is_synthetic"] or known.is_synthetic.eq(1).any())})
-    return pd.DataFrame(rows, columns=["entity_id", "matched_to", "cutoff", "complete_years", "required_years", "complete", "needs_verification", "is_synthetic"])
+    return pd.DataFrame(rows, columns=["entity_id", "matched_to", "cutoff", "complete_years", "required_years", "complete", "needs_verification", "missing_reason", "is_synthetic"])

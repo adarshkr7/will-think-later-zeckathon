@@ -1,3 +1,8 @@
+events:
+  rule_version: uncured-d-v1
+  exclude_d_cured_before_final_default: true
+  review_date: '2026-10-28'
+  review_method: human_verified_VERIFY_EVENTS.md
 panel:
   peers_per_case: 3
   minimum_unique_peers: 30

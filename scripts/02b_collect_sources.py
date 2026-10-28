@@ -9,9 +9,10 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import pandas as pd
+import requests
 
 from prahari.config import Config
-from prahari.data.downloads import CachedDownloader, SourceUnavailable
+from prahari.data.downloads import CachedDownloader, SourceBlocked, SourceUnavailable
 from prahari.data.firewall import write_real_table
 from prahari.data.uci import sha256_file
 
@@ -35,14 +36,27 @@ def main() -> None:
                              "needs_verification": 1, "is_synthetic": 0})
                 logging.warning("Original source unavailable: %s; no financial values substituted", document["name"])
                 continue
+            except (SourceBlocked, requests.RequestException, FileNotFoundError) as exc:
+                rows.append({"name": document["name"], "source_url": document["url"], "source_doc": None,
+                             "sha256": None, "purpose": document["purpose"], "status": "not_cached",
+                             "needs_verification": 1, "is_synthetic": 0})
+                logging.warning("Source pending: %s (%s); continuing other sources", document["name"], type(exc).__name__)
+                continue
             if not path.read_bytes().startswith(b"%PDF-"):
-                raise ValueError(f"Source returned something other than a PDF: {document['name']}")
+                rows.append({"name": document["name"], "source_url": document["url"],
+                             "source_doc": str(path.relative_to(config.root)).replace("\\", "/"),
+                             "sha256": sha256_file(path), "purpose": document["purpose"],
+                             "status": "cached_non_pdf", "needs_verification": 1, "is_synthetic": 0})
+                logging.warning("Linked resource is not a PDF: %s; original response retained", document["name"])
+                continue
             rows.append({"name": document["name"], "source_url": document["url"],
                          "source_doc": str(path.relative_to(config.root)).replace("\\", "/"),
                          "sha256": sha256_file(path), "purpose": document["purpose"],
                          "status": "cached",
-                         "needs_verification": 1, "is_synthetic": 0})
+                         "needs_verification": document.get("needs_verification", 1), "is_synthetic": 0})
         write_real_table(pd.DataFrame(rows), config.path("source_catalog"))
+        if any(row["status"] in ("not_cached", "cached_non_pdf") for row in rows):
+            raise SystemExit("Some original PDFs remain pending; inspect outputs/source_catalog.csv")
     finally:
         downloader.close()
 

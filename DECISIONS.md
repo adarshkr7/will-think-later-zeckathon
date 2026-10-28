@@ -1,5 +1,11 @@
 # Decisions
 
+- 2026-10-28: Human-approved event rule uncured-d-v1 applies to every company: a D rating counts only if it was not later cured back to investment/normal grade before the final default; reject including cured D episodes. Jet's qualifying D is ICRA 2019-01-02, excluding the cured 2014 episode; its earliest verified payment default is still 2018-12-31. This user instruction supersedes the earlier conservative treatment of cured D episodes and is fixed before any Indian replay results.
+- 2026-10-28: Keep RCom CIRP commencement at 2018-05-15 despite the subsequent NCLAT stay and restart; reject moving commencement to the later resumption date, per the human-verified original notice.
+- 2026-10-28: Accept the user's 2026-10-28 verification of all 22 ticked rows for the 12 event labels, preserving the two previously sourced CIRP components; reject filling any unticked event, unidentified security or unverified classification. Event verification and identity/classification readiness have separate acceptance checks.
+- 2026-10-28: Store each component's listed public date in event_evidence.csv and use the earliest event component's publication date in the evaluation label catalog; reject assigning a later CIRP component that earlier publication date. RCom's 2018 publication is supported by the original 2018 notice, while the 2019 reissue remains separately cached corroboration.
+- 2026-10-28: Assign CASE_02/04/05/06/07/08/09/10/12 as internal collection keys where a verified security mapping is absent; reject inventing ISINs or exchange symbols. These keys require sourced identity mapping before market/financial matching and replay.
+
 - 2026-10-28: Date comparative annual-report fields from the source report period plus the configured lag when publication is unknown; reject backdating restated values to their comparative financial year.
 - 2026-10-28: Extract only source-reviewed, hash-pinned statement labels and explicit units; reject guessing total debt, retained earnings or depreciation from non-equivalent lines. PDF dashes remain missing.
 - 2026-10-28: Require sourced quarterly share counts for market capitalization; reject silently substituting annual share counts. Missing counts yield missing market caps with reasons.
