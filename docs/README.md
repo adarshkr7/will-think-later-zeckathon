@@ -1,5 +1,7 @@
 # PRAHARI
 
+Project documentation lives in this folder. Run commands from the repository root.
+
 **P**oint-in-time **R**isk & **A**ccounting **H**azard **A**lerts, **R**anked & **I**nterpretable. *Prahari* is Hindi for "sentinel".
 
 A submission for **Zeckathon PS-02 (Risk & Fraud)**: an early-warning system for Indian corporate credit that would have caught IL&FS.

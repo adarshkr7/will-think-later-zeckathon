@@ -10,6 +10,10 @@ paths:
   harmonized_map: configs/harmonized_map.yaml
   manual_config: configs/manual.yaml
   india_config: configs/india.yaml
+  feature_config: configs/features.yaml
+  feature_cache: data/processed/features
+  universe_cache: data/processed/universe
+  feature_coverage: outputs/feature_coverage.csv
   indian_financials: data/processed/annual_financials.parquet
   coverage_parity: outputs/coverage_parity.csv
   accounting_coverage: outputs/accounting_coverage.csv
@@ -38,7 +42,7 @@ paths:
   benchmark_seal_dir: data/processed/benchmark_seals
   benchmark_training_dir: data/processed/benchmark_training
   benchmark_plots: outputs/benchmark_calibration
-  data_requests: DATA_REQUESTS.md
+  data_requests: docs/DATA_REQUESTS.md
 logging:
   level: INFO
   format: '%(asctime)s %(levelname)s %(name)s: %(message)s'
@@ -46,10 +50,10 @@ downloads:
   timeout_seconds: 90
   max_attempts: 5
   backoff_seconds: 3
-  user_agent: 'PRAHARI research/0.1 (public UCI benchmark; requests)'
+  user_agent: PRAHARI research/0.1 (public UCI benchmark; requests)
 dates:
   results_lag_days: 90
   annual_report_lag_days: 180
 pipeline:
-  modules: [scripts.01_benchmark]
-  # Later phases are added only after their acceptance checks pass.
+  modules:
+  - scripts.01_benchmark

@@ -6,7 +6,7 @@ Updated: 2026-10-28.
 |---|---|---|
 | 1 benchmark | doing | Development implementation and full run complete: 14 model tasks, 16 metric rows, 14 calibration tables/plots and outer-fold audits. Offline cached PowerShell rerun reproduced every output byte. Final hold-out acceptance intentionally pending; no reserved partition opened. |
 | 2 panel collection | doing | Event-count and current identity/classification checks pass for all cases. Nine internal identifiers reconciled to sourced ISINs; reviewed classification import and subtotal/unit-aware statement extraction implemented. Peer membership, quotas and full historical coverage still fail. Current totals/checks are in outputs/collection_status.csv and outputs/panel_acceptance.csv. |
-| 3 features | todo | Point-in-time access boundary and its timing/restatement/imputation tests pass; actual financial feature builders remain pending. |
+| 3 features | doing | Ratio, Altman/Hillegeist/Beneish/Piotroski, CHS, soft-signal and NBFC modules implemented. Hand-computed score tests pass. Assembly and full-quarter artifacts remain in progress; data acceptance is not waived. |
 | 4 primary model / registration | todo | Zero-Indian-label override accepted. No preregistration lock created prematurely. |
 | 5 Arena P replay / policy | todo | Awaiting verified panel and frozen configuration. |
 | 6 explanations | todo | Awaiting model/replay. |
@@ -14,7 +14,9 @@ Updated: 2026-10-28.
 | 7 app | todo | P1 gated on P0 checks. |
 | 8 report | todo | No manually entered performance claims. |
 
-Latest pytest: **83 passed in 4.18s** via `run_tests.ps1`. Added checks cover unique verified identity resolution, unchanged provenance/dates during key replacement, reviewed business-profile proof and interleaved financial subtotal positions. Existing event-rule, benchmark, leakage, synthetic firewall and coverage checks remain green.
+Latest pytest: **88 passed in 7.51s** via `run_tests.ps1`. Added hand-computed classical-screen and CHS tests, missing-input and financial-exemption checks. Feature assembly, production scoring and later phases remain in progress.
+
+User steering: continue building all steps while data collection proceeds, push checkpoints to main, and keep project documentation under docs/. Implementation is proceeding through the remaining modules; acceptance gates, missing inputs, lock prerequisites and once-only final evaluations remain explicit. Historical market collection is running from the official archives with rate limits and cached receipts.
 
 This session: accepted the user's verification of all 22 ticked checklist rows dated 2026-10-28. The company table now contains 12 verified labels and the component table contains those 22 rows plus two retained, previously sourced CIRP records. Unticked fields remain blank. The uncured-D rule is configured and applied uniformly, and RCom's original CIRP commencement is retained. The three supplied PDFs were registered with exact source URLs and checksums, moved under gitignored data/raw/manual/, and excluded from the commit. All linked PDFs are available offline with receipts.
 

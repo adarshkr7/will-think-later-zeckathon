@@ -77,9 +77,12 @@ def parse_index(payload: bytes, source_url: str, settings: dict) -> pd.DataFrame
     keep = list(mapping) + (["is_synthetic"] if "is_synthetic" in table else [])
     table = table[keep].rename(columns=mapping)
     table["name"] = table.name.str.strip()
+    aliases = {name.casefold(): canonical for name, canonical in settings.get("index_aliases", {}).items()}
+    table["source_index_name"] = table.name
+    table["name"] = table.name.map(lambda name: aliases.get(name.casefold(), name))
     table = table.loc[table.name.str.casefold().isin([name.casefold() for name in settings["index_names"]])].copy()
     table["entity_id"] = table.name.str.casefold().str.replace(" ", "_", regex=False)
-    table["period_end"] = pd.to_datetime(table.period_end, format="%d-%m-%Y", utc=True)
+    table["period_end"] = pd.to_datetime(table.period_end.str.replace("/", "-", regex=False), format="%d-%m-%Y", utc=True)
     table["public_date"] = table.period_end + pd.Timedelta(days=settings["publication_lag_days"])
     table["close"] = pd.to_numeric(table.close, errors="raise")
     if table.empty or table.close.isna().any() or table.close.le(0).any():

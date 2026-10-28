@@ -169,13 +169,13 @@ documents:
   source: care
   filename: verified_event_01.pdf
   url: https://www.careratings.com/upload/CompanyFiles/PR/IL&FS%20Transportation%20Networks%20Limited-09-28-2018.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: DHFL ICRA release 2019-06-05
   source: icra
   filename: verified_event_02.pdf
   url: https://www.icra.in/Rating/ShowRationalReportFilePdfViewer/81083
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
   classification_review:
     reviewed: true
@@ -193,13 +193,13 @@ documents:
   source: ibbi
   filename: verified_event_03.pdf
   url: https://ibbi.gov.in//uploads/announcement/0cc175b9c0f1b6a831c399e269772661.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: Jet Airways ICRA release 2019-01-02
   source: icra
   filename: verified_event_04.pdf
   url: https://www.icra.in/Rating/ShowRationalReportFilePdf/76249
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
   classification_review:
     reviewed: true
@@ -217,7 +217,7 @@ documents:
   source: care
   filename: verified_event_05.pdf
   url: https://www.careratings.com/upload/CompanyFiles/PR/Reliance%20Capital%20Limited-09-20-2019.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
   classification_review:
     reviewed: true
@@ -235,13 +235,13 @@ documents:
   source: ibbi
   filename: verified_event_06.pdf
   url: https://ibbi.gov.in//uploads/announcement/9fe33957448ce5c91fe351847787b5d8.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: Reliance Home Finance CARE release 2019-09-12
   source: care
   filename: verified_event_07.pdf
   url: https://www.careratings.com/upload/CompanyFiles/PR/Reliance%20Home%20Finance%20Limited-09-12-2019.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
   classification_review:
     reviewed: true
@@ -265,7 +265,7 @@ documents:
   source: acuite
   filename: verified_event_09.pdf
   url: https://www.acuite.in/documents/ratings/revised/17272-RR-20201028.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
   classification_review:
     reviewed: true
@@ -283,13 +283,13 @@ documents:
   source: ibbi
   filename: verified_event_10.pdf
   url: https://ibbi.gov.in//uploads/announcement/41f4dc1e7ba660f9b05a52a47f748639.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: Coffee Day Enterprises ICRA release 2019-09-10
   source: icra
   filename: verified_event_11.pdf
   url: https://www.icra.in/Rating/ShowRationalReportFilePdf/88300
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
   classification_review:
     reviewed: true
@@ -308,13 +308,13 @@ documents:
   source: ibbi
   filename: verified_event_12.pdf
   url: https://ibbi.gov.in//uploads/announcement/6eac373d5a284646a90977c094409bde.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: Reliance Communications ICRA release 2017-05-30
   source: icra
   filename: verified_event_13.pdf
   url: https://www.icra.in/Rating/GetRationalReportFilePdf?Id=35656
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
   classification_review:
     reviewed: true
@@ -332,25 +332,25 @@ documents:
   source: ibbi
   filename: verified_event_14.pdf
   url: https://ibbi.gov.in//webadmin/pdf/announcement/2019/May/RELIANCE%20COMMUNICATION%2013-05-19_2019-05-13%2012:06:36.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: Reliance Communications original CIRP notice 2018
   source: ibbi
   filename: verified_event_15.pdf
   url: https://ibbi.gov.in//webadmin/pdf/announcement/2018/May/Form%20A-%20Reliance%20Communication_2018-05-28%2015:22:53.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: Srei Infrastructure exchange filing 2021-03-06
   source: srei
   filename: verified_event_16.pdf
   url: https://www.srei.com/storage/app/uploads/public/604/5d1/879/6045d187973a9031381410.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: Srei Infrastructure CARE release 2021-03-06
   source: care
   filename: verified_event_17.pdf
   url: https://www.careratings.com/upload/CompanyFiles/PR/06032021013323_Srei_Infrastructure_Finance_Limited.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
   classification_review:
     reviewed: true
@@ -368,19 +368,19 @@ documents:
   source: ibbi
   filename: verified_event_18.pdf
   url: https://ibbi.gov.in//uploads/announcement/b79a45775818790cf9e6b93af65b3a7b.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: Videocon Industries CIRP public announcement
   source: ibbi
   filename: verified_event_19.pdf
   url: https://ibbi.gov.in//webadmin/pdf/announcement/2018/Jun/Form%20A-%20Videocon%20Industries%20Ltd._2018-06-14%2016:43:23.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: Jaypee Infratech CARE release 2015-09-25
   source: care
   filename: verified_event_20.pdf
   url: https://www.careratings.com/upload/CompanyFiles/PR/Jaypee%20Infratech%20Limited-09-25-2015.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
   classification_review:
     reviewed: true
@@ -399,7 +399,7 @@ documents:
   source: ibbi
   filename: verified_event_21.pdf
   url: https://ibbi.gov.in//webadmin/pdf/announcement/2017/Jul/IRP_Form%20A-%20Alok%20Industries.pdf
-  purpose: Human-verified event source in VERIFY_EVENTS.md, 2026-10-28
+  purpose: Human-verified event source in docs/VERIFY_EVENTS.md, 2026-10-28
   needs_verification: 0
 - name: HDFC Securities collateral list March 2018
   source: hdfcsec
@@ -510,3 +510,28 @@ documents:
   filename: videocon_annual_2015.pdf
   url: https://www.videoconindustriesltd.com/Documents/Videocon%20Industries%20Ltd_2015.pdf
   purpose: Original identity, classification and financial history; pending page review
+- name: Beneish original manuscript 1999
+  source: literature
+  filename: beneish_1999.pdf
+  url: https://www.calctopia.com/papers/beneish1999.pdf
+  purpose: Primary formula/definition or index-identity verification
+- name: Piotroski university reprint
+  source: literature
+  filename: piotroski_2000.pdf
+  url: https://www.chicagobooth.edu/~/media/FE874EE65F624AAEBD0166B1974FD74D
+  purpose: Primary formula/definition or index-identity verification
+- name: Hillegeist original manuscript
+  source: literature
+  filename: hillegeist_2003.pdf
+  url: https://www.textbiz.org/projects/defaultprediction/bankruptcy12.pdf
+  purpose: Primary formula/definition or index-identity verification
+- name: CHS original NBER working paper
+  source: literature
+  filename: chs_nber.pdf
+  url: https://www.nber.org/system/files/working_papers/w12362/w12362.pdf
+  purpose: Primary formula/definition or index-identity verification
+- name: Nifty official index rename notice
+  source: nifty
+  filename: index_renaming_2015.pdf
+  url: https://www.niftyindices.com/Press_Release/ind_prs22092015.pdf
+  purpose: Primary formula/definition or index-identity verification

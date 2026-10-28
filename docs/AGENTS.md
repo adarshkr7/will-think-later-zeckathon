@@ -1,10 +1,10 @@
 # AGENTS.md: operating rules for the coding agent (Codex)
 
 You are building **PRAHARI**, a submission for Zeckathon PS-02 (Risk & Fraud). Read these in order:
-1. `ps.pdf`: the problem statement and judging criteria.
-2. `PROJECT_IDEA.md`: what we are building and why.
-3. `IMPLEMENTATION_PLAN.md`: phases, modules, tests and acceptance checks.
-4. `gemini_report.txt`: the literature background. Use it for formulas only, after checking them against this file and the plan.
+1. `docs/ps.pdf`: the problem statement and judging criteria.
+2. `docs/PROJECT_IDEA.md`: what we are building and why.
+3. `docs/IMPLEMENTATION_PLAN.md`: phases, modules, tests and acceptance checks.
+4. `docs/gemini_report.txt`: the literature background. Use it for formulas only, after checking them against this file and the plan.
 
 **Precedence when documents conflict:**
 - §8b and §8c of `PROJECT_IDEA.md` override earlier sections.
