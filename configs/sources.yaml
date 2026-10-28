@@ -483,6 +483,8 @@ documents:
       columns: 2
       fields:
         cfo: Net cash in from Operating Activities
+    public_date: '2017-10-06'
+    publication_source_url: https://www.nseindia.com/companies-listing/corporate-filings-annual-reports?symbol=ALOKTEXT&tabIndex=equity
 - name: Reliance Communications annual report FY2018
   source: rcom
   filename: rcom_annual_2018.pdf
@@ -535,3 +537,68 @@ documents:
   filename: index_renaming_2015.pdf
   url: https://www.niftyindices.com/Press_Release/ind_prs22092015.pdf
   purpose: Primary formula/definition or index-identity verification
+- name: Alok Industries annual report FY2016
+  source: alok
+  filename: alok_annual_2016.pdf
+  url: https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2015-16.pdf
+  purpose: Reviewed standalone statements; prior balance-sheet comparatives only,
+    excluding eighteen-month comparative flows
+  financial_extraction:
+    reviewed: true
+    entity_id: INE270A01011
+    source_period_end: '2016-03-31'
+    fiscal_periods:
+    - '2016-03-31'
+    - '2015-03-31'
+    unit: INR_crore
+    unit_marker: crores
+    public_date: '2016-10-04'
+    publication_source_url: https://www.nseindia.com/companies-listing/corporate-filings-annual-reports?symbol=ALOKTEXT&tabIndex=equity
+    source_sha256: 001846b9a915234ef864626dff1ec0ea6ece5e601607330fccb4f4137d85ae24
+    tables:
+    - page: 88
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        current_assets:
+          label: Other current assets
+          line_offset: 1
+        current_liabilities:
+          label: Short-term provisions
+          line_offset: 1
+        equity:
+          label: Reserves and surplus
+          line_offset: 1
+        inventory: Inventories
+        receivables: Trade receivables
+        ppe_net:
+          label: Tangible assets
+          expected_matches: 2
+          occurrence: 0
+        cwip: Capital work-in-progress
+        lt_debt: Long-term borrowings
+        st_borrowings: Short-term borrowings
+    - page: 89
+      basis: standalone
+      columns: 2
+      fiscal_periods:
+      - '2016-03-31'
+      fields:
+        revenue: Revenue from operations (net)
+        pat: Net Profit/(loss) for the period
+        pbt: Profit/(Loss) before tax
+        finance_costs: Finance costs
+        depreciation: Depreciation and amortisation expense
+    - page: 90
+      basis: standalone
+      columns: 2
+      fiscal_periods:
+      - '2016-03-31'
+      fields:
+        cfo: Net cash (used in) / generated from operating activities
+        interest_expense: Interest expense
+        cash_and_cash_equivalents: Cash and Cash equivalents at the end of the year/period

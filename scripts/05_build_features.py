@@ -28,8 +28,9 @@ def main() -> None:
     dates = [pd.Timestamp(args.date)] if args.date else pd.date_range(settings["first_quarter"], settings["last_quarter"], freq="QE-MAR")
     sources = load_feature_sources(config)
     coverage = []
+    history_cache = {}
     for day in dates:
-        table = build_features(config, day, args.arena, sources=sources)
+        table = build_features(config, day, args.arena, sources=sources, history_cache=history_cache)
         write_real_table(table, config.path("feature_cache") / args.arena / f"{day:%Y-%m-%d}.parquet")
         reasons = [name for name in table if name.endswith("__reason")]
         for column in reasons:

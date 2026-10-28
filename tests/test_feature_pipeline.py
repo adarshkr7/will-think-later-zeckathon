@@ -62,3 +62,18 @@ def test_consolidated_source_taint_cannot_escape_through_standalone_feature_join
     sources.tables["financials"] = pd.concat([sources.tables["financials"], row.to_frame().T], ignore_index=True)
     result = build_features(config, "2019-10-01", "P", sources=sources)
     assert result.is_synthetic.item() == 1
+
+
+def test_batch_history_cache_preserves_exact_quarter_ends(config, sources, monkeypatch):
+    original = sources.snapshot
+    seen = []
+    def snapshot(config, day, arena):
+        seen.append(pd.Timestamp(day))
+        return original(config, day, arena)
+    monkeypatch.setattr(sources, "snapshot", snapshot)
+    cache = {}
+    build_features(config, "2019-06-30", "P", sources=sources, history_cache=cache)
+    assert pd.Timestamp("2019-03-31", tz="UTC") in seen
+    assert pd.Timestamp("2019-03-30", tz="UTC") not in seen
+    build_features(config, "2019-09-30", "P", sources=sources, history_cache=cache)
+    assert len(seen) == 5

@@ -32,15 +32,26 @@ def parse_bhavcopy(payload: bytes, source_url: str, settings: dict) -> pd.DataFr
         table = pd.read_csv(archive.open(members[0]))
     table.columns = table.columns.str.strip()
     mapping = settings["legacy_columns"]
+    symbol_only = False
     if not set(mapping).issubset(table):
-        raise ValueError("Unsupported official bhavcopy schema")
+        missing = set(mapping).difference(table)
+        if missing == {"ISIN"} and set(settings["symbol_only_columns"]).issubset(table):
+            mapping = settings["symbol_only_columns"]
+            symbol_only = True
+        else:
+            raise ValueError("Unsupported official bhavcopy schema")
     keep = list(mapping) + (["is_synthetic"] if "is_synthetic" in table else [])
     table = table[keep].rename(columns=mapping)
     table["series"] = table.series.str.strip()
     table = table.loc[table.series.isin(settings["series"])].copy()
     table["period_end"] = pd.to_datetime(table.period_end, format="%d-%b-%Y", utc=True)
     table["public_date"] = table.period_end + pd.Timedelta(days=settings["publication_lag_days"])
-    table["entity_id"] = table.entity_id.str.strip()
+    table["symbol"] = table.symbol.str.strip()
+    if symbol_only:
+        table["exchange_code"] = table.symbol
+        table["entity_id"] = "NSE:" + table.symbol
+    else:
+        table["entity_id"] = table.entity_id.str.strip()
     for column in ("close", "volume"):
         table[column] = pd.to_numeric(table[column], errors="raise")
     if table.entity_id.isna().any() or table.close.le(0).any() or table.volume.lt(0).any():
@@ -49,7 +60,8 @@ def parse_bhavcopy(payload: bytes, source_url: str, settings: dict) -> pd.DataFr
         raise ValueError("Duplicate bhavcopy security/session")
     table["source_url"] = source_url
     table["date_is_imputed"] = 1  # Daily archive publication time unknown; next-day conservative dating.
-    table["needs_verification"] = 0
+    table["needs_verification"] = int(symbol_only)
+    table["identity_reason"] = "unmapped_legacy_symbol" if symbol_only else ""
     table["exchange"] = "nse"
     if "is_synthetic" not in table:
         table["is_synthetic"] = 0
@@ -62,6 +74,21 @@ def cache_session(config: Config, downloader: CachedDownloader, day: str, *, off
     url, filename = archive_url(day, settings)
     raw = downloader.fetch("nse", url, filename, offline=offline)
     table = parse_bhavcopy(raw.read_bytes(), url, settings)
+    if table.needs_verification.eq(1).any():
+        from prahari.data.manual import read_manual
+        mapping = as_of(read_manual(config, "security_crosswalk"), pd.to_datetime(day, utc=True) + pd.Timedelta(days=settings["publication_lag_days"]+1))
+        mapping = mapping.loc[mapping.exchange.eq("nse")].sort_values(["period_end", "public_date"]).drop_duplicates("exchange_code", keep="last").set_index("exchange_code")
+        resolved = table.exchange_code.map(mapping.entity_id)
+        known = resolved.notna()
+        table.loc[known, "entity_id"] = resolved.loc[known]
+        table.loc[known, "needs_verification"] = 0
+        table.loc[known, "identity_reason"] = ""
+        if known.any():
+            dates = pd.to_datetime(table.exchange_code.map(mapping.public_date), utc=True)
+            table["public_date"] = table.public_date.where(dates.isna() | table.public_date.ge(dates), dates)
+            evidence = table.exchange_code.map(mapping.source_url)
+            table.loc[known, "source_url"] = table.loc[known, "source_url"] + ";" + evidence.loc[known]
+            table.loc[known & table.exchange_code.map(mapping.is_synthetic).eq(1), "is_synthetic"] = 1
     if not table.period_end.eq(pd.to_datetime(day, utc=True)).all():
         raise ValueError("NSE archive observations do not match the requested date")
     write_real_table(table, config.path("market_cache") / f"bhavcopy_{pd.Timestamp(day):%Y%m%d}.parquet")

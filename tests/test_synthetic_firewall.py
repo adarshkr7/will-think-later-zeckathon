@@ -11,6 +11,13 @@ def test_fixture_flags(benchmark_fixture, observations):
     assert observations.is_synthetic.eq(1).all()
 
 
+def test_all_csv_fixtures_are_explicitly_synthetic():
+    for path in Path(__file__).parent.joinpath("fixtures").glob("*.csv"):
+        table = pd.read_csv(path)
+        assert "is_synthetic" in table, path.name
+        assert table.is_synthetic.eq(1).all(), path.name
+
+
 def test_synthetic_write_rejected_before_file_creation(benchmark_fixture, tmp_path):
     path = tmp_path / "forbidden.parquet"
     with pytest.raises(ValueError, match="Synthetic"):
@@ -28,6 +35,10 @@ def test_production_tables_are_real_without_reading_reserved_partitions(config):
     files = list(config.path("benchmark_training_dir").glob("*.parquet"))
     processed = config.path("processed")
     files += list(processed.glob("*.parquet")) + list(processed.glob("*.csv"))
+    # Explicit unsealed locations: never recurse through protected benchmark
+    # partitions or manual/sealed while checking new nested feature caches.
+    for key in ("feature_cache", "universe_cache"):
+        files += list(config.path(key).glob("*/*.parquet"))
     if config.path("outputs").exists():
         files += list(config.path("outputs").rglob("*.csv")) + list(config.path("outputs").rglob("*.parquet"))
     for path in files:

@@ -27,3 +27,11 @@ def test_interleaved_statement_subtotals_preserve_year_positions():
         reviewed_values(text, "Total", 2, 2)
     with pytest.raises(ValueError, match="column positions"):
         reviewed_values(text, dict(rule, positions=[1, 1]), 2, 2)
+
+
+def test_reviewed_amount_only_subtotal_offset_and_ligatures():
+    text = (FIXTURES / "statement_offset.txt").read_text(encoding="utf-8")
+    assert reviewed_values(text, {"label": "Reserves and surplus", "line_offset": 1}, 2, 2) == [40, 25]
+    assert reviewed_values(text, "Net Profit for the year", 2, 1) == [10]
+    with pytest.raises(ValueError, match="amount-only"):
+        reviewed_values(text, {"label": "Reserves and surplus", "line_offset": 2}, 2, 2)

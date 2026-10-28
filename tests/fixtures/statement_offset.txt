@@ -1,0 +1,4 @@
+is_synthetic=1
+Reserves and surplus 2 30.00 20.00
+40.00 25.00
+Net Proﬁt for the year 10.00 (2.00)

@@ -1,5 +1,10 @@
 # Decisions
 
+- 2026-10-28: Use the later sourced NSE dissemination dates for Alok annual-report evidence (FY2016: 2016-10-04; FY2017: 2017-10-06), rather than the earlier generic lag dates. Preserve all reviewed numeric values and human-verified event dates. Record the date correction in outputs/financial_date_review.csv.
+- 2026-10-28: Import Alok FY2016 annual flows only; the FY2015 comparatives cover eighteen months and are excluded from annual-flow inputs. Reviewed balance-sheet comparatives remain usable with the FY2016 report's publication date.
+- 2026-10-28: Read printed amount-only subtotals only through hash-pinned reviewed anchor/line offsets; reject unexpected labels, offsets or nonnumeric rows. Never synthesize missing balance-sheet subtotals by guessing components.
+- 2026-10-28: CHS quarterly history uses exact prior quarter ends. Batch caching is confined to snapshots from one immutable source load; independent source/future-deletion calls never share that cache.
+
 - 2026-10-28: Apply the published CHS USD price cap only after a dated INR/USD conversion; declare a one-INR numerical book-equity floor as an adaptation, not observed financial data. Missing FX remains missing. This supersedes the earlier note that these numerical settings were unset.
 - 2026-10-28: Use the original market-equity Altman score and its published 1.81 distress cutoff for the distress-zone detection line; never apply that cutoff to the EM variant with its additional intercept. Source: Altman's author chapter, https://www.blackwellpublishing.com/content/BPL_images/Content_Store/Sample_Chapter/9780631225638/altman.pdf.
 - 2026-10-28: Rescale native margin TreeSHAP along the calibrated log-odds path for exact reconciliation; explicitly reject calling that allocation Shapley values of the calibrated probability function.

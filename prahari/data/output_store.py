@@ -34,3 +34,14 @@ class OutputStore:
     def text(self, key: str, *parts: str) -> str:
         path = self.path(key, *parts)
         return path.read_text(encoding="utf-8") if path.is_file() else ""
+
+    def filtered_frame(self, key: str, filters: list) -> pd.DataFrame:
+        """Push selection into the exported parquet scan, without live scoring."""
+        path = self.path(key)
+        if not path.is_file():
+            return pd.DataFrame()
+        if path.suffix != ".parquet":
+            raise ValueError("Filtered output scans require parquet")
+        table = pd.read_parquet(path, filters=filters)
+        assert_real(table)
+        return table

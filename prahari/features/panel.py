@@ -51,7 +51,7 @@ def select_peers(snapshot: pd.DataFrame, focal_entity_id: str, eligible_ids: set
     return result.reset_index(drop=True)
 
 
-def build_features(config, t, arena: str = "P", *, sources=None) -> pd.DataFrame:
+def build_features(config, t, arena: str = "P", *, sources=None, history_cache: dict | None = None) -> pd.DataFrame:
     """Build a single dated cross-section; no Indian outcome enters a feature.
 
     Every source read is filtered by data.asof, including each of the four
@@ -71,6 +71,11 @@ def build_features(config, t, arena: str = "P", *, sources=None) -> pd.DataFrame
     settings = config.section("feature_config")
     cutoff = pd.to_datetime(t, utc=True)
     base, tables = sources.snapshot(config, cutoff, arena)
+    # A batch may reuse only snapshots from its one immutable input load.
+    # The default cache is local, so independent/future-deletion calls cannot
+    # inherit observations from another source object.
+    history_cache = {} if history_cache is None else history_cache
+    history_cache[(arena, cutoff)] = base.copy()
     result = base.copy()
     result.attrs.update(base.attrs)
     source_dates = ["max_source_date"]
@@ -93,7 +98,11 @@ def build_features(config, t, arena: str = "P", *, sources=None) -> pd.DataFrame
         result[name + "__reason"] = [value.reason for value in computed]
     histories = []
     for lag in range(4):
-        prior, _ = sources.snapshot(config, cutoff - pd.DateOffset(months=3 * lag), arena)
+        prior_cutoff = cutoff - pd.offsets.QuarterEnd(lag, startingMonth=3) if cutoff.is_quarter_end else cutoff - pd.DateOffset(months=3*lag)
+        key = (arena, prior_cutoff)
+        if key not in history_cache:
+            history_cache[key] = sources.snapshot(config, prior_cutoff, arena)[0].copy()
+        prior = history_cache[key].copy()
         prior["nimta_history"] = [chs_accounting(record, settings["chs"])["nimta"].value for record in prior.to_dict(orient="records")]
         histories.append(prior.set_index("entity_id"))
     averages, history_dates = [], []

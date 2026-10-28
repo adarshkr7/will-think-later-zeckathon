@@ -96,6 +96,12 @@ market:
     CLOSE: close
     TOTTRDQTY: volume
     ISIN: entity_id
+  symbol_only_columns:
+    SYMBOL: symbol
+    SERIES: series
+    TIMESTAMP: period_end
+    CLOSE: close
+    TOTTRDQTY: volume
   index_columns:
     Index Name: name
     Index Date: period_end

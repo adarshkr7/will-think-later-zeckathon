@@ -1,10 +1,10 @@
 item,observed,needs_verification,is_synthetic
-market_sessions,768,0,0
-market_observations,1178816,0,0
-distinct_isins,2057,0,0
-cached_source_pdfs,39,0,0
+market_sessions,1107,0,0
+market_observations,1726777,0,0
+distinct_isins,2059,0,0
+cached_source_pdfs,40,0,0
 unavailable_source_pdfs,1,1,0
-verified_financial_fields,118,0,0
+verified_financial_fields,135,0,0
 financial_entities,2,0,0
 verified_panel_events,12,0,0
 verified_case_isins,12,0,0

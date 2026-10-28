@@ -21,6 +21,12 @@ def frame(path: str, key: str) -> pd.DataFrame:
     return OutputStore(path).frame(key)
 
 
+@st.cache_data
+def feature_frame(path: str, entity: str, arena: str, quarter: str) -> pd.DataFrame:
+    return OutputStore(path).filtered_frame("app_features", [("entity_id", "==", entity),
+        ("arena", "==", arena), ("scoring_date", "==", pd.Timestamp(quarter, tz="UTC").to_pydatetime())])
+
+
 def main() -> None:
     path = os.environ.get("PRAHARI_APP_MANIFEST")
     if not path:
@@ -95,8 +101,7 @@ def main() -> None:
                 columns += [name for name in ("verified_event_within_4q", "verified_event_within_8q") if name in selected]
                 st.caption("Verified event matches only. A missing catalog event does not certify that a borrower survived.")
             st.dataframe(selected[columns].head(settings["snapshot_rows"]), hide_index=True, width="stretch", height=390)
-        details = frame(path, "app_features")
-        borrower = details.loc[details.entity_id.eq(entity) & details.arena.eq(arena) & details.scoring_date.astype(str).str.startswith(quarter)]
+        borrower = feature_frame(path, entity, arena, quarter)
         with st.expander("Inspect observed features and missing-input reasons", expanded=False):
             st.dataframe(borrower[[name for name in ["feature", "value", "reason", "max_source_date"] if name in borrower]], hide_index=True, width="stretch")
     with tabs[1]:

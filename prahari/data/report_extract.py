@@ -5,6 +5,7 @@ from __future__ import annotations
 from decimal import Decimal
 import logging
 import re
+import unicodedata
 
 import pandas as pd
 from pypdf import PdfReader
@@ -24,7 +25,7 @@ def amount_columns(text: str, label: str, count: int, *, occurrence: int = 0,
     not shift column positions. Ambiguity and unexpected token counts fail.
     No arithmetic synthesizes financial statement inputs here.
     """
-    normalized = lambda value: re.sub("[^a-z]", "", value.lower())
+    normalized = lambda value: re.sub("[^a-z]", "", unicodedata.normalize("NFKD", value).lower())
     matches = [line for line in text.splitlines() if normalized(line).endswith(normalized(label))]
     if len(matches) != expected_matches or not 0 <= occurrence < expected_matches:
         raise ValueError(f"Source row label is missing or ambiguous: {label}")
@@ -52,6 +53,20 @@ def reviewed_values(text: str, rule: str | dict, columns: int, periods: int) -> 
     """
     details = {"label": rule} if isinstance(rule, str) else rule
     count = details.get("columns", columns)
+    if "line_offset" in details:
+        lines = text.splitlines()
+        normalized = lambda value: re.sub("[^a-z]", "", unicodedata.normalize("NFKD", value).lower())
+        matches = [index for index, line in enumerate(lines) if normalized(line).endswith(normalized(details["label"]))]
+        expected = details.get("expected_matches", 1)
+        occurrence = details.get("occurrence", 0)
+        offset = details["line_offset"]
+        if len(matches) != expected or not 0 <= occurrence < expected or not isinstance(offset, int) or offset <= 0:
+            raise ValueError("Ambiguous reviewed subtotal anchor/offset")
+        index = matches[occurrence] + offset
+        if index >= len(lines) or re.fullmatch(r"[\d,().\s+\-\u2013\u2014]+", lines[index]) is None:
+            raise ValueError("Reviewed subtotal line is not amount-only")
+        text = details["label"] + " " + lines[index]
+        details = {**details, "occurrence": 0, "expected_matches": 1}
     values = amount_columns(text, details["label"], count, occurrence=details.get("occurrence", 0),
                             expected_matches=details.get("expected_matches", 1))
     positions = details.get("positions", list(range(periods)))
@@ -76,18 +91,19 @@ def extract_reviewed_reports(config: Config) -> pd.DataFrame:
             for table in spec["tables"]:
                 text = reader.pages[table["page"] - 1].extract_text()
                 markers = config.section("india_config")["financials"]["source_unit_markers"]
-                marker = markers.get(spec["unit"])
+                marker = table.get("unit_marker", spec.get("unit_marker", markers.get(spec["unit"])))
                 if not marker or marker not in re.sub("[^a-z]", "", text.lower()):
                     raise ValueError("Source table denomination changed; review required")
                 for field, label in table["fields"].items():
-                    values = reviewed_values(text, label, table["columns"], len(spec["fiscal_periods"]))
-                    for fy_end, value in zip(spec["fiscal_periods"], values, strict=True):
+                    periods = table.get("fiscal_periods", spec["fiscal_periods"])
+                    values = reviewed_values(text, label, table["columns"], len(periods))
+                    for fy_end, value in zip(periods, values, strict=True):
                         rows.append({"entity_id": spec["entity_id"], "fy_end": fy_end, "period_end": fy_end,
                                      "source_period_end": spec["source_period_end"], "basis": table["basis"],
                                      "field": field, "numeric_value": value, "text_value": None,
-                                     "unit": spec["unit"], "publication_kind": "annual_report", "public_date": None,
-                                     "source_doc": document["url"], "source_page": table["page"],
-                                     "date_is_imputed": 1, "needs_verification": int(value is None), "is_synthetic": 0})
+                                     "unit": spec["unit"], "publication_kind": "annual_report", "public_date": spec.get("public_date"),
+                                     "source_doc": ";".join(filter(None, [document["url"], spec.get("publication_source_url")])), "source_page": table["page"],
+                                     "date_is_imputed": int(not spec.get("public_date")), "needs_verification": int(value is None), "is_synthetic": 0})
             LOG.info("Extracted reviewed report %s; no publication date inferred from audit signing date", document["name"])
     finally:
         downloader.close()
