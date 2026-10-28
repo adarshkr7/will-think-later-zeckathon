@@ -11,3 +11,5 @@ joblib
 matplotlib
 pydantic
 pypdf
+streamlit>=1.42,<2
+plotly>=5.24,<7

@@ -1,0 +1,9 @@
+title: PRAHARI
+subtitle: Point-in-time credit review desk
+demo_quarter: '2018-09-30'
+port: 8501
+address: 127.0.0.1
+palette: {navy: '#10233f', teal: '#047d78', amber: '#a85e00', background: '#f5f7fb'}
+tables:
+  benchmark: [dataset, representation, variant, horizon_quarters, pr_auc, pr_auc_ci_low, pr_auc_ci_high, base_rate, brier, evaluation_split]
+  snapshot: [rank, name, symbols, sector, tier, pd_4q, pd_8q, known_features, missing_features, score_status]
