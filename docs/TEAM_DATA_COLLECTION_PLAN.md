@@ -63,7 +63,7 @@ The reporting-year range is a collection guide, not permission to force every co
 Special attention:
 
 - **Alok:** some reports/comparatives cover eighteen months. Do not enter those flows as twelve-month PAT, sales or CFO. Earlier balance sheets can still be collected with their true dates. FY2016 original statement evidence is now cached; FY2017 evidence uses the later sourced exchange dissemination date.
-- **Videocon:** verify the actual reporting calendar and period duration before extracting any flow.
+- **Videocon:** original FY2014 statements cover eighteen months ending December, with a June comparative balance sheet. Those flows are excluded. Reviewed balance sheets and twelve-month FY2015 standalone flows have been imported from the cached originals; see [review note](intake/VIDEOCON_STATEMENT_REVIEW.md). Continue collecting the missing earlier/later original periods and unresolved core fields.
 - **ITNL:** an attempted FY2016 annual-report link returned a cached 404. Find an actual original copy or exchange filing; do not rename the later comparative report as an earlier source.
 - **Financial firms:** collect their financial-sector disclosures as well as ordinary accounts. A metric that is not applicable is not zero.
 

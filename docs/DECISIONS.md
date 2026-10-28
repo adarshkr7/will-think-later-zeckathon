@@ -1,5 +1,7 @@
 # Decisions
 
+- 2026-10-28: Import source-reviewed Videocon balance sheets with their actual December/June period ends, and only the twelve-month FY2015 flows; reject annualizing the eighteen-month FY2014 comparatives. Use printed net operating revenue, preserve cash alone separately, and leave total liabilities/retained earnings unresolved. Unknown dissemination uses the source-report-period annual lag, never the older comparative period.
+
 - 2026-10-28: Report rating lead using earliest sourced pre-event sub-IG publication and first pre-event operational flag, retaining unpaired cases; reject backdating a later disclosure to its action date or calling incomplete rating history a first-ever downgrade. Export both calendar-quarter and day differences with an explicitly paired-observed median.
 
 - 2026-10-28: Use original archived Federal Reserve H.10 weekly releases for historical INR/USD, recording their actual publication dates. Reject current revised FRED histories as a substitute for old vintages. Preserve ND cells as unknown and exclude any release on/after a scoring cutoff.
