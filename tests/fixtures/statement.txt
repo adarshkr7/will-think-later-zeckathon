@@ -1,0 +1,5 @@
+is_synthetic=1
+Total Assets 100.00 80.00 -
+Total Equity 40.00 30.00 -
+Total Equity and Liabilities 100.00 80.00 -
+Profit / (Loss) for the Year (V-VI) 10.00 (2.00)

@@ -1,7 +1,7 @@
 import requests
 import pytest
 
-from prahari.data.downloads import CachedDownloader, SourceBlocked
+from prahari.data.downloads import CachedDownloader, SourceBlocked, SourceUnavailable
 
 
 def test_repeated_exchange_blocks_stop_at_configured_limit(config, monkeypatch):
@@ -35,4 +35,23 @@ def test_cache_names_reject_traversal(config):
     downloader = CachedDownloader(config)
     with pytest.raises(ValueError, match="traversal"):
         downloader.fetch("nse", "https://fixture.invalid/file", "../outside.zip")
+    downloader.close()
+
+
+def test_official_404_is_cached_but_not_claimed_as_holiday(config, tmp_path, monkeypatch):
+    config.base["paths"]["raw"] = str(tmp_path / "raw")
+    downloader = CachedDownloader(config)
+    calls = []
+    def absent(url, **kwargs):
+        calls.append(url)
+        response = requests.Response()
+        response.status_code, response.url = 404, url
+        return response
+    monkeypatch.setattr(downloader.session, "get", absent)
+    with pytest.raises(SourceUnavailable):
+        downloader.fetch("fixture404", "https://fixture.invalid/missing", "missing.zip")
+    with pytest.raises(SourceUnavailable):
+        downloader.fetch("fixture404", "https://fixture.invalid/missing", "missing.zip", offline=True)
+    assert len(calls) == 1
+    assert not (tmp_path / "raw" / "fixture404" / "missing.zip").exists()
     downloader.close()

@@ -19,6 +19,10 @@ class SourceBlocked(RuntimeError):
     pass
 
 
+class SourceUnavailable(FileNotFoundError):
+    """A cached official HTTP 404; not proof of a holiday or suspension."""
+
+
 class CachedDownloader:
     def __init__(self, config: Config) -> None:
         self.config = config
@@ -58,6 +62,12 @@ class CachedDownloader:
             if metadata["source_url"] != url or metadata["sha256"] != hashlib.sha256(path.read_bytes()).hexdigest():
                 raise ValueError("Public-source cache integrity failure")
             return path
+        absent = path.with_suffix(path.suffix + ".unavailable.json")
+        if absent.exists():
+            metadata = json.loads(absent.read_text(encoding="utf-8"))
+            if metadata["source_url"] != url or metadata["http_status"] != 404:
+                raise ValueError("Unavailable-source receipt mismatch")
+            raise SourceUnavailable(f"Official source returned 404: {url}")
         if offline:
             raise FileNotFoundError(f"Offline public-source cache missing: {path}")
         failures = self.config.path("source_failures")
@@ -80,7 +90,9 @@ class CachedDownloader:
                         self._record_failure(source, url, path, response.status_code)
                         raise SourceBlocked(f"{source} repeatedly blocked; manual download recorded in DATA_REQUESTS.md")
                 if response.status_code == 404:
-                    raise FileNotFoundError(f"No official file for requested date: {url}")
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    absent.write_text(json.dumps({"source_url": url, "http_status": 404}), encoding="utf-8")
+                    raise SourceUnavailable(f"No official file for requested date: {url}")
                 response.raise_for_status()
                 path.parent.mkdir(parents=True, exist_ok=True)
                 temporary = path.with_suffix(path.suffix + ".partial")

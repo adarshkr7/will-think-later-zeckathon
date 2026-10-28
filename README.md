@@ -29,7 +29,7 @@ Key properties:
 
 Phase 1 development is implemented: cached UCI ingestion, sealed stratified partitions, fold-local preprocessing, nested cross-validation, unweighted/weighted LightGBM, logistic regression, out-of-fold calibration, monotone harmonized models and a cross-country transfer test. Final benchmark hold-outs remain unopened. Development results are explicitly distinguished from final results.
 
-Panel input templates and validation are available. Indian panel collection, feature layers, the primary scoring overlay, replay, memos, app and report remain pending. See [PROGRESS.md](PROGRESS.md) for acceptance status and [DATA_REQUESTS.md](DATA_REQUESTS.md) for the missing source evidence.
+Phase 2 has public-source caching, reviewed financial-field extraction, NSE/BSE ingestion, dated market-cap joins, peer selection and explicit acceptance checks. Panel evidence remains incomplete. Feature layers, primary scoring, replay, memos, app and report remain pending. See [PROGRESS.md](PROGRESS.md) for acceptance status and [DATA_REQUESTS.md](DATA_REQUESTS.md) for missing evidence.
 
 **Horizon correction:** UCI documents `5year.arff` as a one-year forecast and `4year.arff` as two years. The benchmark retains `3year` and `4year` comparisons, and uses `5year`/`4year` for the intended 4Q/8Q HDM heads. The original plan's horizon labels are off by one year. Source: [UCI Polish dataset documentation](https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data).
 
@@ -63,6 +63,9 @@ Phase 2 public-source commands:
 .venv/Scripts/python.exe -m scripts.02_market_data --start 2018-07-01 --end 2018-09-30
 .venv/Scripts/python.exe -m scripts.02b_collect_sources
 .venv/Scripts/python.exe -m scripts.02b_collect_sources --offline
+.venv/Scripts/python.exe -m scripts.02d_extract_financials
+.venv/Scripts/python.exe -m scripts.02c_market_cap --as-of 2018-09-30
+.venv/Scripts/python.exe -m scripts.03c_collection_status
 .venv/Scripts/python.exe -m scripts.03_validate_manual --as-of 2018-09-30
 ```
 
@@ -74,7 +77,9 @@ Repeated exchange blocks stop collection and persist a manual request. To regist
 .venv/Scripts/python.exe -m scripts.02_market_data --import-file <local-file> --import-url <original-source-url> --import-source nse
 ```
 
-`03_validate_manual` now writes accounting coverage and explicit panel acceptance checks. Its optional as-of audit writes `outputs/coverage_parity.csv`; empty cohorts are marked unresolved. Collection progress is recorded in `outputs/collection_status.csv`, and cached original PDFs are indexed in `outputs/source_catalog.csv`. Partial event evidence remains `needs_verification=1` and is not counted as a verified event. BSE routing, complete historical market coverage, verified event dates, financial histories and actual peer selection remain outstanding Phase 2 work.
+`03_validate_manual` writes accounting, financial-history, market-coverage and panel acceptance checks. Its optional as-of audit writes `outputs/coverage_parity.csv`; empty cohorts are unresolved. Collection progress is in `outputs/collection_status.csv`, and original PDFs are indexed in `outputs/source_catalog.csv`. Partial event evidence remains `needs_verification=1`. Complete historical coverage, verified earliest events, financial histories and independently sourced peer eligibility remain outstanding.
+
+Market collection supports `--exchange auto`, `nse` or `bse`. Unmapped BSE identities remain quarantined. Market caps require dated quarterly share counts; missing counts remain unknown. The financial extractor uses only reviewed statement mappings and pinned document hashes, preserving later publication dates for comparative figures. `scripts.03b_select_peers --write-peers` publishes eligible matches only after its data checks pass and refuses changes after registration. It currently fails on the incomplete event cohort, as intended.
 
 Template initialization never overwrites an existing file. The validator rejects an empty panel at the acceptance gate. The full historical pipeline is not yet implemented; `run_all.ps1` announces that it runs implemented phases only.
 

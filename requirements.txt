@@ -63,6 +63,8 @@ pygments==2.21.0
     # via pytest
 pyparsing==3.3.3
     # via matplotlib
+pypdf==6.21.3
+    # via -r requirements.in
 pytest==9.2.0
     # via -r requirements.in
 python-dateutil==3.0.0

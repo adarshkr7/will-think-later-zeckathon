@@ -1,5 +1,13 @@
 # Decisions
 
+- 2026-10-28: Date comparative annual-report fields from the source report period plus the configured lag when publication is unknown; reject backdating restated values to their comparative financial year.
+- 2026-10-28: Extract only source-reviewed, hash-pinned statement labels and explicit units; reject guessing total debt, retained earnings or depreciation from non-equivalent lines. PDF dashes remain missing.
+- 2026-10-28: Require sourced quarterly share counts for market capitalization; reject silently substituting annual share counts. Missing counts yield missing market caps with reasons.
+- 2026-10-28: Match BSE codes through dated original-source crosswalks; reject fuzzy company-name identity matches and quarantine unmapped identities.
+- 2026-10-28: Require explicit exchange-session and non-default survival evidence for coverage and peer eligibility; reject treating missing archives or missing default records as proof.
+- 2026-10-28: Exclude candidates with unknown leverage from the stressed-survivor classification; reject counting unknown leverage as an unstressed observation.
+- 2026-10-28: Treat newly supplied event guides as candidate source indexes until original documents are checked; reject copying unchecked assertions into verified event labels. Earlier cured or disputed defaults cannot be silently discarded to select a later event.
+
 - 2026-10-28: Use the zero-Indian-label primary model in PROJECT_IDEA §8b and the Phase 4 override; reject the earlier primary stacker because the later instructions take precedence.
 - 2026-10-28: Correct Polish horizon metadata from the primary UCI documentation: 5year = 4Q, 4year = 8Q, 3year = 12Q; retain the requested 3year/4year benchmark comparisons and add 5year for the actual 4Q head. Source: https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data . The plan/literature horizon labels are off by one year.
 - 2026-10-28: Reserve final benchmark hold-outs and do development on training-only nested CV; reject opening them during implementation because no tuning or locked-code changes are allowed after final evaluation.

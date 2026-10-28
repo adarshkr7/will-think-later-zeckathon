@@ -50,6 +50,7 @@ def parse_bhavcopy(payload: bytes, source_url: str, settings: dict) -> pd.DataFr
     table["source_url"] = source_url
     table["date_is_imputed"] = 1  # Daily archive publication time unknown; next-day conservative dating.
     table["needs_verification"] = 0
+    table["exchange"] = "nse"
     if "is_synthetic" not in table:
         table["is_synthetic"] = 0
     LOG.info("Bhavcopy rows=%s dates_imputed=%s missing=%s", len(table), len(table), table.isna().sum().to_dict())
@@ -61,6 +62,8 @@ def cache_session(config: Config, downloader: CachedDownloader, day: str, *, off
     url, filename = archive_url(day, settings)
     raw = downloader.fetch("nse", url, filename, offline=offline)
     table = parse_bhavcopy(raw.read_bytes(), url, settings)
+    if not table.period_end.eq(pd.to_datetime(day, utc=True)).all():
+        raise ValueError("NSE archive observations do not match the requested date")
     write_real_table(table, config.path("market_cache") / f"bhavcopy_{pd.Timestamp(day):%Y%m%d}.parquet")
     return table
 
@@ -90,10 +93,17 @@ def parse_index(payload: bytes, source_url: str, settings: dict) -> pd.DataFrame
 
 
 def market_as_of(config: Config, t: str | pd.Timestamp) -> pd.DataFrame:
-    files = sorted(config.path("market_cache").glob("bhavcopy_*.parquet"))
+    files = sorted([*config.path("market_cache").glob("bhavcopy_*.parquet"),
+                    *config.path("market_cache").glob("bse_*.parquet")])
     if not files:
         raise FileNotFoundError("No market cache; run scripts.02_market_data")
-    return as_of(pd.concat([pd.read_parquet(path) for path in files], ignore_index=True), t)
+    tables = []
+    for path in files:
+        table = pd.read_parquet(path)
+        if "exchange" not in table:
+            table["exchange"] = "bse" if path.name.startswith("bse_") else "nse"
+        tables.append(table)
+    return as_of(pd.concat(tables, ignore_index=True), t)
 
 
 def bounded_forward_fill(table: pd.DataFrame, sessions: pd.DatetimeIndex, limit: int) -> pd.DataFrame:

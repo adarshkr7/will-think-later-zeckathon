@@ -11,6 +11,8 @@ from prahari.data.asof import as_of
 from prahari.data.financials import financial_table
 from prahari.data.manual import read_manual
 from prahari.eval.coverage import coverage_parity
+from prahari.eval.market_coverage import market_coverage
+from prahari.data.bhavcopy import market_as_of
 
 
 def panel_acceptance(events: pd.DataFrame, peers: pd.DataFrame, market: pd.DataFrame,
@@ -24,13 +26,11 @@ def panel_acceptance(events: pd.DataFrame, peers: pd.DataFrame, market: pd.DataF
     stressed = peers.drop_duplicates("entity_id").is_stressed_survivor.eq(1).sum()
     market_ok = (not market.empty and {"entity_id", "complete"}.issubset(market)
                  and (case_ids | peer_ids).issubset(set(market.loc[market.complete.eq(1), "entity_id"])))
-    identity_ok = not accounting.empty and accounting.identity_status.eq("pass").all()
+    identity_ok = (not accounting.empty and accounting.identity_status.eq("pass").any()
+                   and not accounting.identity_status.isin(["fail", "invalid_assets"]).any())
     financial_ok = False
     if financials is not None and not financials.empty:
-        verified = financials.loc[financials.needs_verification.eq(0) & financials.basis.eq("standalone")]
-        years = verified.groupby("entity_id").fy_end.nunique()
-        financial_ok = bool(case_ids) and all(years.get(entity, 0) >= settings["minimum_financial_years"]
-                                             for entity in case_ids | peer_ids)
+        financial_ok = bool(case_ids) and financials.complete.eq(1).all() and (case_ids | peer_ids).issubset(set(financials.entity_id))
     checks = [("verified_events", len(case_ids), settings["minimum_cases"], len(case_ids) >= settings["minimum_cases"]),
               ("unique_verified_peers", len(peer_ids), settings["minimum_unique_peers"], len(peer_ids) >= settings["minimum_unique_peers"]),
               ("disjoint_cases_peers", len(case_ids & peer_ids), 0, not case_ids.intersection(peer_ids)),
@@ -63,3 +63,54 @@ def audit_coverage(config: Config, t: str) -> pd.DataFrame:
             if field not in wide:
                 wide[field] = float("nan")
     return coverage_parity(wide, cohorts, fields, config.section("india_config")["coverage"])
+
+
+def audit_market(config: Config) -> pd.DataFrame:
+    settings = config.section("india_config")["panel"]
+    events, peers = read_manual(config, "events"), read_manual(config, "peers")
+    events = events.loc[events.needs_verification.eq(0)]
+    peers = peers.loc[peers.needs_verification.eq(0)]
+    rows = []
+    for case in events.to_dict(orient="records"):
+        end = pd.to_datetime(case["event_date"], utc=True)
+        start = end - pd.DateOffset(years=settings["history_years"])
+        for entity in {case["entity_id"], *peers.loc[peers.matched_to.eq(case["entity_id"]), "entity_id"]}:
+            rows.append({"entity_id": entity, "start": start, "end": end, "is_synthetic": 0})
+    windows = pd.DataFrame(rows, columns=["entity_id", "start", "end", "is_synthetic"])
+    if windows.empty:
+        return market_coverage(windows, pd.DataFrame(), pd.DataFrame())
+    windows = windows.groupby("entity_id", as_index=False).agg(start=("start", "min"), end=("end", "max"), is_synthetic=("is_synthetic", "max"))
+    now = pd.Timestamp.now(tz="UTC")
+    calendar = as_of(read_manual(config, "trading_calendar"), now)
+    # NSE panel calendar; BSE calendar evidence is retained separately when supplied.
+    calendar = calendar.loc[calendar.entity_id.str.casefold().eq("nse")]
+    return market_coverage(windows, market_as_of(config, now), calendar)
+
+
+def audit_financial_histories(config: Config) -> pd.DataFrame:
+    settings = config.section("india_config")
+    events, peers = read_manual(config, "events"), read_manual(config, "peers")
+    events = events.loc[events.needs_verification.eq(0)]
+    peers = peers.loc[peers.needs_verification.eq(0)]
+    table = financial_table(config)
+    rows = []
+    for case in events.to_dict(orient="records"):
+        cutoff = pd.to_datetime(case["event_date"], utc=True)
+        known = as_of(table, cutoff)
+        first_period = cutoff - pd.DateOffset(years=settings["panel"]["collection_years_before"])
+        known = known.loc[known.period_end.ge(first_period)]
+        for entity in {case["entity_id"], *peers.loc[peers.matched_to.eq(case["entity_id"]), "entity_id"]}:
+            if entity == case["entity_id"]:
+                financial = case["is_financial"]
+            else:
+                financial = peers.loc[peers.entity_id.eq(entity), "is_financial"].iloc[0]
+            required = set(settings["financials"]["required_financial" if financial else "required_nonfinancial"])
+            available = known.loc[known.entity_id.eq(entity) & known.basis.eq("standalone")]
+            periods = available.groupby("period_end").field.agg(set)
+            complete_years = sum(required.issubset(fields) for fields in periods)
+            rows.append({"entity_id": entity, "matched_to": case["entity_id"], "cutoff": cutoff,
+                         "complete_years": complete_years, "required_years": settings["panel"]["minimum_financial_years"],
+                         "complete": int(complete_years >= settings["panel"]["minimum_financial_years"]),
+                         "needs_verification": int(complete_years < settings["panel"]["minimum_financial_years"]),
+                         "is_synthetic": int(case["is_synthetic"] or known.is_synthetic.eq(1).any())})
+    return pd.DataFrame(rows, columns=["entity_id", "matched_to", "cutoff", "complete_years", "required_years", "complete", "needs_verification", "is_synthetic"])

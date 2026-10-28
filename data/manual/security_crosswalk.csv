@@ -1,0 +1,2 @@
+entity_id,exchange,exchange_code,period_end,public_date,source_url,date_is_imputed,needs_verification,is_synthetic
+INE975G01012,bse,533177,2018-09-28,2018-09-29,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf;https://nsearchives.nseindia.com/content/historical/EQUITIES/2018/SEP/cm28SEP2018bhav.csv.zip,1,0,0

@@ -10,3 +10,4 @@ pytest
 joblib
 matplotlib
 pydantic
+pypdf

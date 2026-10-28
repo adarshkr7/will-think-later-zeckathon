@@ -34,7 +34,7 @@ def select_peers(snapshot: pd.DataFrame, focal_entity_id: str, eligible_ids: set
     sector["leverage"] = (sector.total_liabilities / sector.total_assets.where(valid)).where(valid)
     threshold = sector.leverage.quantile(settings["stressed_quantile"])
     candidates = sector.loc[sector.entity_id.isin(eligible_ids) & sector.entity_id.ne(focal_entity_id)
-                            & sector.total_assets.gt(0) & sector.needs_verification.eq(0)].copy()
+                            & sector.total_assets.gt(0) & sector.leverage.notna() & sector.needs_verification.eq(0)].copy()
     candidates["asset_distance"] = (candidates.total_assets - focal.total_assets).abs()
     candidates["is_stressed_survivor"] = candidates.leverage.ge(threshold).astype(int)
     candidates = candidates.sort_values(["asset_distance", "entity_id"], kind="stable")

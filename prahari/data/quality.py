@@ -60,11 +60,17 @@ def validate_table(table: pd.DataFrame, name: str, settings: dict) -> dict:
             pending += 1
             continue
         for key in ("entity_id", "period_end", "public_date", spec["source"]):
+            if key == "public_date" and name == "financial_evidence" and row["date_is_imputed"] == 1:
+                continue
             if row[key] is None:
                 raise ValueError(f"{name}: verified row lacks {key}")
-        if row["public_date"] < row["period_end"]:
+        if name != "trading_calendar" and row["public_date"] is not None and row["public_date"] < row["period_end"]:
             raise ValueError(f"{name}: public date precedes observation period")
         if name == "events":
+            if any(row[key] is None for key in ("name", "sector", "is_financial")):
+                raise ValueError("Verified events need sourced company classification")
+            if row["nse_symbol"] is None and row["bse_code"] is None:
+                raise ValueError("The listed panel needs a sourced exchange identifier")
             dates = [row[key] for key in ("first_payment_default_date", "first_D_rating_date", "cirp_admission_date")
                      if row[key] is not None]
             if not dates or row["event_date"] != min(dates):
@@ -85,8 +91,43 @@ def validate_table(table: pd.DataFrame, name: str, settings: dict) -> dict:
             raise ValueError("Unrecognized governance event")
         if name == "peers" and not all(row[key] is not None for key in ("matched_to", "sector", "selection_rule_version", "is_stressed_survivor")):
             raise ValueError("Verified peer lacks selection evidence")
+        if name == "entities" and any(row[key] is None for key in ("name", "symbols", "sector", "is_financial")):
+            raise ValueError("Verified entity metadata lacks classification/identity evidence")
+        if name == "peer_survival":
+            if any(row[key] is None for key in ("matched_to", "nondefault_start", "nondefault_through")):
+                raise ValueError("Survival evidence needs a complete sourced window")
+            if row["nondefault_start"] > row["nondefault_through"]:
+                raise ValueError("Invalid survival window")
+        if name == "security_crosswalk" and (row["exchange"] not in ("nse", "bse") or row["exchange_code"] is None):
+            raise ValueError("Invalid sourced exchange identity mapping")
+        if name == "financial_evidence":
+            annual = settings["tables"]["annual_financials"]
+            allowed = annual["numeric"] + ["auditor_opinion", "going_concern_flag", "caro_default_flag", "caro_fraud_flag"]
+            if row["field"] not in allowed or row["basis"] not in settings["validation"]["fiscal_basis"]:
+                raise ValueError("Unrecognized financial evidence field/basis")
+            if row["fy_end"] != row["period_end"] or row["source_page"] is None or row["source_page"] < 1 or row["source_page"] % 1:
+                raise ValueError("Financial evidence needs a fiscal period and document page")
+            if row["source_period_end"] is None or row["source_period_end"] < row["fy_end"]:
+                raise ValueError("Comparative values need the source report's reporting period")
+            if row["unit"] is None or row["publication_kind"] not in ("results", "annual_report"):
+                raise ValueError("Financial evidence needs explicit units and publication kind")
+            if (row["numeric_value"] is None) == (row["text_value"] is None):
+                raise ValueError("Verified evidence must contain exactly one numeric/text value")
+            if row["field"] == "auditor_opinion":
+                if row["unit"] != "text" or row["text_value"] not in settings["validation"]["audit_opinions"]:
+                    raise ValueError("Auditor opinion evidence needs a recognized sourced opinion")
+            elif row["field"] in ("going_concern_flag", "caro_default_flag", "caro_fraud_flag"):
+                if row["unit"] != "flag" or row["numeric_value"] not in (0, 1):
+                    raise ValueError("Audit flags require explicit binary source evidence")
+            elif row["field"] == "shares_outstanding":
+                if not row["unit"].startswith("shares") or row["numeric_value"] is None:
+                    raise ValueError("Outstanding shares need count units")
+            elif not row["unit"].startswith("INR") or row["numeric_value"] is None:
+                raise ValueError("Monetary financial evidence needs explicit INR denomination")
         if name in ("nbfc_metrics", "shareholding") and any(row[key] is None for key in spec["numeric"]):
             raise ValueError("Incomplete numerical row must set needs_verification=1")
+        if name == "share_counts" and (row["shares_outstanding"] is None or row["shares_outstanding"] <= 0):
+            raise ValueError("Shareholding share counts need a positive sourced count")
         verified += 1
     missing = table.isna().sum().loc[lambda series: series.gt(0)].to_dict()
     LOG.info("%s rows=%s dates_imputed=%s missing=%s verified=%s pending=%s",
@@ -122,3 +163,20 @@ def accounting_coverage(table: pd.DataFrame, tolerance: float) -> pd.DataFrame:
         rows.append({**{key: record[key] for key in columns if key in record},
                      "identity_relative_error": error, "identity_status": status})
     return pd.DataFrame(rows, columns=columns)
+
+
+def accounting_from_fields(table: pd.DataFrame, tolerance: float) -> pd.DataFrame:
+    """Audit latest known statement triplets; incomplete evidence is reported."""
+    fields = table.loc[table.field.isin(["total_assets", "total_liabilities", "equity"])].copy()
+    fields = fields.sort_values("public_date").drop_duplicates(["entity_id", "period_end", "basis", "field"], keep="last")
+    if fields.empty:
+        return accounting_coverage(pd.DataFrame(), tolerance)
+    keys = ["entity_id", "period_end", "basis"]
+    wide = fields.pivot(index=keys, columns="field", values="value").reset_index()
+    metadata = fields.groupby(keys, as_index=False).agg(source_doc=("source_doc", lambda values: ";".join(sorted(set(values)))),
+                                                       is_synthetic=("is_synthetic", "max"))
+    wide = wide.merge(metadata, on=keys, validate="one_to_one")
+    for field in ("total_assets", "total_liabilities", "equity"):
+        if field not in wide:
+            wide[field] = float("nan")
+    return accounting_coverage(wide, tolerance)

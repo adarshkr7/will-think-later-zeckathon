@@ -30,3 +30,11 @@ def test_peer_selection_rejects_raw_or_future_data(config):
     snapshot.loc[0, "max_source_date"] = pd.Timestamp("2018-01-01", tz="UTC")
     with pytest.raises(ValueError, match="future sources"):
         select_peers(snapshot, "FIX_CASE", set(table.entity_id), config.section("india_config")["panel"])
+
+
+def test_unknown_leverage_is_not_classified_as_an_unstressed_peer(config):
+    table = pd.read_csv(FIXTURES / "peer_snapshot.csv")
+    table.loc[table.entity_id.ne("FIX_CASE"), "total_liabilities"] = float("nan")
+    snapshot = as_of(table, "2017-01-01")
+    with pytest.raises(ValueError, match="Insufficient verified"):
+        select_peers(snapshot, "FIX_CASE", set(table.entity_id), config.section("india_config")["panel"])

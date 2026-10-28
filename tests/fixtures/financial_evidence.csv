@@ -1,0 +1,2 @@
+entity_id,fy_end,period_end,source_period_end,basis,field,numeric_value,text_value,unit,publication_kind,public_date,source_doc,source_page,date_is_imputed,needs_verification,is_synthetic
+FIX_CASE,2018-03-31,2018-03-31,2018-03-31,standalone,total_assets,100,,INR_crore,annual_report,,fixture-financial-document,10,1,0,1

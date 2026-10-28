@@ -1,4 +1,10 @@
 table,rows,verified,pending,dates_imputed,is_synthetic
+share_counts,0,0,0,0,0
+financial_evidence,46,46,0,46,0
+trading_calendar,0,0,0,0,0
+entities,0,0,0,0,0
+peer_survival,0,0,0,0,0
+security_crosswalk,1,1,0,1,0
 events,2,0,2,1,0
 peers,0,0,0,0,0
 annual_financials,0,0,0,0,0

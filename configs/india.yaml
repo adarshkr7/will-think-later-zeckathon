@@ -3,6 +3,8 @@ panel:
   minimum_unique_peers: 30
   minimum_cases: 10
   minimum_financial_years: 3
+  history_years: 3
+  collection_years_before: 4
   target_cases: 12
   target_peers: 36
   stressed_fraction: 0.3333333333333333
@@ -15,7 +17,10 @@ coverage:
   collection_causes: {}
   # Unknown collection causes remain explicitly unresolved.
 financials:
+  required_nonfinancial: [total_assets, total_liabilities, current_assets, current_liabilities, equity, retained_earnings, revenue, inventory, pat]
+  required_financial: [total_assets, total_liabilities, equity, pat]
   annual_only_fields: [cfo, shares_outstanding, related_party_loans_advances, related_party_revenue, auditor_opinion, going_concern_flag, caro_default_flag, caro_fraud_flag]
+  unit_multipliers: {INR: 1, INR_lakh: 100000, INR_crore: 10000000, INR_million: 1000000, shares: 1, shares_lakh: 100000, shares_million: 1000000, shares_crore: 10000000, flag: 1, text: 1}
 market:
   start_date: '2011-04-01'
   end_date: '2024-03-31'
@@ -29,7 +34,11 @@ market:
   index_names: [Nifty 500, Nifty 50]
   legacy_columns: {SYMBOL: symbol, SERIES: series, TIMESTAMP: period_end, CLOSE: close, TOTTRDQTY: volume, ISIN: entity_id}
   index_columns: {'Index Name': name, 'Index Date': period_end, 'Closing Index Value': close}
-  # BSE archives can be provided via the source manifest; never guess era URLs.
+  bse_url: https://www.bseindia.com/download/BhavCopy/Equity/EQ{date}_CSV.ZIP
+  bse_member: EQ{date}.CSV
+  bse_columns: {SC_CODE: exchange_code, SC_NAME: symbol, SC_TYPE: security_type, CLOSE: close, NO_OF_SHRS: volume}
+  bse_equity_type: Q
+  exchange_preference: [nse, bse]
 network:
   interval_seconds: 3
   timeout_seconds: 45

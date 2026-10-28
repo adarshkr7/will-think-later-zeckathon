@@ -13,6 +13,7 @@ paths:
   indian_financials: data/processed/annual_financials.parquet
   coverage_parity: outputs/coverage_parity.csv
   accounting_coverage: outputs/accounting_coverage.csv
+  financial_coverage: outputs/financial_coverage.csv
   panel_acceptance: outputs/panel_acceptance.csv
   market_coverage: outputs/market_coverage.csv
   market_manifest: data/manual/market_sources.csv
@@ -22,6 +23,10 @@ paths:
   source_documents: data/manual/source_documents.csv
   source_config: configs/sources.yaml
   source_catalog: outputs/source_catalog.csv
+  collection_status: outputs/collection_status.csv
+  security_crosswalk: data/manual/security_crosswalk.csv
+  market_cap: outputs/market_cap.csv
+  preregistration_lock: configs/preregistration.lock
   manual_validation: outputs/manual_validation.csv
   benchmark_development_metrics: outputs/benchmark_development_metrics.csv
   benchmark_final_metrics: outputs/benchmark_metrics.csv

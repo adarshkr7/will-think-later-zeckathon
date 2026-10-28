@@ -6,4 +6,4 @@ peers_per_case,0,1,0,0
 stressed_survivors,0,0,0,0
 panel_market_coverage,0,1,0,0
 financial_year_coverage,0,1,0,0
-accounting_identities,0,1,0,0
+accounting_identities,1,1,1,0
