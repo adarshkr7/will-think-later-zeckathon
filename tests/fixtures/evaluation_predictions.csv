@@ -1,0 +1,4 @@
+entity_id,scoring_date,pd_4q,pd_8q,deep_review,deep_review_8q,is_synthetic
+FIX_A,2018-12-31,0.2,0.3,1,1,1
+FIX_A,2019-03-31,0.01,0.02,0,0,1
+FIX_B,2018-09-30,0.3,0.4,1,1,1

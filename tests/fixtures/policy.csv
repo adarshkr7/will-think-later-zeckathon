@@ -1,0 +1,5 @@
+entity_id,pd_4q,pd_8q,hard_trigger,is_synthetic
+FIX_A,0.20,0.30,0,1
+FIX_B,0.10,0.20,1,1
+FIX_C,0.02,0.05,0,1
+FIX_D,,,0,1

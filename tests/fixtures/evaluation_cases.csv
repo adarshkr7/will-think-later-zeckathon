@@ -1,0 +1,3 @@
+entity_id,name,sector,event_date,cirp_admission_date,needs_verification,is_synthetic
+FIX_A,Fixture A,fixture,2020-01-15,2020-03-15,0,1
+FIX_B,Fixture B,fixture,2020-01-15,2020-03-15,0,1

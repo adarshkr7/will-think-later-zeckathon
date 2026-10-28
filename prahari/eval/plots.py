@@ -22,3 +22,18 @@ def calibration_plot(table: pd.DataFrame, destination: Path) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(destination, dpi=150)
     plt.close(figure)
+
+
+def evaluation_plot(table, x, values, destination, xlabel, ylabel):
+    """Plot persisted evaluation values, never fill missing results with zero."""
+    assert_real(table)
+    figure, axes = plt.subplots(figsize=(8, 5), layout="constrained")
+    for arena, group in table.groupby("arena"):
+        for value in values:
+            curve = group.groupby(x)[value].mean()
+            axes.plot(curve.index, curve.values, label=f"{arena}: {value}")
+    axes.set(xlabel=xlabel, ylabel=ylabel)
+    axes.legend()
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    figure.savefig(destination, dpi=150)
+    plt.close(figure)
