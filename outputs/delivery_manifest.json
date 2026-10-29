@@ -1,6 +1,6 @@
 {
   "mode": "readiness_only",
-  "created_at": "2026-10-29T16:00:43.297270+00:00",
+  "created_at": "2026-10-29T16:04:33.919860+00:00",
   "scientific_panel_accepted": false,
   "failed_panel_checks": [
     "unique_verified_peers",
@@ -291,7 +291,7 @@
     "prahari/policy/threshold.py": "c5f5fa704a5b62d8f424fe3222e068203d834e62f7d0179243421359fb1f9ef1",
     "prahari/policy/watchlist.py": "34fd15e0dffe48cdded7753ba72d8b2ee1e9f20788dc0e20438cc94de1c357a6",
     "pyproject.toml": "e6dfc5f9927eb858c879509740c61802d3762bd5c91902d90161bc9988a2e394",
-    "README.md": "9a7a9a01a53be990663e9c2bf14ae00ebd527048bdfa33a43b97e91363b7416e",
+    "README.md": "62e558f4f9388092334037398035df4920d0647c2abf254ebfb90898cd6905fb",
     "requirements.in": "e48f0d7fe9e29708168caa0ef0320242d791657ca17cec22fdd3fd49d77a96fe",
     "requirements.txt": "f27e3e849c1869b44341a7ff4995c536910e299164bb607186fef5f1deb000c3",
     "run_all.ps1": "c5a825bb6462d0fb6b5028fe8d6cc31b929f532601781c2934120cc87c05ec84",

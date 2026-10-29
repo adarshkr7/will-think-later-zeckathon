@@ -59,4 +59,4 @@ The organiser accepts the Markdown report as the explanation document. Submit it
 - [Zeckathon submission form](https://docs.google.com/forms/d/e/1FAIpQLSfPaLvsicO3wvoOI9cgMeoAdfem5TKW1W93My6NIJtFs-ql8w/viewform?usp=header)
 - [Zeckathon website](https://zeckathon.com/)
 
-Submissions cannot be edited or replaced. The repository is currently private; it must be made public or shared with organisers before judging. No external submission has been made by the implementation agent.
+Submissions cannot be edited or replaced. The repository is public and should remain accessible until judging is complete. No external submission has been made by the implementation agent.
