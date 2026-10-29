@@ -1956,3 +1956,337 @@ documents:
         pbt: PROFIT BEFORE TAX (III-IV)
         finance_costs: Finance cost
         depreciation: Depreciation and amortisation
+- name: Reliance Communications annual report FY2012-13
+  source: bse_reports
+  filename: INE330H01018_annual_2013.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/532712/5327120313.pdf
+  purpose: Reviewed original standalone sources; interleaved printed subtotals and separate surplus/deficit caption;
+    reserve transfers remain explicit limitations
+  financial_extraction:
+    reviewed: true
+    entity_id: INE330H01018
+    source_period_end: '2013-03-31'
+    fiscal_periods:
+    - '2013-03-31'
+    - '2012-03-31'
+    unit: INR_crore
+    source_sha256: 5c3af48e0b9d5e96f0f17b7608219b4b9dd7b8c114c30fa5c9799e600011f663
+    tables:
+    - page: 53
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Reserves and Surplus
+          columns: 4
+          positions:
+          - 1
+          - 3
+        total_liabilities:
+          sum:
+          - label: Long Term Provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Short Term Provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+        current_assets:
+          label: Other Current Assets
+          columns: 4
+          positions:
+          - 1
+          - 3
+        current_liabilities:
+          label: Short Term Provisions
+          columns: 4
+          positions:
+          - 1
+          - 3
+        inventory: Inventories
+        receivables: Trade Receivables
+        ppe_net:
+          label: Tangible Assets
+          expected_matches: 2
+          occurrence: 0
+        cwip: Capital Work in Progress
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+  classification_review:
+    reviewed: true
+    entity_id: INE330H01018
+    name: Reliance Communications Ltd (RCom)
+    page: 3
+    sector: telecommunications
+    is_financial: 0
+    period_end: '2013-03-31'
+    evidence_markers:
+    - integrated telecommunications service provider
+    - wireless customers
+    source_sha256: 5c3af48e0b9d5e96f0f17b7608219b4b9dd7b8c114c30fa5c9799e600011f663
+- name: Reliance Communications annual report FY2013-14
+  source: bse_reports
+  filename: INE330H01018_annual_2014.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/532712/5327120314.pdf
+  purpose: Reviewed original standalone sources; interleaved printed subtotals and separate surplus/deficit caption;
+    reserve transfers remain explicit limitations
+  financial_extraction:
+    reviewed: true
+    entity_id: INE330H01018
+    source_period_end: '2014-03-31'
+    fiscal_periods:
+    - '2014-03-31'
+    - '2013-03-31'
+    unit: INR_crore
+    source_sha256: 3667617d60c7446d2fd946560e6639912d80415cbec45898d69597d4e2a4bd63
+    tables:
+    - page: 55
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Reserves and Surplus
+          columns: 4
+          positions:
+          - 1
+          - 3
+        total_liabilities:
+          sum:
+          - label: Long Term Provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Short Term Provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+        current_assets:
+          label: Other Current Assets
+          columns: 4
+          positions:
+          - 1
+          - 3
+        current_liabilities:
+          label: Short Term Provisions
+          columns: 4
+          positions:
+          - 1
+          - 3
+        inventory: Inventories
+        receivables: Trade Receivables
+        ppe_net:
+          label: Tangible Assets
+          expected_matches: 2
+          occurrence: 0
+        cwip: Capital Work in Progress
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 56
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: Profit after Tax
+        pbt: Profit/ (Loss) before Tax
+        finance_costs: Finance Costs
+        depreciation: Depreciation and Amortisation Expenses
+        sga: Sales and General Administration Expenses
+    - page: 62
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: Tax on Proposed Dividend
+          line_offset: 1
+- name: Reliance Communications annual report FY2015-16
+  source: bse_reports
+  filename: INE330H01018_annual_2016.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/532712/5327120316.pdf
+  purpose: Reviewed original standalone sources; interleaved printed subtotals and separate surplus/deficit caption;
+    reserve transfers remain explicit limitations
+  financial_extraction:
+    reviewed: true
+    entity_id: INE330H01018
+    source_period_end: '2016-03-31'
+    fiscal_periods:
+    - '2016-03-31'
+    - '2015-03-31'
+    unit: INR_crore
+    source_sha256: 1effd70b915c704518f74fa9c4688a7ce46f473648f59dbd8be242ec93c14293
+    tables:
+    - page: 71
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Reserves and Surplus
+          columns: 4
+          positions:
+          - 1
+          - 3
+        total_liabilities:
+          sum:
+          - label: Long Term Provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Short Term Provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+        current_assets:
+          label: Other Current Assets
+          columns: 4
+          positions:
+          - 1
+          - 3
+        current_liabilities:
+          label: Short Term Provisions
+          columns: 4
+          positions:
+          - 1
+          - 3
+        inventory: Inventories
+        receivables: Trade Receivables
+        ppe_net:
+          label: Tangible Assets
+          expected_matches: 2
+          occurrence: 0
+        cwip: Capital Work in Progress
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 72
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: Profit/ (Loss) after Tax
+        pbt: Profit/ (Loss) before Tax
+        finance_costs: Finance Costs
+        depreciation: Depreciation and Amortisation Expenses
+        sga: Sales and General Administration Expenses
+    - page: 78
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: 'Add : Profit/ (Loss) for the year'
+          line_offset: 1
+- name: Reliance Communications annual report FY2014-15
+  source: bse_reports
+  filename: INE330H01018_annual_2015.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/532712/5327120315.pdf
+  purpose: Reviewed original standalone sources; interleaved printed subtotals and separate surplus/deficit caption;
+    reserve transfers remain explicit limitations
+  financial_extraction:
+    reviewed: true
+    entity_id: INE330H01018
+    source_period_end: '2015-03-31'
+    fiscal_periods:
+    - '2015-03-31'
+    - '2014-03-31'
+    unit: INR_crore
+    source_sha256: 4024c509c365c1c02ac9b9b3a273249f0450ceef97ea4468598714ffd2057c2a
+    tables:
+    - page: 69
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Reserves and Surplus
+          columns: 4
+          positions:
+          - 1
+          - 3
+        total_liabilities:
+          sum:
+          - label: Long Term Provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Short Term Provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+        current_assets:
+          label: Other Current Assets
+          columns: 4
+          positions:
+          - 1
+          - 3
+        current_liabilities:
+          label: Short Term Provisions
+          columns: 4
+          positions:
+          - 1
+          - 3
+        inventory: Inventories
+        receivables: Trade Receivables
+        ppe_net:
+          label: Tangible Assets
+          expected_matches: 2
+          occurrence: 0
+        cwip: Capital Work in Progress
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 70
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: Profit/ (Loss) after Tax
+        pbt: Profit/ (Loss) before Tax
+        finance_costs: Finance Costs
+        depreciation: Depreciation and Amortisation Expenses
+        sga: Sales and General Administration Expenses
+    - page: 76
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: 'Less : Transfer to Debenture Redemption Reserve'
+          line_offset: 1
+- name: Reliance Home Finance annual report FY2017-18
+  source: bse_reports
+  filename: INE217K01011_annual_2018.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/540709/5407090318.pdf
+  purpose: Reviewed original first-equity-listing evidence only; financial statements remain separate pending review
+  listing_review:
+    reviewed: true
+    entity_id: INE217K01011
+    page: 6
+    listing_date: '2017-09-22'
+    listing_date_marker: September 22, 2017
+    source_period_end: '2018-03-31'
+    exchanges:
+    - nse
+    - bse
+    evidence_markers:
+    - equity shares were successfully listed on BSE and NSE
+    - with effect from
+    source_sha256: 6f7c0d8cfce16693c4cc57510b7c19156bfa0952b1ad107dfd79b6d4639275d7

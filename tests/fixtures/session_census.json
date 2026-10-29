@@ -1,0 +1,13 @@
+{
+  "is_synthetic": 1,
+  "exchange": "FIX_EXCHANGE",
+  "start": "2018-09-27",
+  "end": "2018-09-30",
+  "sessions": [
+    {"entity_id": "FIX_EXCHANGE", "period_end": "2018-09-27", "public_date": "2018-09-28", "source_url": "fixture://session1", "date_is_imputed": 1, "needs_verification": 0, "is_synthetic": 1},
+    {"entity_id": "FIX_EXCHANGE", "period_end": "2018-09-28", "public_date": "2018-09-29", "source_url": "fixture://session2", "date_is_imputed": 1, "needs_verification": 0, "is_synthetic": 1}
+  ],
+  "claims": [
+    {"entity_id": "FIX_EXCHANGE", "field": "source_count_A", "period_start": "2018-09-27", "period_end": "2018-09-30", "expected_count": 2, "public_date": "2018-10-01", "source_url": "fixture://published-count", "date_is_imputed": 0, "needs_verification": 0, "is_synthetic": 1}
+  ]
+}

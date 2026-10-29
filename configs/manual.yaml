@@ -1,116 +1,580 @@
 tables:
+  trading_session_counts:
+    columns:
+    - entity_id
+    - field
+    - period_start
+    - period_end
+    - expected_count
+    - public_date
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_start
+    - period_end
+    - public_date
+    numeric:
+    - expected_count
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    source: source_url
   signal_coverage:
-    columns: [entity_id, signal_name, coverage_start, coverage_end, period_end, public_date, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [coverage_start, coverage_end, period_end, public_date]
+    columns:
+    - entity_id
+    - signal_name
+    - coverage_start
+    - coverage_end
+    - period_end
+    - public_date
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - coverage_start
+    - coverage_end
+    - period_end
+    - public_date
     numeric: []
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    source: source_url
+  listing_events:
+    columns:
+    - entity_id
+    - exchange
+    - listing_date
+    - period_end
+    - public_date
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - listing_date
+    - period_end
+    - public_date
+    numeric: []
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   groups:
-    columns: [entity_id, group_id, group_name, membership_complete, period_end, public_date, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [period_end, public_date]
+    columns:
+    - entity_id
+    - group_id
+    - group_name
+    - membership_complete
+    - period_end
+    - public_date
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_end
+    - public_date
     numeric: []
-    flags: [membership_complete, date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - membership_complete
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   entity_aliases:
-    columns: [entity_id, alias, period_end, public_date, source_url, source_page, date_is_imputed, needs_verification, is_synthetic]
-    dates: [period_end, public_date]
-    numeric: [source_page]
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    columns:
+    - entity_id
+    - alias
+    - period_end
+    - public_date
+    - source_url
+    - source_page
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_end
+    - public_date
+    numeric:
+    - source_page
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   event_evidence:
-    columns: [entity_id, event_type, period_end, public_date, cured_before_final_default, source_url, verified_on, verification_method, event_rule_version, date_is_imputed, needs_verification, is_synthetic]
-    dates: [period_end, public_date, verified_on]
+    columns:
+    - entity_id
+    - event_type
+    - period_end
+    - public_date
+    - cured_before_final_default
+    - source_url
+    - verified_on
+    - verification_method
+    - event_rule_version
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_end
+    - public_date
+    - verified_on
     numeric: []
-    flags: [cured_before_final_default, date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - cured_before_final_default
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   share_counts:
-    columns: [entity_id, period_end, public_date, shares_outstanding, source_doc, date_is_imputed, needs_verification, is_synthetic]
-    dates: [period_end, public_date]
-    numeric: [shares_outstanding]
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    columns:
+    - entity_id
+    - period_end
+    - public_date
+    - shares_outstanding
+    - source_doc
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_end
+    - public_date
+    numeric:
+    - shares_outstanding
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_doc
   financial_evidence:
-    columns: [entity_id, fy_end, period_end, source_period_end, basis, field, numeric_value, text_value, unit, publication_kind, public_date, source_doc, source_page, date_is_imputed, needs_verification, is_synthetic]
-    dates: [fy_end, period_end, source_period_end, public_date]
-    numeric: [numeric_value, source_page]
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    columns:
+    - entity_id
+    - fy_end
+    - period_end
+    - source_period_end
+    - basis
+    - field
+    - numeric_value
+    - text_value
+    - unit
+    - publication_kind
+    - public_date
+    - source_doc
+    - source_page
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - fy_end
+    - period_end
+    - source_period_end
+    - public_date
+    numeric:
+    - numeric_value
+    - source_page
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_doc
   trading_calendar:
-    columns: [entity_id, period_end, public_date, is_trading_day, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [period_end, public_date]
+    columns:
+    - entity_id
+    - period_end
+    - public_date
+    - is_trading_day
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    - derivation_method
+    dates:
+    - period_end
+    - public_date
     numeric: []
-    flags: [is_trading_day, date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - is_trading_day
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   entities:
-    columns: [entity_id, name, symbols, sector, is_financial, period_end, public_date, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [period_end, public_date]
+    columns:
+    - entity_id
+    - name
+    - symbols
+    - sector
+    - is_financial
+    - period_end
+    - public_date
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_end
+    - public_date
     numeric: []
-    flags: [is_financial, date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - is_financial
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   peer_survival:
-    columns: [entity_id, matched_to, nondefault_start, nondefault_through, period_end, public_date, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [nondefault_start, nondefault_through, period_end, public_date]
+    columns:
+    - entity_id
+    - matched_to
+    - nondefault_start
+    - nondefault_through
+    - period_end
+    - public_date
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - nondefault_start
+    - nondefault_through
+    - period_end
+    - public_date
     numeric: []
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   security_crosswalk:
-    columns: [entity_id, exchange, exchange_code, period_end, public_date, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [period_end, public_date]
+    columns:
+    - entity_id
+    - exchange
+    - exchange_code
+    - period_end
+    - public_date
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_end
+    - public_date
     numeric: []
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   events:
-    columns: [entity_id, name, nse_symbol, bse_code, isin, sector, is_financial, first_payment_default_date, first_D_rating_date, cirp_admission_date, event_date, period_end, public_date, source_urls, notes, date_is_imputed, needs_verification, is_synthetic]
-    dates: [first_payment_default_date, first_D_rating_date, cirp_admission_date, event_date, period_end, public_date]
+    columns:
+    - entity_id
+    - name
+    - nse_symbol
+    - bse_code
+    - isin
+    - sector
+    - is_financial
+    - first_payment_default_date
+    - first_D_rating_date
+    - cirp_admission_date
+    - event_date
+    - period_end
+    - public_date
+    - source_urls
+    - notes
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - first_payment_default_date
+    - first_D_rating_date
+    - cirp_admission_date
+    - event_date
+    - period_end
+    - public_date
     numeric: []
-    flags: [is_financial, date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - is_financial
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_urls
   peers:
-    columns: [entity_id, name, symbols, sector, is_financial, matched_to, is_stressed_survivor, selection_rule_version, period_end, public_date, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [period_end, public_date]
+    columns:
+    - entity_id
+    - name
+    - symbols
+    - sector
+    - is_financial
+    - matched_to
+    - is_stressed_survivor
+    - selection_rule_version
+    - period_end
+    - public_date
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_end
+    - public_date
     numeric: []
-    flags: [is_financial, is_stressed_survivor, date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - is_financial
+    - is_stressed_survivor
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   annual_financials:
-    columns: [entity_id, fy_end, period_end, basis, total_assets, total_liabilities, current_assets, current_liabilities, inventory, receivables, cash_and_st_investments, ppe_net, cwip, total_debt, st_borrowings, commercial_paper, lt_debt, equity, retained_earnings, revenue, cogs, gross_profit, sga, depreciation, ebit, interest_expense, pbt, pat, cfo, shares_outstanding, related_party_loans_advances, related_party_revenue, auditor_opinion, going_concern_flag, caro_default_flag, caro_fraud_flag, results_public_date, annual_report_public_date, public_date, source_doc, date_is_imputed, needs_verification, is_synthetic, cash_and_cash_equivalents, finance_costs, income_continuing, income_before_extraordinary, current_maturities_lt_debt, equity_issued]
-    dates: [fy_end, period_end, results_public_date, annual_report_public_date, public_date]
-    numeric: [total_assets, total_liabilities, current_assets, current_liabilities, inventory, receivables, cash_and_st_investments, ppe_net, cwip, total_debt, st_borrowings, commercial_paper, lt_debt, equity, retained_earnings, revenue, cogs, gross_profit, sga, depreciation, ebit, interest_expense, pbt, pat, cfo, shares_outstanding, related_party_loans_advances, related_party_revenue, cash_and_cash_equivalents, finance_costs, income_continuing, income_before_extraordinary, current_maturities_lt_debt, equity_issued]
-    flags: [going_concern_flag, caro_default_flag, caro_fraud_flag, date_is_imputed, needs_verification, is_synthetic]
+    columns:
+    - entity_id
+    - fy_end
+    - period_end
+    - basis
+    - total_assets
+    - total_liabilities
+    - current_assets
+    - current_liabilities
+    - inventory
+    - receivables
+    - cash_and_st_investments
+    - ppe_net
+    - cwip
+    - total_debt
+    - st_borrowings
+    - commercial_paper
+    - lt_debt
+    - equity
+    - retained_earnings
+    - revenue
+    - cogs
+    - gross_profit
+    - sga
+    - depreciation
+    - ebit
+    - interest_expense
+    - pbt
+    - pat
+    - cfo
+    - shares_outstanding
+    - related_party_loans_advances
+    - related_party_revenue
+    - auditor_opinion
+    - going_concern_flag
+    - caro_default_flag
+    - caro_fraud_flag
+    - results_public_date
+    - annual_report_public_date
+    - public_date
+    - source_doc
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    - cash_and_cash_equivalents
+    - finance_costs
+    - income_continuing
+    - income_before_extraordinary
+    - current_maturities_lt_debt
+    - equity_issued
+    dates:
+    - fy_end
+    - period_end
+    - results_public_date
+    - annual_report_public_date
+    - public_date
+    numeric:
+    - total_assets
+    - total_liabilities
+    - current_assets
+    - current_liabilities
+    - inventory
+    - receivables
+    - cash_and_st_investments
+    - ppe_net
+    - cwip
+    - total_debt
+    - st_borrowings
+    - commercial_paper
+    - lt_debt
+    - equity
+    - retained_earnings
+    - revenue
+    - cogs
+    - gross_profit
+    - sga
+    - depreciation
+    - ebit
+    - interest_expense
+    - pbt
+    - pat
+    - cfo
+    - shares_outstanding
+    - related_party_loans_advances
+    - related_party_revenue
+    - cash_and_cash_equivalents
+    - finance_costs
+    - income_continuing
+    - income_before_extraordinary
+    - current_maturities_lt_debt
+    - equity_issued
+    flags:
+    - going_concern_flag
+    - caro_default_flag
+    - caro_fraud_flag
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_doc
   nbfc_metrics:
-    columns: [entity_id, period_end, public_date, gnpa_pct, nnpa_pct, car_pct, nim_pct, cp_share_of_borrowings, st_liab_to_st_assets, loan_book_growth, source_doc, date_is_imputed, needs_verification, is_synthetic, car_minimum_pct]
-    dates: [period_end, public_date]
-    numeric: [gnpa_pct, nnpa_pct, car_pct, nim_pct, cp_share_of_borrowings, st_liab_to_st_assets, loan_book_growth, car_minimum_pct]
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    columns:
+    - entity_id
+    - period_end
+    - public_date
+    - gnpa_pct
+    - nnpa_pct
+    - car_pct
+    - nim_pct
+    - cp_share_of_borrowings
+    - st_liab_to_st_assets
+    - loan_book_growth
+    - source_doc
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    - car_minimum_pct
+    dates:
+    - period_end
+    - public_date
+    numeric:
+    - gnpa_pct
+    - nnpa_pct
+    - car_pct
+    - nim_pct
+    - cp_share_of_borrowings
+    - st_liab_to_st_assets
+    - loan_book_growth
+    - car_minimum_pct
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_doc
   shareholding:
-    columns: [entity_id, period_end, public_date, promoter_holding_pct, promoter_pledged_pct_of_promoter, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [period_end, public_date]
-    numeric: [promoter_holding_pct, promoter_pledged_pct_of_promoter]
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    columns:
+    - entity_id
+    - period_end
+    - public_date
+    - promoter_holding_pct
+    - promoter_pledged_pct_of_promoter
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_end
+    - public_date
+    numeric:
+    - promoter_holding_pct
+    - promoter_pledged_pct_of_promoter
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   rating_actions:
-    columns: [entity_id, agency, action_date, period_end, public_date, instrument, rating_from, rating_to, outlook, watch, inc_flag, is_default_grade, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [action_date, period_end, public_date]
+    columns:
+    - entity_id
+    - agency
+    - action_date
+    - period_end
+    - public_date
+    - instrument
+    - rating_from
+    - rating_to
+    - outlook
+    - watch
+    - inc_flag
+    - is_default_grade
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - action_date
+    - period_end
+    - public_date
     numeric: []
-    flags: [inc_flag, is_default_grade, date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - inc_flag
+    - is_default_grade
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   governance_events:
-    columns: [entity_id, event_type, announce_date, period_end, public_date, detail, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [announce_date, period_end, public_date]
+    columns:
+    - entity_id
+    - event_type
+    - announce_date
+    - period_end
+    - public_date
+    - detail
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - announce_date
+    - period_end
+    - public_date
     numeric: []
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
   fx_rates:
-    columns: [entity_id, period_end, public_date, inr_per_usd, source_url, date_is_imputed, needs_verification, is_synthetic]
-    dates: [period_end, public_date]
-    numeric: [inr_per_usd]
-    flags: [date_is_imputed, needs_verification, is_synthetic]
+    columns:
+    - entity_id
+    - period_end
+    - public_date
+    - inr_per_usd
+    - source_url
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_end
+    - public_date
+    numeric:
+    - inr_per_usd
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
     source: source_url
 validation:
   accounting_tolerance: 0.02
   minimum_events: 10
   minimum_peers: 30
-  fiscal_basis: [standalone, consolidated]
-  audit_opinions: [clean, qualified, adverse, disclaimer]
-  governance_event_types: [auditor_resignation, delayed_results, cfo_resignation, forensic_audit_ordered]
+  fiscal_basis:
+  - standalone
+  - consolidated
+  audit_opinions:
+  - clean
+  - qualified
+  - adverse
+  - disclaimer
+  governance_event_types:
+  - auditor_resignation
+  - delayed_results
+  - cfo_resignation
+  - forensic_audit_ordered

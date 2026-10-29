@@ -5,6 +5,7 @@ public_page_filename: '{entity_id}_{symbol}_documents_{snapshot_date}.html'
 report_source: bse_reports
 report_filename: '{entity_id}_annual_{year}.pdf'
 annual_label_pattern: '^Annual Report (\d{4})$'
+report_label_fiscal_year_end: {month: 3, day: 31}
 market_identity_source: nse
 identity_quote_lookback_days: 10
 market_identity_leads:

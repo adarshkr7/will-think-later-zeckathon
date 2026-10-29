@@ -85,9 +85,10 @@ def audit_market(config: Config) -> pd.DataFrame:
     windows = windows.groupby("entity_id", as_index=False).agg(start=("start", "min"), end=("end", "max"), is_synthetic=("is_synthetic", "max"))
     now = pd.Timestamp.now(tz="UTC")
     calendar = as_of(read_manual(config, "trading_calendar"), now)
-    # NSE panel calendar; BSE calendar evidence is retained separately when supplied.
-    calendar = calendar.loc[calendar.entity_id.str.casefold().eq("nse")]
-    return market_coverage(windows, market_as_of(config, now), calendar)
+    exchange = config.section("india_config")["market"]["exchange_preference"][0]
+    calendar = calendar.loc[calendar.entity_id.str.casefold().eq(exchange)]
+    listings = as_of(read_manual(config, "listing_events"), now)
+    return market_coverage(windows, market_as_of(config, now), calendar, listings, exchange=exchange)
 
 
 def audit_financial_histories(config: Config) -> pd.DataFrame:

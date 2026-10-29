@@ -1,0 +1,8 @@
+{
+  "is_synthetic": 1,
+  "cases": [
+    {"event_date": "2018-09-20", "first_year": 2014, "last_year": 2021, "is_synthetic": 1},
+    {"event_date": "2021-03-06", "first_year": 2017, "last_year": 2023, "is_synthetic": 1},
+    {"event_date": "2020-03-31", "first_year": 2016, "last_year": 2022, "is_synthetic": 1}
+  ]
+}

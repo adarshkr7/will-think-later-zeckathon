@@ -19,6 +19,9 @@ paths:
   shareholding_config: configs/shareholding.yaml
   shareholding_import_review: outputs/shareholding_import_review.csv
   financial_index_config: configs/financial_results.yaml
+  calendar_config: configs/calendar.yaml
+  session_census: outputs/session_census
+  session_coverage: outputs/session_coverage.csv
   financial_index_coverage: outputs/financial_results_index.csv
   supplied_source_review: outputs/supplied_source_review.csv
   supplied_sources_config: configs/supplied_sources.yaml
@@ -126,6 +129,8 @@ pipeline:
   - {module: scripts.02_market_data, arguments: [--cached-only]}
   - {module: scripts.03f_import_filing_identities}
   - {module: scripts.03e_extract_metadata}
+  - {module: scripts.03g_import_listing_status}
+  - {module: scripts.02j_audit_sessions, offline: true}
   - {module: scripts.02d_extract_financials}
   - {module: scripts.02f_collect_shareholding, offline: true}
   - {module: scripts.02e_collect_fx, offline: true}

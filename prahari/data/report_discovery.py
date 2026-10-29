@@ -9,7 +9,6 @@ from __future__ import annotations
 from html.parser import HTMLParser
 import json
 import logging
-import math
 import re
 from urllib.parse import quote, urljoin, urlparse
 
@@ -186,14 +185,27 @@ def annual_links(payload: bytes, page_url: str, pattern: str) -> list[tuple[int,
     return sorted(set(result))
 
 
+def candidate_report_window(event: pd.Timestamp, panel: dict, fiscal_end: dict) -> tuple[int, int]:
+    """Include the fiscal report that covers the full forward survival interval.
+
+    A March report for the endpoint's calendar year cannot certify survival
+    through a later month. These labels guide acquisition only; actual dates,
+    fiscal periods and non-default evidence still require source review.
+    """
+    through = event + pd.DateOffset(months=3 * panel["survival_quarters"])
+    year_end = pd.Timestamp(year=through.year, month=fiscal_end["month"], day=fiscal_end["day"], tz=through.tz)
+    last = through.year + int(through > year_end)
+    return event.year - panel["collection_years_before"], last
+
+
 def discover_reports(config: Config, *, offline: bool, limit: int | None = None, candidates: bool = False) -> None:
     settings = config.section("report_discovery_config")
     years_before = config.section("india_config")["panel"]["collection_years_before"]
     cases, peers = read_manual(config, "events"), read_manual(config, "peers")
-    windows = {row.entity_id: pd.Timestamp(row.event_date).year for row in cases.itertuples()}
-    cohort = [(row.entity_id, row.nse_symbol, row.bse_code, windows[row.entity_id])
+    windows = {row.entity_id: pd.Timestamp(row.event_date) for row in cases.itertuples()}
+    cohort = [(row.entity_id, row.nse_symbol, row.bse_code, windows[row.entity_id].year-years_before, windows[row.entity_id].year)
               for row in cases.loc[cases.needs_verification.eq(0)].itertuples()]
-    cohort += [(row.entity_id, row.symbols, None, windows[row.matched_to])
+    cohort += [(row.entity_id, row.symbols, None, windows[row.matched_to].year-years_before, windows[row.matched_to].year)
                for row in peers.loc[peers.needs_verification.eq(0)].itertuples()]
     if candidates:
         # Research pool only. Sector, asset distance and survival are unresolved;
@@ -203,9 +215,9 @@ def discover_reports(config: Config, *, offline: bool, limit: int | None = None,
             raise ValueError("Research candidates require real-source taint and unresolved eligibility")
         # Future reports support outcome/survival review only. Their later public
         # dates remain mandatory if any financial fields are imported later.
-        survival_years = math.ceil(config.section("india_config")["panel"]["survival_quarters"]/4)
-        years_before += survival_years
-        cohort = [(row.entity_id, row.symbol, row.bse_code, windows[row.case_entity_id]+survival_years)
+        cohort = [(row.entity_id, row.symbol, row.bse_code,
+                   *candidate_report_window(windows[row.case_entity_id], config.section("india_config")["panel"],
+                                            settings["report_label_fiscal_year_end"]))
                   for row in pool.itertuples()]
     cache = {}
     for document in config.section("source_config")["documents"]:
@@ -218,7 +230,7 @@ def discover_reports(config: Config, *, offline: bool, limit: int | None = None,
     audit = []
     completed = 0
     try:
-        for entity, symbol, bse_code, end_year in cohort:
+        for entity, symbol, bse_code, first_year, end_year in cohort:
             page = None
             symbols = [symbol] + ([str(bse_code)] if pd.notna(bse_code) else [])
             for candidate in symbols:
@@ -236,7 +248,7 @@ def discover_reports(config: Config, *, offline: bool, limit: int | None = None,
                 audit.append({"entity_id": entity, "status": "document_list_unavailable", "needs_verification": 1, "is_synthetic": 0})
                 continue
             links = annual_links(page.read_bytes(), page_url, settings["annual_label_pattern"])
-            selected = [(year, url, synthetic) for year, url, synthetic in links if end_year-years_before <= year <= end_year]
+            selected = [(year, url, synthetic) for year, url, synthetic in links if first_year <= year <= end_year]
             for year, url, synthetic in selected:
                 if limit is not None and completed >= limit:
                     break

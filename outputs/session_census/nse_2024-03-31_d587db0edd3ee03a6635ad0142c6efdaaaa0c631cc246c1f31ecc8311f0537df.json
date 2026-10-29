@@ -1,0 +1,22 @@
+{
+  "count_claims": [
+    {
+      "date_is_imputed": 1,
+      "entity_id": "nse",
+      "expected_count": 246,
+      "field": "session_count__cash_segment_annual_2024",
+      "is_synthetic": 0,
+      "needs_verification": 0,
+      "period_end": "2024-03-31 00:00:00+00:00",
+      "period_start": "2023-04-01",
+      "public_date": "2026-10-29 02:58:03.376354+00:00",
+      "source_url": "https://www.sebi.gov.in/sebi_data/commondocs/nov-2024/Table%2017%20Trends%20in%20Equity%20Cash%20Segment_p.xlsx#17A!V15"
+    }
+  ],
+  "exchange": "nse",
+  "is_synthetic": 0,
+  "method": "cash_segment_exact_count_census_v1",
+  "period_end": "2024-03-31T00:00:00+00:00",
+  "period_start": "2023-04-01T00:00:00+00:00",
+  "sessions": []
+}

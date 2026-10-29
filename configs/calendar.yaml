@@ -1,0 +1,90 @@
+exchange: nse
+fiscal_year_end:
+  month: 3
+  day: 31
+census_filename: '{exchange}_{period_end}_{sha256}.json'
+recovery_month_priority:
+- 11
+- 10
+- 3
+- 2
+- 9
+- 5
+- 1
+- 4
+- 6
+- 7
+- 8
+- 12
+count_sources:
+- id: cash_segment_annual_2024
+  source: sebi
+  url: https://www.sebi.gov.in/sebi_data/commondocs/nov-2024/Table%2017%20Trends%20in%20Equity%20Cash%20Segment_p.xlsx
+  filename: cash_segment_annual_2024.xlsx
+  format: xlsx
+  sha256: 89a9aea84cfd249ec27ddbd14016d956ff82fe7fe0de2d561f48b16dae8e6203
+  public_date: '2026-10-29T02:58:03.376354+00:00'
+  date_is_imputed: 1
+  publication_basis: publicly_observed_at_cached_download
+  period_labels:
+  - 2013-14
+  - 2014-15
+  - 2015-16
+  - 2016-17
+  - 2017-18
+  - 2018-19
+  - 2019-20
+  - 2020-21
+  - 2021-22
+  - 2022-23
+  - 2023-24
+  sheet: 17A
+  header_cells:
+    A1: 'Table 17: Trends in Equity Cash Segment'
+    S2: NSE
+    V3: No. of Trading Days
+    R17: 'Source : NSE'
+  period_column: R
+  count_column: V
+  first_row: 5
+  last_row: 15
+- id: nse_factbook_2015
+  source: nse_factbooks
+  url: https://nsearchives.nseindia.com/web/sites/default/files/inline-files/nsefactbook2015.pdf
+  filename: nse_factbook_2015.pdf
+  format: pdf
+  sha256: 7f9e21526cff1d7741a38e7bea679ad464573c8efec87e87285dc1da6fa4a5e6
+  public_date: '2026-10-29T02:50:01.493698+00:00'
+  date_is_imputed: 1
+  publication_basis: publicly_observed_at_cached_download
+  period_labels:
+  - 2011-12
+  - 2012-13
+  - 2013-14
+  - 2014-15
+  page: 40
+  evidence_markers:
+  - Business Growth of CM Segment
+  - No. of Trading Days
+  row_pattern: ^\s*(?P<period>\d{4}-\d{2})\s+(?P<count>\d{1,3})\s
+- id: nse_factbook_2018
+  source: nse_factbooks
+  url: https://nsearchives.nseindia.com/research/dynaContent/NSE_Factbook-2018_Final.pdf
+  filename: nse_factbook_2018.pdf
+  format: pdf
+  sha256: 78bf961aa847828849de5f56745d9713bc5495af53b9e6a490bb7acc792bf38d
+  public_date: '2026-10-29T02:49:58.184062+00:00'
+  date_is_imputed: 1
+  publication_basis: publicly_observed_at_cached_download
+  period_labels:
+  - 2013-14
+  - 2014-15
+  - 2015-16
+  - 2016-17
+  - 2017-18
+  page: 43
+  evidence_markers:
+  - Business Growth of CM Segment
+  - No. of Trading Days
+  row_pattern: ^\s*(?P<period>\d{4}-\d{2})\s+(?P<count>\d{1,3})\s
+method_id: cash_segment_exact_count_census_v1

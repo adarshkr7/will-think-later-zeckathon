@@ -34,6 +34,11 @@ def main() -> None:
     statements = read_manual(config, "financial_evidence")
     shares = read_manual(config, "share_counts")
     holdings = read_manual(config, "shareholding")
+    listings = read_manual(config, "listing_events")
+    groups = read_manual(config, "groups")
+    session_counts = read_manual(config, "trading_session_counts")
+    calendar = read_manual(config, "trading_calendar")
+    sessions = pd.read_csv(config.path("session_coverage")) if config.path("session_coverage").exists() else pd.DataFrame(columns=["status"])
     discovery = pd.read_csv(config.path("report_discovery_audit")) if config.path("report_discovery_audit").exists() else pd.DataFrame(columns=["status"])
     indexes = pd.read_csv(config.path("financial_index_coverage")) if config.path("financial_index_coverage").exists() else pd.DataFrame(columns=["status", "rows"])
     histories = pd.read_csv(config.path("financial_coverage")) if config.path("financial_coverage").exists() else pd.DataFrame(columns=["complete"])
@@ -54,6 +59,12 @@ def main() -> None:
             ("verified_identity_mappings", int(identities.needs_verification.eq(0).sum()), 0),
             ("verified_quarterly_share_counts", int(shares.needs_verification.eq(0).sum()), 0),
             ("verified_quarterly_shareholding", int(holdings.needs_verification.eq(0).sum()), 0),
+            ("verified_first_listing_certificates", int(listings.needs_verification.eq(0).sum()), 0),
+            ("sourced_group_memberships", int(groups.needs_verification.eq(0).sum()), 0),
+            ("complete_group_roster_memberships", int((groups.needs_verification.eq(0) & groups.membership_complete.eq(1)).sum()), 0),
+            ("published_session_count_claims", int(session_counts.needs_verification.eq(0).sum()), 0),
+            ("certified_session_census_periods", int(sessions.status.eq("complete_census").sum()), 0),
+            ("sourced_exchange_calendar_rows", int(calendar.needs_verification.eq(0).sum()), 0),
             ("complete_core_financial_histories", int(histories.complete.eq(1).sum()), 0),
             ("unselected_research_symbols", candidates.symbol.nunique(), 1),
             ("unselected_research_security_ids", candidates.entity_id.nunique(), 1),

@@ -107,3 +107,10 @@
 - 2026-10-29: Preserve Jet FY2017 original and FY2018 Ind AS restated comparatives at their separate publication proxies; reject backdating the restatement or mapping opening transition columns to annual observations.
 - 2026-10-29: Future Retail COGS is the signed sum of printed purchases and stock-in-trade inventory changes; distinguish retained earnings from restructuring reserves and restrict unreviewed comparative flow periods.
 - 2026-10-29: Accept only configured four-/two-digit exchange date formats after the original July 2020 bhavcopy changed to a two-digit year; retain the requested-archive-date check and reject generic mixed date inference.
+
+- 2026-10-29: Record only positively sourced RCom/Reliance Capital/RHFL Reliance Group memberships from original dated reports, with membership_complete=0 because the full roster is unknown; reject shared-name grouping, fabricated singleton status or enabling the primary group overlay.
+
+- 2026-10-29: Certify non-trading civil dates only by an exact cash-segment session census: distinct receipt-verified production sessions must equal every agreeing published fiscal total; missing archives alone, conflicting totals or excess observations produce no closure claims. Calendar source publication is conservatively the observed download time, and the audit does not enter historical risk features.
+- 2026-10-29: Separate source-availability coverage from full-window quote history for positively certified first equity listings; retain unavailable pre-listing features and all case denominators. Never use the first cached quote as an IPO certificate.
+- 2026-10-29: Extend candidate-report acquisition to the fiscal report covering the full forward survival endpoint; reject using a March-ending report to certify survival through a later month. All such documents remain unverified candidates until reviewed.
+- 2026-10-29: Add pinned openpyxl support for the original SEBI workbook, retaining every existing dependency version; the import reads pinned cells and venue headings rather than reconstructing counts from rounded turnover averages.

@@ -1,0 +1,13 @@
+{
+  "is_synthetic": 1,
+  "text": "FIX_ISSUER equity shares were successfully listed on NSE and BSE with effect from September 28, 2018.",
+  "spec": {
+    "entity_id": "FIX_LISTED",
+    "page": 1,
+    "listing_date": "2018-09-28",
+    "listing_date_marker": "September 28, 2018",
+    "source_period_end": "2019-03-31",
+    "exchanges": ["nse", "bse"],
+    "evidence_markers": ["equity shares were successfully listed", "NSE and BSE"]
+  }
+}

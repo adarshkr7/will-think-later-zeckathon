@@ -11,5 +11,6 @@ joblib
 matplotlib
 pydantic
 pypdf[crypto]
+openpyxl==3.1.5
 streamlit>=1.42,<2
 plotly>=5.24,<7
