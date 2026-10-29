@@ -1,2 +1,2 @@
-# Output receipts hash exact bytes; checkout must preserve them on every OS.
-outputs/** -text
+# Frozen inputs and output receipts hash exact bytes on every platform.
+* -text
