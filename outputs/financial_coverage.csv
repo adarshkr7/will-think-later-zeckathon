@@ -1,5 +1,5 @@
 entity_id,matched_to,cutoff,complete_years,required_years,complete,needs_verification,missing_reason,is_synthetic
-INE975G01012,INE975G01012,2018-09-28 00:00:00+00:00,0,3,0,1,insufficient_complete_financial_years,0
+INE975G01012,INE975G01012,2018-09-28 00:00:00+00:00,3,3,1,0,,0
 INE202B01012,INE202B01012,2019-06-04 00:00:00+00:00,3,3,1,0,,0
 INE802G01018,INE802G01018,2018-12-31 00:00:00+00:00,3,3,1,0,,0
 INE013A01015,INE013A01015,2019-09-09 00:00:00+00:00,3,3,1,0,,0

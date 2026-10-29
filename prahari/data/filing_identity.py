@@ -11,7 +11,7 @@ import pandas as pd
 
 from prahari.config import Config
 from prahari.data.downloads import CachedDownloader
-from prahari.data.firewall import write_real_table
+from prahari.data.firewall import assert_real, write_real_table
 from prahari.data.manual import read_manual
 from prahari.data.quality import validate_table
 from prahari.data.uci import sha256_file
@@ -65,6 +65,14 @@ def import_filing_identities(config: Config) -> None:
     if config.path("preregistration_lock").exists():
         raise RuntimeError("Identity inputs are registered; amendment required")
     allowed = set(read_manual(config, "events").entity_id) | set(read_manual(config, "peers").entity_id)
+    # Research candidates need original identity proofs before classification
+    # and selection. Their inclusion here only permits collection: index
+    # claims remain quarantined and verification still requires original quotes.
+    candidates_path = config.path("peer_discovery_candidates")
+    if candidates_path.is_file():
+        candidates = pd.read_csv(candidates_path)
+        assert_real(candidates)
+        allowed.update(candidates.entity_id.dropna())
     settings = config.section("financial_index_config")
     audit_path = config.path("financial_index_coverage")
     audit = pd.read_csv(audit_path) if audit_path.exists() else pd.DataFrame(columns=["status", "needs_verification"])

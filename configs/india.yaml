@@ -88,6 +88,7 @@ market:
   - '2018-09-28'
   legacy_url: https://nsearchives.nseindia.com/content/historical/EQUITIES/{year}/{month}/cm{day}{month}{year}bhav.csv.zip
   index_url: https://nsearchives.nseindia.com/content/indices/ind_close_all_{date}.csv
+  index_filename_pattern: '^ind_close_all_(?P<date>\d{8})\.csv$'
   index_names:
   - Nifty 500
   - Nifty 50

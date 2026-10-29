@@ -51,6 +51,20 @@ def test_reviewed_sum_uses_only_complete_printed_components():
         reviewed_values(text, {"sum": ["Absent component", "Total current liabilities"]}, 3, 3)
 
 
+def test_repeated_captions_sum_distinct_cells_and_reject_alias_double_counting():
+    text = json.loads((FIXTURES / "statement_repeated.json").read_text())["text"]
+    first = {"label": "Transfer from earnings", "expected_matches": 2, "occurrence": 0,
+             "columns": 4, "positions": [1, 3]}
+    second = {**first, "occurrence": 1}
+    assert reviewed_values(text, {"sum": [first, second]}, 2, 2) == [40, 60]
+    alias = {**first, "label": "earnings"}
+    with pytest.raises(ValueError, match="twice"):
+        reviewed_values(text, {"sum": [first, alias]}, 2, 2)
+    assert amount_columns(text, "Spaced comma amount", 2) == [30177.43, 23525.88]
+    encoded = json.loads((FIXTURES / "statement_repeated.json").read_text())["encoded_note"]
+    assert amount_columns(encoded, "Encoded note", 1) == [123]
+
+
 def test_reviewed_liability_identity_preserves_missing_operands():
     text = (FIXTURES / "statement_sum.txt").read_text()
     rule = {"difference": ["Total assets", {"sum": ["Equity share capital", "Other equity"]}]}

@@ -3,13 +3,14 @@ documents:
   source: crisil_studies
   filename: crisil_default_study_2024.pdf
   url: https://www.crisilratings.com/content/dam/crisil/our-analysis/publications/default-study/crisil-ratings-annual-default-and-ratings-transition-study-fy-2024.pdf
-  purpose: Independent prior-source candidate; rated-cohort population and horizon compatibility unresolved, no
-    prior values imported
+  purpose: Independent prior-source candidate; rated-cohort population and horizon
+    compatibility unresolved, no prior values imported
 - name: Reliance Capital annual report FY2014-15
   source: bse_reports
   filename: INE013A01015_annual_2015.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/500111/5001110315.pdf
-  purpose: Reviewed original matching-period standalone balance sheet and historical nonbank classification
+  purpose: Reviewed original matching-period standalone balance sheet and historical
+    nonbank classification
   classification_review:
     reviewed: true
     entity_id: INE013A01015
@@ -82,7 +83,8 @@ documents:
   source: bse_reports
   filename: INE013A01015_annual_2017.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/500111/5001110317.pdf
-  purpose: Reviewed standalone statements; original spaced-thousands layout and later comparative availability retained
+  purpose: Reviewed standalone statements; original spaced-thousands layout and later
+    comparative availability retained
   financial_extraction:
     reviewed: true
     entity_id: INE013A01015
@@ -154,7 +156,8 @@ documents:
   source: bse_reports
   filename: INE013A01015_annual_2018.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/500111/5001110318.pdf
-  purpose: Reviewed standalone statements; restated comparative balance sheet retains FY2018 availability
+  purpose: Reviewed standalone statements; restated comparative balance sheet retains
+    FY2018 availability
   financial_extraction:
     reviewed: true
     entity_id: INE013A01015
@@ -226,7 +229,8 @@ documents:
   source: itnl
   filename: itnl_annual_2016_alternate.pdf
   url: https://ipv4.itnlindia.com/pdf/annual-reports/ITNLAnnualReport2015-16.pdf
-  purpose: Reviewed original standalone FY2016 statements and FY2015 comparatives; recovered publisher host
+  purpose: Reviewed original standalone FY2016 statements and FY2015 comparatives;
+    recovered publisher host
   financial_extraction:
     reviewed: true
     entity_id: INE975G01012
@@ -304,17 +308,46 @@ documents:
       columns: 2
       fields:
         cash_and_cash_equivalents: Cash and Cash Equivalents at the end of the year
+    - page: 127
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          sum:
+          - label: Transfer from balance in Statement of Profit and Loss
+            expected_matches: 2
+            occurrence: 0
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Transfer from balance in Statement of Profit and Loss
+            expected_matches: 2
+            occurrence: 1
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: preference shares
+            expected_matches: 2
+            occurrence: 1
+            line_offset: 1
+            columns: 4
+            positions:
+            - 1
+            - 3
 - name: IL&FS Financial Services annual report FY2017-18
   source: ilfsifin
   filename: ifin_annual_2018.pdf
   url: https://www.ilfsifin.com/pdf/IFIN-Annual-Report-2017-18.pdf
-  purpose: User-supplied original IFIN report; separate legal entity from ITNL, not a substitute for its statements
+  purpose: User-supplied original IFIN report; separate legal entity from ITNL, not
+    a substitute for its statements
 - name: IIFCL annual report FY2016-17
   source: iifcl
   filename: iifcl_user_annual_report.pdf
   url: https://www.iifcl.in/images/FileUploaded/AnnualReport1pdf05122019132624.pdf
-  purpose: User-supplied original India Infrastructure Finance Company report; separate legal entity from IL&FS
-    and ITNL
+  purpose: User-supplied original India Infrastructure Finance Company report; separate
+    legal entity from IL&FS and ITNL
 - name: Srei Infrastructure Finance annual report FY2017-18
   source: srei
   filename: srei_annual_2018.pdf
@@ -441,7 +474,8 @@ documents:
   source: srei
   filename: srei_annual_2019.pdf
   url: https://www.srei.com/storage/app/media/annual-report-and-agm-notice-of-srei-for-the-fy-2018-19.pdf
-  purpose: Reviewed original standalone Ind AS statements; restated comparatives retain FY2019 publication timing
+  purpose: Reviewed original standalone Ind AS statements; restated comparatives retain
+    FY2019 publication timing
   financial_extraction:
     reviewed: true
     entity_id: INE872A01014
@@ -748,6 +782,51 @@ documents:
       columns: 2
       fields:
         cfo: Net Cash (used in) / generated from Operating Activities (A)
+    - page: 128
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          sum:
+          - label: Transfer from balance in Statement of Profit and Loss
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Transfer from balance in Statement of Profit and Loss (Refer footnote)
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Redemption premium on 20.50% CRPS
+            expected_matches: 2
+            occurrence: 1
+            columns: 4
+            positions:
+            - 1
+            - 3
+      additional_pages:
+      - 129
+    - page: 116
+      basis: standalone
+      columns: 2
+      fields:
+        inventory:
+          difference:
+          - label: Other current assets (net)
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - sum:
+            - T rade receivables (net)
+            - Cash and cash equivalents
+            - Short-term loans and advances (net)
+            - label: Other current assets (net)
+              columns: 4
+              positions:
+              - 0
+              - 2
   classification_review:
     reviewed: true
     entity_id: INE975G01012
@@ -764,7 +843,8 @@ documents:
   source: itnl
   filename: itnl_annual_2017.pdf
   url: https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf
-  purpose: Original annual financial statements; comparative restatements retain this report's publication timing
+  purpose: Original annual financial statements; comparative restatements retain this
+    report's publication timing
   financial_extraction:
     reviewed: true
     entity_id: INE975G01012
@@ -834,17 +914,59 @@ documents:
       columns: 2
       fields:
         cfo: Net cash generated by operating activities (A)
+    - page: 118
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          difference:
+          - label: Balance as at March 31, 2017
+            expected_matches: 2
+            occurrence: 0
+            columns: 10
+            positions:
+            - 6
+          - label: Balance as at March 31, 2017
+            expected_matches: 2
+            occurrence: 0
+            columns: 10
+            positions:
+            - 3
+      fiscal_periods:
+      - '2017-03-31'
+    - page: 118
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          difference:
+          - label: Balance as at March 31, 2016
+            expected_matches: 2
+            occurrence: 1
+            columns: 10
+            positions:
+            - 6
+          - label: Balance as at March 31, 2016
+            expected_matches: 2
+            occurrence: 1
+            columns: 10
+            positions:
+            - 3
+      fiscal_periods:
+      - '2016-03-31'
     source_sha256: d001478c6a0ad13fb487a16e3a3112ff5b5cad8874d773f8bb8ef630b753e1c4
 - name: Jaypee Infratech public announcement
   source: ibbi
   filename: jaypee_form_a.pdf
   url: https://ibbi.gov.in/webadmin/pdf/announcement/2017/Aug/Form-A-Public-JAYPEE%20Infra.pdf
-  purpose: CIRP component evidence; earliest payment default and CRA D still need verification
+  purpose: CIRP component evidence; earliest payment default and CRA D still need
+    verification
 - name: Jet Airways original NCLT order
   source: jet_airways
   filename: jet_nclt_order.pdf
   url: https://www.jetairways.com/information/Documents/NCLT-Order.pdf
-  purpose: CIRP component evidence; retrospective default statements are not contemporaneous disclosures
+  purpose: CIRP component evidence; retrospective default statements are not contemporaneous
+    disclosures
 - name: Jet Airways public announcement
   source: jet_airways
   filename: jet_public_announcement.pdf
@@ -854,7 +976,8 @@ documents:
   source: icra
   filename: itnl_icra_72468.pdf
   url: https://www.icra.in/Rating/GetRationalReportFilePdf?id=72468
-  purpose: Soft-signal evidence; INC is not a D rating and does not establish a default date
+  purpose: Soft-signal evidence; INC is not a D rating and does not establish a default
+    date
 - name: ITNL CARE D release 2018-09-28
   source: care
   filename: verified_event_01.pdf
@@ -1136,7 +1259,7 @@ documents:
     - page: 120
       basis: standalone
       columns: 3
-      fields: &id001
+      fields:
         total_assets: TOTAL ASSETS
         ppe_net: Property, Plant and Equipment
         cwip: Capital work-in-progress
@@ -1159,7 +1282,13 @@ documents:
     - page: 214
       basis: consolidated
       columns: 3
-      fields: *id001
+      fields:
+        total_assets: TOTAL ASSETS
+        ppe_net: Property, Plant and Equipment
+        cwip: Capital work-in-progress
+        inventory: Inventories
+        receivables: Trade receivables
+        cash_and_cash_equivalents: Cash and cash equivalents
     - page: 215
       basis: consolidated
       columns: 2
@@ -1231,8 +1360,8 @@ documents:
   source: alok
   filename: alok_annual_2016.pdf
   url: https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2015-16.pdf
-  purpose: Reviewed standalone statements; prior balance-sheet comparatives only, excluding eighteen-month comparative
-    flows
+  purpose: Reviewed standalone statements; prior balance-sheet comparatives only,
+    excluding eighteen-month comparative flows
   financial_extraction:
     reviewed: true
     entity_id: INE270A01011
@@ -1296,8 +1425,8 @@ documents:
   source: bse_reports
   filename: jaypee_original_2011.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/533207/5332070311.pdf
-  purpose: Reviewed original standalone statements; printed INR units, liability subtotals and retained profit reserves
-    with source-page evidence
+  purpose: Reviewed original standalone statements; printed INR units, liability subtotals
+    and retained profit reserves with source-page evidence
   classification_review:
     reviewed: true
     entity_id: INE099J01015
@@ -1357,8 +1486,8 @@ documents:
   source: bse_reports
   filename: jaypee_original_2012.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/533207/5332070312.pdf
-  purpose: Reviewed original standalone statements; printed INR units, liability subtotals and retained profit reserves
-    with source-page evidence
+  purpose: Reviewed original standalone statements; printed INR units, liability subtotals
+    and retained profit reserves with source-page evidence
   financial_extraction:
     reviewed: true
     entity_id: INE099J01015
@@ -1433,8 +1562,8 @@ documents:
   source: bse_reports
   filename: jaypee_original_2013.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/533207/5332070313.pdf
-  purpose: Reviewed original standalone statements; printed INR units, liability subtotals and retained profit reserves
-    with source-page evidence
+  purpose: Reviewed original standalone statements; printed INR units, liability subtotals
+    and retained profit reserves with source-page evidence
   financial_extraction:
     reviewed: true
     entity_id: INE099J01015
@@ -1509,8 +1638,8 @@ documents:
   source: bse_reports
   filename: jaypee_original_2014.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/533207/5332070314.pdf
-  purpose: Reviewed original standalone statements; printed INR units, liability subtotals and retained profit reserves
-    with source-page evidence
+  purpose: Reviewed original standalone statements; printed INR units, liability subtotals
+    and retained profit reserves with source-page evidence
   financial_extraction:
     reviewed: true
     entity_id: INE099J01015
@@ -1585,7 +1714,8 @@ documents:
   source: bse_reports
   filename: INE802G01018_annual_2015.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/532617/5326170315.pdf
-  purpose: Reviewed original standalone annual statements; later Ind AS comparatives retain later availability
+  purpose: Reviewed original standalone annual statements; later Ind AS comparatives
+    retain later availability
   financial_extraction:
     reviewed: true
     entity_id: INE802G01018
@@ -1652,7 +1782,8 @@ documents:
   source: bse_reports
   filename: INE802G01018_annual_2017.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/532617/5326170317.pdf
-  purpose: Reviewed original standalone annual statements; later Ind AS comparatives retain later availability
+  purpose: Reviewed original standalone annual statements; later Ind AS comparatives
+    retain later availability
   financial_extraction:
     reviewed: true
     entity_id: INE802G01018
@@ -1711,7 +1842,8 @@ documents:
   source: bse_reports
   filename: INE802G01018_annual_2018.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/532617/5326170318.pdf
-  purpose: Reviewed original standalone annual statements; later Ind AS comparatives retain later availability
+  purpose: Reviewed original standalone annual statements; later Ind AS comparatives
+    retain later availability
   financial_extraction:
     reviewed: true
     entity_id: INE802G01018
@@ -1764,8 +1896,8 @@ documents:
   source: bse_reports
   filename: INE752P01024_annual_2017.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/540064/5400640317.pdf
-  purpose: Reviewed original standalone statements; explicitly separated equity components, opening balance excluded
-    and later comparative availability preserved
+  purpose: Reviewed original standalone statements; explicitly separated equity components,
+    opening balance excluded and later comparative availability preserved
   financial_extraction:
     reviewed: true
     entity_id: INE752P01024
@@ -1843,8 +1975,8 @@ documents:
   source: bse_reports
   filename: INE752P01024_annual_2019.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/540064/5400640319.pdf
-  purpose: Reviewed original standalone statements; explicitly separated equity components, opening balance excluded
-    and later comparative availability preserved
+  purpose: Reviewed original standalone statements; explicitly separated equity components,
+    opening balance excluded and later comparative availability preserved
   financial_extraction:
     reviewed: true
     entity_id: INE752P01024
@@ -1910,8 +2042,8 @@ documents:
   source: rhfl
   filename: rhfl_annual_2017.pdf
   url: https://www.reliancehomefinance.com/documents/20142/141572/Annual-Report-2016-17.pdf
-  purpose: Original publisher report; partial standalone inputs; comparative equity/liabilities remain unknown because
-    a component is a dash
+  purpose: Original publisher report; partial standalone inputs; comparative equity/liabilities
+    remain unknown because a component is a dash
   financial_extraction:
     reviewed: true
     entity_id: INE217K01011
@@ -1930,7 +2062,7 @@ documents:
           label: TOTAL
           expected_matches: 2
           occurrence: 1
-        equity: &id002
+        equity:
           sum:
           - Share capital
           - Reserves and Surplus
@@ -1940,7 +2072,10 @@ documents:
           - label: TOTAL
             expected_matches: 2
             occurrence: 1
-          - *id002
+          - sum:
+            - Share capital
+            - Reserves and Surplus
+            - Share capital suspense Refer Note No ii
         lt_debt: Long-term borrowings
         st_borrowings: Short-term borrowings
         ppe_net:
@@ -1960,8 +2095,8 @@ documents:
   source: bse_reports
   filename: INE330H01018_annual_2013.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/532712/5327120313.pdf
-  purpose: Reviewed original standalone sources; interleaved printed subtotals and separate surplus/deficit caption;
-    reserve transfers remain explicit limitations
+  purpose: Reviewed original standalone sources; interleaved printed subtotals and
+    separate surplus/deficit caption; reserve transfers remain explicit limitations
   financial_extraction:
     reviewed: true
     entity_id: INE330H01018
@@ -2035,8 +2170,8 @@ documents:
   source: bse_reports
   filename: INE330H01018_annual_2014.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/532712/5327120314.pdf
-  purpose: Reviewed original standalone sources; interleaved printed subtotals and separate surplus/deficit caption;
-    reserve transfers remain explicit limitations
+  purpose: Reviewed original standalone sources; interleaved printed subtotals and
+    separate surplus/deficit caption; reserve transfers remain explicit limitations
   financial_extraction:
     reviewed: true
     entity_id: INE330H01018
@@ -2115,8 +2250,8 @@ documents:
   source: bse_reports
   filename: INE330H01018_annual_2016.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/532712/5327120316.pdf
-  purpose: Reviewed original standalone sources; interleaved printed subtotals and separate surplus/deficit caption;
-    reserve transfers remain explicit limitations
+  purpose: Reviewed original standalone sources; interleaved printed subtotals and
+    separate surplus/deficit caption; reserve transfers remain explicit limitations
   financial_extraction:
     reviewed: true
     entity_id: INE330H01018
@@ -2195,8 +2330,8 @@ documents:
   source: bse_reports
   filename: INE330H01018_annual_2015.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/532712/5327120315.pdf
-  purpose: Reviewed original standalone sources; interleaved printed subtotals and separate surplus/deficit caption;
-    reserve transfers remain explicit limitations
+  purpose: Reviewed original standalone sources; interleaved printed subtotals and
+    separate surplus/deficit caption; reserve transfers remain explicit limitations
   financial_extraction:
     reviewed: true
     entity_id: INE330H01018
@@ -2275,7 +2410,8 @@ documents:
   source: bse_reports
   filename: INE217K01011_annual_2018.pdf
   url: https://www.bseindia.com/bseplus/AnnualReport/540709/5407090318.pdf
-  purpose: Reviewed original first-equity-listing evidence only; financial statements remain separate pending review
+  purpose: Reviewed original first-equity-listing evidence only; financial statements
+    remain separate pending review
   listing_review:
     reviewed: true
     entity_id: INE217K01011
@@ -2565,3 +2701,436 @@ documents:
       - 89
       context_markers:
       - However, there is no physical inventory as at the year end.
+- name: Repco Home Finance original annual report FY2015
+  source: bse_reports
+  filename: INE612J01015_annual_2015.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/535322/5353220315.pdf
+  purpose: Reviewed candidate financials only; no peer survival or selection inferred.
+    Book equity uses the reported shareholders funds; unallotted application money
+    remains outside those funds.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE612J01015
+    source_period_end: '2015-03-31'
+    fiscal_periods:
+    - '2015-03-31'
+    - '2014-03-31'
+    unit: INR
+    source_sha256: b8e01e93ea796202638b4fd0dc6f1ff8c4d6c71a45994a898a5a2059caadc846
+    tables:
+    - page: 59
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          sum:
+          - Share Capital
+          - Reserves and Surplus
+        total_liabilities:
+          difference:
+          - label: Total
+            expected_matches: 2
+            occurrence: 1
+          - sum:
+            - Share Capital
+            - Reserves and Surplus
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 60
+      basis: standalone
+      columns: 2
+      fields:
+        pat: Net Profit/(Loss) for the period
+        revenue: Revenue from Operations
+    unit_marker: amtininr
+  classification_review:
+    reviewed: true
+    entity_id: INE612J01015
+    name: Repco Home Finance Ltd
+    page: 75
+    sector: housing_finance
+    is_financial: 1
+    period_end: '2015-03-31'
+    evidence_markers:
+    - main business of the Company is to provide long term loan financing for Residential
+      purposes in India
+    source_sha256: b8e01e93ea796202638b4fd0dc6f1ff8c4d6c71a45994a898a5a2059caadc846
+- name: Repco Home Finance original annual report FY2017
+  source: bse_reports
+  filename: INE612J01015_annual_2017.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/535322/5353220317.pdf
+  purpose: Reviewed candidate financials only; no peer survival or selection inferred.
+    Book equity uses the reported shareholders funds; unallotted application money
+    remains outside those funds.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE612J01015
+    source_period_end: '2017-03-31'
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
+    unit: INR
+    source_sha256: c2e869992b0507a9da668e6358762636a6e8281f831dc4cdcecfcfcae1de5629
+    tables:
+    - page: 69
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          sum:
+          - Share Capital
+          - Reserves and Surplus
+        total_liabilities:
+          difference:
+          - label: Total
+            expected_matches: 2
+            occurrence: 1
+          - sum:
+            - Share Capital
+            - Reserves and Surplus
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 70
+      basis: standalone
+      columns: 2
+      fields:
+        pat: Net Profit/(Loss) for the period (IX-X)
+        revenue: Revenue from Operations
+    unit_marker: amtininr
+- name: Repco Home Finance original annual report FY2018
+  source: bse_reports
+  filename: INE612J01015_annual_2018.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/535322/5353220318.pdf
+  purpose: Reviewed candidate financials only; no peer survival or selection inferred.
+    Book equity uses the reported shareholders funds; unallotted application money
+    remains outside those funds.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE612J01015
+    source_period_end: '2018-03-31'
+    fiscal_periods:
+    - '2018-03-31'
+    - '2017-03-31'
+    unit: INR
+    source_sha256: 2de8b11cefc82bb1626630c3905b176d846e9a0f25246bf9de05ef997058a703
+    tables:
+    - page: 65
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          sum:
+          - Share Capital
+          - Reserves and Surplus
+        total_liabilities:
+          difference:
+          - label: Total
+            expected_matches: 2
+            occurrence: 1
+          - sum:
+            - Share Capital
+            - Reserves and Surplus
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 66
+      basis: standalone
+      columns: 2
+      fields:
+        pat: Net profit for the year
+        revenue: Revenue from Operations
+        finance_costs: Finance cost
+    unit_marker: allamountsareinrupees
+- name: Can Fin Homes original annual report FY2015
+  source: bse_reports
+  filename: INE477A01012_annual_2015.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511196/5111960315.pdf
+  purpose: Reviewed candidate financials only; no peer survival or selection inferred.
+    Book equity uses the reported shareholders funds; unallotted application money
+    remains outside those funds.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE477A01012
+    source_period_end: '2015-03-31'
+    fiscal_periods:
+    - '2015-03-31'
+    - '2014-03-31'
+    unit: INR_lakh
+    source_sha256: 970ce4d268af439a95a024e04218e2d3bbb4e26b0769ad266f1c412ed75918eb
+    tables:
+    - page: 102
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Reserves and Surplus
+          line_offset: 1
+        total_liabilities:
+          difference:
+          - label: Total
+            expected_matches: 2
+            occurrence: 1
+          - label: Reserves and Surplus
+            line_offset: 1
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 103
+      basis: standalone
+      columns: 2
+      fields:
+        pat: Profit for the period
+        revenue: Revenue from Operations
+        finance_costs: Finance Costs
+        depreciation: Depreciation and Amortization Expenses
+  classification_review:
+    reviewed: true
+    entity_id: INE477A01012
+    name: Can Fin Homes Ltd
+    page: 9
+    sector: housing_finance
+    is_financial: 1
+    period_end: '2015-03-31'
+    evidence_markers:
+    - Housing Finance Company registered with
+    - National Housing Bank
+    source_sha256: 970ce4d268af439a95a024e04218e2d3bbb4e26b0769ad266f1c412ed75918eb
+- name: Can Fin Homes original annual report FY2017
+  source: bse_reports
+  filename: INE477A01012_annual_2017.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511196/5111960317.pdf
+  purpose: Reviewed candidate financials only; no peer survival or selection inferred.
+    Book equity uses the reported shareholders funds; unallotted application money
+    remains outside those funds.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE477A01012
+    source_period_end: '2017-03-31'
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
+    unit: INR_lakh
+    source_sha256: fa48b2659c6121dda6fc35b122ff9c22980f5b629d994705a4ea7817af05cc59
+    tables:
+    - page: 125
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Reserves and Surplus
+          line_offset: 1
+        total_liabilities:
+          difference:
+          - label: Total
+            expected_matches: 2
+            occurrence: 1
+          - label: Reserves and Surplus
+            line_offset: 1
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 126
+      basis: standalone
+      columns: 2
+      fields:
+        pat: Profit for the period
+        revenue: Revenue from Operations
+        finance_costs: Finance Costs
+        depreciation: Depreciation and Amortization Expenses
+- name: Can Fin Homes original annual report FY2018
+  source: bse_reports
+  filename: INE477A01012_annual_2018.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511196/5111960318.pdf
+  purpose: Reviewed candidate financials only; no peer survival or selection inferred.
+    Book equity uses the reported shareholders funds; unallotted application money
+    remains outside those funds.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE477A01012
+    source_period_end: '2018-03-31'
+    fiscal_periods:
+    - '2018-03-31'
+    - '2017-03-31'
+    unit: INR_lakh
+    source_sha256: 79069d7aa8df132db88bf7d11f41a05284db3dcf1554f09c7e7ba42804b15e5c
+    tables:
+    - page: 123
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Reserves and Surplus
+          line_offset: 1
+        total_liabilities:
+          difference:
+          - label: Total
+            expected_matches: 2
+            occurrence: 1
+          - label: Reserves and Surplus
+            line_offset: 1
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 124
+      basis: standalone
+      columns: 2
+      fields:
+        pat: Profit for the period
+        revenue: Revenue from Operations
+        finance_costs: Finance Costs
+        depreciation: Depreciation and Amortization Expenses
+- name: GIC Housing Finance original annual report FY2015
+  source: bse_reports
+  filename: INE289B01019_annual_2015.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511676/5116760315.pdf
+  purpose: Reviewed original candidate statements. FY2018 current column visually
+    verified; encoded comparative glyphs are not decoded or imported.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE289B01019
+    source_period_end: '2015-03-31'
+    fiscal_periods:
+    - '2015-03-31'
+    - '2014-03-31'
+    unit: INR_lakh
+    unit_marker_literal: '` in Lacs'
+    source_sha256: 5dfc4a1df1313aa25131d0d7d86a57dfbe250878e143de1217eb8b5e2ae741d4
+    tables:
+    - page: 54
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets: &id001
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        equity: &id002
+          label: Reserves and Surplus
+          line_offset: 1
+        total_liabilities:
+          difference:
+          - *id001
+          - *id002
+    - page: 55
+      basis: standalone
+      columns: 2
+      fields:
+        pat: PROFIT AFTER TAX FOR THE YEAR
+        revenue:
+          sum:
+          - Interest Income
+          - Other Financial Services
+  classification_review:
+    reviewed: true
+    entity_id: INE289B01019
+    name: GIC Housing Finance Ltd
+    page: 58
+    sector: housing_finance
+    is_financial: 1
+    period_end: '2015-03-31'
+    evidence_markers:
+    - National Housing Bank Act, 1987
+    - The Housing Finance Companies (NHB) Directions, 2010 as amended
+    source_sha256: 5dfc4a1df1313aa25131d0d7d86a57dfbe250878e143de1217eb8b5e2ae741d4
+- name: GIC Housing Finance original annual report FY2017
+  source: bse_reports
+  filename: INE289B01019_annual_2017.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511676/5116760317.pdf
+  purpose: Reviewed original candidate statements. FY2018 current column visually
+    verified; encoded comparative glyphs are not decoded or imported.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE289B01019
+    source_period_end: '2017-03-31'
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
+    unit: INR_lakh
+    unit_marker_literal: '` in Lacs'
+    source_sha256: 8a2238b82acb441db7ebcbfb9b8a497d950ab828426c013206cb0eada768667f
+    tables:
+    - page: 62
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets: &id003
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        equity: &id004
+          label: Reserves and Surplus
+          line_offset: 1
+        total_liabilities:
+          difference:
+          - *id003
+          - *id004
+    - page: 63
+      basis: standalone
+      columns: 2
+      fields:
+        pat: PROFIT AFTER TAX
+        revenue:
+          sum:
+          - Interest Income
+          - Other Financial Services
+- name: GIC Housing Finance original annual report FY2018
+  source: bse_reports
+  filename: INE289B01019_annual_2018.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511676/5116760318.pdf
+  purpose: Reviewed original candidate statements. FY2018 current column visually
+    verified; encoded comparative glyphs are not decoded or imported.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE289B01019
+    source_period_end: '2018-03-31'
+    fiscal_periods:
+    - '2018-03-31'
+    unit: INR_lakh
+    unit_marker_literal: "`\x03LQ\x03/DNKV"
+    source_sha256: 4bfb6a59e2c1f938eef2cd9f109df7e55e8b3ed80a9d13000636c8623ed33bcc
+    tables:
+    - page: 71
+      basis: standalone
+      columns: 1
+      fields:
+        total_assets: &id005
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        equity: &id006
+          sum:
+          - "6KDUH\x03&DSLWDO"
+          - "5HVHUYHV\x03DQG\x036XUSOXV"
+        total_liabilities:
+          difference:
+          - *id005
+          - *id006
+    - page: 72
+      basis: standalone
+      columns: 1
+      fields:
+        pat: PROFIT AFTER TAX
+        revenue:
+          sum:
+          - ",QWHUHVW\x03,QFRPH"
+          - "2WKHU\x03)LQDQFLDO\x036HUYLFHV"

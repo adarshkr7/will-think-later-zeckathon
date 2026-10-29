@@ -15,7 +15,7 @@ if __package__ in (None, ""):
 import pandas as pd
 
 from prahari.config import Config
-from prahari.data.bhavcopy import cache_session, parse_index
+from prahari.data.bhavcopy import cache_session, cache_reviewed_index
 from prahari.data.bse import cache_bse_session
 from prahari.data.downloads import CachedDownloader, SourceBlocked, SourceUnavailable
 from prahari.data.firewall import write_real_table
@@ -54,11 +54,11 @@ def main() -> None:
                 filename = receipt.name.removesuffix(".receipt.json")
                 metadata = json.loads(receipt.read_text(encoding="utf-8"))
                 raw = downloader.fetch("nse_index", metadata["source_url"], filename, offline=True)
-                table = parse_index(raw.read_bytes(), metadata["source_url"], settings)
-                date = table.period_end.iloc[0]
-                if not table.period_end.eq(date).all():
-                    raise ValueError("Cached index spans multiple sessions")
-                write_real_table(table, config.path("market_cache") / f"index_{date:%Y%m%d}.parquet")
+                match = re.fullmatch(settings["index_filename_pattern"], filename)
+                if match is None:
+                    raise ValueError("Unsupported cached index archive filename")
+                date = pd.to_datetime(match["date"], format="%d%m%Y", utc=True)
+                cache_reviewed_index(config, raw, metadata["source_url"], date)
             for receipt in sorted((config.path("raw") / "bse").glob("*.receipt.json")):
                 filename = receipt.name.removesuffix(".receipt.json")
                 match = re.fullmatch(r"EQ(\d{6})_CSV\.ZIP", filename, re.IGNORECASE)
@@ -97,10 +97,7 @@ def main() -> None:
             url = settings["index_url"].format(date=date.strftime("%d%m%Y"))
             try:
                 raw = downloader.fetch("nse_index", url, url.rsplit("/", 1)[-1], offline=args.offline)
-                table = parse_index(raw.read_bytes(), url, settings)
-                if not table.period_end.eq(pd.to_datetime(day, utc=True)).all():
-                    raise ValueError("Index archive observations do not match requested date")
-                write_real_table(table, config.path("market_cache") / f"index_{date:%Y%m%d}.parquet")
+                cache_reviewed_index(config, raw, url, date)
             except FileNotFoundError:
                 if args.offline:
                     raise

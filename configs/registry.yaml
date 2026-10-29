@@ -1,0 +1,7 @@
+source: ibbi_pages
+url: https://ibbi.gov.in/public-announcement
+snapshot_date: '2026-10-29'
+first_filename: public_announcements_20261029.html
+page_filename: public_announcements_p{page:04d}_{snapshot}.html
+headers: [Type of PA, Date of Announcement, Last date of Submission, Name of Corporate Debtor, Name of Applicant, Name of Insolvency Professional, Public Announcement, Remarks]
+date_format: '%d-%m-%Y'

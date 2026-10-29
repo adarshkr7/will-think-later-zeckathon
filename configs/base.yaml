@@ -19,6 +19,9 @@ paths:
   shareholding_config: configs/shareholding.yaml
   shareholding_import_review: outputs/shareholding_import_review.csv
   financial_index_config: configs/financial_results.yaml
+  registry_config: configs/registry.yaml
+  registry_pages: outputs/ibbi_registry_pages.csv
+  registry_records: data/interim/ibbi_registry_records.csv
   calendar_config: configs/calendar.yaml
   session_census: outputs/session_census
   session_coverage: outputs/session_coverage.csv

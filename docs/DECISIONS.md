@@ -122,3 +122,12 @@
 - 2026-10-29: Preserve unavailable HDM diagnostics while adjusting only observed probabilities; reject both batch-wide failure from intentional NaNs and substituting zeros for unavailable scores.
 - 2026-10-29: Extend exact-byte Git preservation to every tracked frozen input, not just outputs, and verify newline-only reindexing against prior content; exclude concurrent unreviewed data edits from the checkpoint.
 - 2026-10-29: Keep another session's pending RHFL interim imports intact while verifying accepted changes in a separate checkout; reject relabelling interim flows as annual observations or weakening the publication/date/schema guards merely to make tests green.
+
+- 2026-10-29: Permit research candidates in identity-proof acquisition while retaining the original-quote verification requirement; reject the circular requirement to select a peer before collecting its identity proof.
+- 2026-10-29: ITNL earned reserves include sourced general/redemption reserves and surplus, excluding paid-in securities premium and currency/hedge reserves; retain separate GAAP/Ind AS publication vintages instead of backdating restatements.
+- 2026-10-29: ITNL FY2015/FY2014 inventory is a zero residual only after the complete original current-assets section reconciles exactly; reject coercing later comparative dashes to zero.
+- 2026-10-29: Use each HFC's printed shareholder-equity subtotal; keep Can Fin's unallotted application money outside that subtotal rather than silently treating it as issued equity.
+- 2026-10-29: Import only the visually verified current column of GIC FY2018 statements; reject decoding or guessing encoded comparative amounts.
+- 2026-10-29: Quarantine the three internally inconsistent April 2023 index archives in both live and offline builds; reject a global format switch or session relabelling that would silently change dates.
+- 2026-10-29: Cache the complete available public IBBI pagination as discovery metadata; require original debtor/commencement review and affirmative full-window survival evidence instead of deriving negative labels from an empty name search.
+- 2026-10-29: Preserve Can Fin's original issuer facts but withhold cross-ISIN market joins until a dated successor-security link is sourced; reject ticker-only continuity assumptions.

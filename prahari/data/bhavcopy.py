@@ -158,6 +158,32 @@ def market_as_of(config: Config, t: str | pd.Timestamp) -> pd.DataFrame:
     return as_of(pd.concat(tables, ignore_index=True), t)
 
 
+def cache_reviewed_index(config: Config, raw: Path, source_url: str, day: str | pd.Timestamp) -> bool:
+    """Keep a mismatched source out of production without stopping stock quotes.
+
+    Never repair an ambiguous date from memory or silently interpret it as a
+    different session. The same check applies to live and offline cache builds.
+    """
+    table = parse_index(raw.read_bytes(), source_url, config.section("india_config")["market"])
+    requested = pd.to_datetime(day, utc=True)
+    if not table.period_end.eq(requested).all():
+        target = config.path("source_failures")
+        previous = pd.read_csv(target) if target.exists() else pd.DataFrame()
+        row = {"source": "nse_index", "source_url": source_url, "status": np.nan,
+               "target": raw.relative_to(config.root).as_posix(),
+               "requested_date": requested.date().isoformat(),
+               "reason": "archive_date_mismatch_no_index_values_imported",
+               "needs_verification": 1, "is_synthetic": int(table.is_synthetic.eq(1).any())}
+        audit = pd.concat([previous, pd.DataFrame([row])], ignore_index=True).drop_duplicates(
+            ["source", "source_url"], keep="last")
+        write_real_table(audit, target)
+        LOG.error("Index source date mismatch: requested=%s source=%s; no index values imported", requested.date(), source_url)
+        return False
+    write_real_table(table, config.path("market_cache") / f"index_{requested:%Y%m%d}.parquet")
+    LOG.info("Index rows=%s dates_imputed=%s missing=%s", len(table), table.date_is_imputed.sum(), table.isna().sum().to_dict())
+    return True
+
+
 def bounded_forward_fill(table: pd.DataFrame, sessions: pd.DatetimeIndex, limit: int) -> pd.DataFrame:
     """Carry a last observed quote for at most configured actual exchange sessions.
 

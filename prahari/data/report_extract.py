@@ -78,13 +78,14 @@ def amount_columns(text: str, label: str, count: int, *, occurrence: int = 0,
     Printed amounts are read without estimating missing components.
     """
     normalized = lambda value: re.sub("[^a-z]", "", unicodedata.normalize("NFKD", value).lower())
-    matches = [line for line in text.splitlines() if normalized(line).endswith(normalized(label))]
+    matches = [line for line in text.split("\n") if normalized(line).endswith(normalized(label))]
     if len(matches) != expected_matches or not 0 <= occurrence < expected_matches:
         raise ValueError(f"Source row label is missing or ambiguous: {label}")
     line = matches[occurrence]
     last_letter = max(match.end() for match in re.finditer("[A-Za-z]", line))
     # Some PDF font runs insert whitespace immediately before a thousands comma.
     amounts_text = re.sub(r"(?<=\d)\s+(?=,\d)", "", line[last_letter:])
+    amounts_text = re.sub(r"(?<=\d,)\s+(?=\d{3}(?:\D|$)|\d{2},)", "", amounts_text)
     tokens = re.findall(r"\(?-?\d[\d,]*(?:\.\d+)?\)?|(?<!\S)[—–-](?!\S)", amounts_text)
     if len(tokens) not in (count, count + 1):
         raise ValueError(f"Unexpected amount columns for {label}: {len(tokens)}")
@@ -118,16 +119,30 @@ def reviewed_values(text: str, rule: str | dict, columns: int, periods: int) -> 
         if (set(details) != {"sum"} or not isinstance(components, list) or len(components) < 2
                 or any(isinstance(component, dict) and ("sum" in component or "difference" in component) for component in components)):
             raise ValueError("Reviewed sums require distinct non-nested source rows")
-        labels = [component if isinstance(component, str) else component["label"] for component in components]
-        if len(set(labels)) != len(labels):
-            raise ValueError("Reviewed sums must not count a source row twice")
+        # Different occurrences/cells in one printed table can have the same
+        # caption. Resolve physical cells so aliases cannot count one twice.
+        cells = []
+        normalize = lambda value: re.sub("[^a-z]", "", unicodedata.normalize("NFKD", value).lower())
+        lines = text.split("\n")
+        for component in components:
+            item = {"label": component} if isinstance(component, str) else component
+            matches = [index for index, line in enumerate(lines)
+                       if normalize(line).endswith(normalize(item["label"]))]
+            expected, occurrence = item.get("expected_matches", 1), item.get("occurrence", 0)
+            if len(matches) != expected or not 0 <= occurrence < expected:
+                raise ValueError("Source row label is missing or ambiguous: " + item["label"])
+            row = matches[occurrence] + item.get("line_offset", 0)
+            count = item.get("columns", columns)
+            cells.extend((row, position-count) for position in item.get("positions", list(range(periods))))
+        if len(set(cells)) != len(cells):
+            raise ValueError("Reviewed sums must not count a source cell twice")
         columns_by_component = [reviewed_values(text, component, columns, periods) for component in components]
         return [None if any(value is None for value in values) else
                 float(sum(Decimal(str(value)) for value in values))
                 for values in zip(*columns_by_component, strict=True)]
     count = details.get("columns", columns)
     if "line_offset" in details:
-        lines = text.splitlines()
+        lines = text.split("\n")
         normalized = lambda value: re.sub("[^a-z]", "", unicodedata.normalize("NFKD", value).lower())
         matches = [index for index, line in enumerate(lines) if normalized(line).endswith(normalized(details["label"]))]
         expected = details.get("expected_matches", 1)

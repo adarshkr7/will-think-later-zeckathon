@@ -5,7 +5,7 @@ import pandas as pd
 import pytest
 
 from prahari.data.asof import as_of
-from prahari.data.bhavcopy import archive_url, bounded_forward_fill, parse_bhavcopy, parse_index
+from prahari.data.bhavcopy import archive_url, bounded_forward_fill, cache_reviewed_index, parse_bhavcopy, parse_index
 from conftest import FIXTURES
 
 
@@ -43,6 +43,19 @@ def test_index_rejects_missing_or_nonfinite_closes(config, token):
     frame.loc[0, "Closing Index Value"] = token
     with pytest.raises(ValueError, match="absent or invalid"):
         parse_index(frame.to_csv(index=False).encode(), "fixture://invalid", config.section("india_config")["market"])
+
+
+def test_mismatched_archive_cannot_be_relabelled_as_another_cached_session(config, tmp_path, monkeypatch):
+    config.base["paths"]["source_failures"] = str(tmp_path / "audit.csv")
+    writes = []
+    monkeypatch.setattr("prahari.data.bhavcopy.write_real_table", lambda table, path: writes.append((table, path)))
+    assert not cache_reviewed_index(config, FIXTURES / "index.csv", "fixture://index", "2018-09-27")
+    assert len(writes) == 1 and writes[0][1].suffix == ".csv"
+    assert writes[0][0].reason.eq("archive_date_mismatch_no_index_values_imported").all()
+    assert writes[0][0].is_synthetic.eq(1).all()
+    writes.clear()
+    assert cache_reviewed_index(config, FIXTURES / "index.csv", "fixture://index", "2018-09-28")
+    assert writes[0][1].name == "index_20180928.parquet"
 
 
 def test_exchange_two_digit_year_keeps_dates_and_rejects_unreviewed_format(config):
