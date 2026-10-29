@@ -28,7 +28,10 @@ def as_of(table: pd.DataFrame, t: str | pd.Timestamp) -> pd.DataFrame:
     result = result.loc[result["public_date"].lt(instant) & result["period_end"].lt(instant)
                         & result["needs_verification"].eq(0)].copy()
     source_columns = [c for c in ("source_url", "source_doc", "source_urls") if c in result]
-    if not source_columns or (len(result) and not result[source_columns].notna().any(axis=1).all()):
+    has_source = result[source_columns].apply(
+        lambda column: column.notna() & column.astype(str).str.strip().ne("")
+    ).any(axis=1)
+    if not source_columns or (len(result) and not has_source.all()):
         raise ValueError("Every visible Indian observation needs source provenance")
     key = [c for c in ("entity_id", "field", "period_end", "basis", "instrument", "agency", "event_type", "series", "exchange")
            if c in result]

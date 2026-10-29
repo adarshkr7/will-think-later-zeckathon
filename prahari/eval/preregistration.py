@@ -13,6 +13,8 @@ from prahari.config import Config
 from prahari.data.quality import validate_manual
 from prahari.data.manual import read_manual
 from prahari.data.uci import sha256_file
+from prahari.data.feature_lineage import (feature_input_fingerprint, feature_receipt_path,
+                                         verify_feature_receipt)
 from prahari.eval.panel_quality import audit_financial_histories, audit_market, panel_acceptance
 from prahari.data.financials import financials_as_of
 from prahari.data.quality import accounting_from_fields
@@ -21,13 +23,16 @@ from prahari.eval.seal import code_fingerprint
 
 def registration_files(config: Config) -> dict[str, str]:
     files = code_fingerprint(config)
+    files.update(feature_input_fingerprint(config))
     paths = [config.path("manual") / f"{name}.csv" for name in config.section("manual_config")["tables"]]
     paths += list(config.root.joinpath("app").rglob("*.py"))
     paths += [config.path("benchmark_model_manifest")]
     if config.path("benchmark_model_manifest").exists():
         entries = json.loads(config.path("benchmark_model_manifest").read_text(encoding="utf-8"))
         paths += [config.root / entry["artifact"] for entry in entries if entry["representation"] == "harmonized"]
-    paths += list(config.path("feature_cache").glob("*/*.parquet"))
+    artifacts = [path for arena in config.base["pipeline"]["arenas"]
+                 for path in config.path("feature_cache").joinpath(arena).glob("*.parquet")]
+    paths += artifacts + [feature_receipt_path(config, path) for path in artifacts]
     for path in paths:
         if not path.is_file():
             raise FileNotFoundError(f"Registration input missing: {path.relative_to(config.root)}")
@@ -53,9 +58,16 @@ def preflight(config: Config) -> None:
     if primary.get("nbfc_logit_scale") is None:
         raise RuntimeError("NBFC probability link must be declared before registration")
     dates = config.section("feature_config")["dates"]
+    inputs = feature_input_fingerprint(config)
     for day in pd.date_range(dates["first_quarter"], dates["last_quarter"], freq="QE-MAR"):
-        if not (config.path("feature_cache") / "P" / f"{day:%Y-%m-%d}.parquet").is_file():
+        artifact = config.path("feature_cache") / "P" / f"{day:%Y-%m-%d}.parquet"
+        if not artifact.is_file():
             raise RuntimeError("Panel feature history is incomplete")
+        verify_feature_receipt(config, artifact, inputs)
+    for arena in config.base["pipeline"]["arenas"]:
+        if arena != "P":
+            for artifact in config.path("feature_cache").joinpath(arena).glob("*.parquet"):
+                verify_feature_receipt(config, artifact, inputs)
 
 
 def freeze(config: Config, *, amend: str | None = None) -> None:

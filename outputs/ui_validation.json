@@ -1,6 +1,6 @@
 {
-  "measured_at": "2026-10-29T02:16:34.914149+00:00",
-  "cold_render_seconds": 1.597800699993968,
+  "measured_at": "2026-10-29T08:04:48.548844+00:00",
+  "cold_render_seconds": 3.7540467999933753,
   "timing_scope": "AppTest construction and first render; Streamlit test-harness import excluded",
   "checks": {
     "cold_start_under_five_seconds": true,

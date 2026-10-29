@@ -109,6 +109,12 @@ paths:
   data_requests: docs/DATA_REQUESTS.md
   team_collection_plan: docs/TEAM_DATA_COLLECTION_PLAN.md
   team_collection_windows: outputs/team_collection_windows.csv
+feature_lineage:
+  config_paths: [india_config, feature_config, manual_config, harmonized_map]
+  code_roots: [prahari/data, prahari/features]
+  code_files: [prahari/config.py, scripts/05_build_features.py]
+  market_patterns: [bhavcopy_*.parquet, bse_*.parquet, index_*.parquet]
+  receipt_suffix: .receipt.json
 logging:
   level: INFO
   format: '%(asctime)s %(levelname)s %(name)s: %(message)s'

@@ -1,0 +1,24 @@
+# Direct code review: 2026-10-29
+
+This review supplements the test suite. It scans the production modules, scripts, configuration and app, and manually traces point-in-time filtering, financial normalization, feature building, primary scoring, peer selection, policy selection, replay registration, final-access boundaries, explanations and report exports. It does not certify that every possible defect has been found. Protected case contents and benchmark hold-out membership were not opened.
+
+| Finding | Consequence | Resolution |
+|---|---|---|
+| HDM diagnostic prior adjustment passed deliberately missing probabilities to a function that requires finite inputs. | Configured Indian priors would make mixed financial/nonfinancial or incomplete batches crash. | Adjust observed probabilities only; keep unavailable HDM margins missing. Invalid observed values still fail. |
+| Registration checked cached feature existence without binding caches to their build-time input epoch. | Newly corrected manual inputs could be registered together with stale features; explanations could read a different source snapshot. | Hash explicit public inputs before and after loading, attach source and artifact receipts to newly built features, verify them before registration, and lock those public input hashes and receipts. Existing caches require an actual rebuild; they are not retroactively stamped. |
+| Point-in-time source checks accepted empty or whitespace-only strings. | A visible row could claim provenance while carrying no usable reference. | Require at least one nonblank source reference on each visible row. |
+| NSE/BSE numeric guards did not consistently reject missing or infinite prices and volumes. | Bad source cells could pass as verified market observations and contaminate volatility or trading-session audits. | Reject nonfinite numeric cells and invalid NSE identifiers before caching. Source gaps are not zero-filled. |
+| BSE identity resolution did not inherit the identity source's synthetic flag. | A synthetic identity mapping could lose its provenance flag during a join. | Propagate mapping taint before the production write firewall. |
+| Git newline conversion could change files after their byte hashes were recorded. | Output receipts and later registration hashes could fail on another checkout or platform. | Preserve exact tracked bytes through Git attributes. Newline-only changes were checked against the previous committed contents; unrelated concurrent data edits were excluded. |
+
+Additional observations and remaining gates:
+
+- Shared-workspace RHFL interim imports have mismatched annual and observation periods, no financial source pages, an unsupported publication kind and incomplete rows marked verified. The supplied PDF contains interim results, not a future annual statement. Preserve these source files and review their quarter/half-year scope and units before importing; do not loosen the annual schema or infer a missing pledge/capital value. The received rows are preserved with immutable receipts under raw manual intake and excluded from the accepted annual panel until reviewed.
+- The primary model still needs independent horizon priors, a declared financial-track probability link and complete required source inputs. Null configuration and missing observations deliberately keep scores unavailable.
+- Peer acquisition still needs reviewed historical classifications, original asset observations and complete survival evidence. An empty default search is not survival. The identity importer currently starts from cases and selected peers; extending it to reviewed candidate profiles requires the same original-source corroboration, not automatic promotion of search groups.
+- Review historical pledge/encumbrance tag scope uniformly before registration. Combined encumbrance counts must not be described as pure pledged stock.
+- Corporate-action-adjusted returns are not available uniformly. Raw returns remain labelled as unadjusted; no post hoc case-specific adjustment is accepted.
+- Market-only Arena U membership does not supply missing accounting inputs. It is not presented as a calibrated market-only primary model.
+- New source receipts require a complete fresh feature build after collection. Readiness exports remain usable offline, with their source-age limitations; they cannot be promoted into a final replay by merely creating a receipt.
+
+Verification is recorded in the checkpoint's `outputs/test_summary.json`. Tests were run in a separate checkout and then in the shared working copy after the interim imports were preserved in raw intake. Original supplied documents remain intact. Public manual schema validation passes there; full panel acceptance remains incomplete because of outstanding peers and histories. Compilation and focused regression checks also pass.

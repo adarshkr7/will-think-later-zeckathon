@@ -1,6 +1,7 @@
 import io
 import zipfile
 import pytest
+import pandas as pd
 
 from prahari.data.bse import parse_bse
 from conftest import FIXTURES
@@ -23,3 +24,15 @@ def test_wrong_session_bse_archive_is_rejected(config):
         archive.writestr("EQ280918.CSV", (FIXTURES / "bse.csv").read_bytes())
     with pytest.raises(ValueError, match="requested date"):
         parse_bse(payload.getvalue(), "fixture://bse", "2018-09-27", config.section("india_config")["market"])
+
+
+@pytest.mark.parametrize("column", ["CLOSE", "NO_OF_SHRS"])
+@pytest.mark.parametrize("token", ["", "inf", "-inf"])
+def test_bse_rejects_missing_or_nonfinite_observations(config, column, token):
+    frame = pd.read_csv(FIXTURES / "bse.csv", dtype=str)
+    frame.loc[0, column] = token
+    payload = io.BytesIO()
+    with zipfile.ZipFile(payload, "w") as archive:
+        archive.writestr("EQ280918.CSV", frame.to_csv(index=False))
+    with pytest.raises(ValueError, match="Invalid BSE"):
+        parse_bse(payload.getvalue(), "fixture://invalid", "2018-09-28", config.section("india_config")["market"])

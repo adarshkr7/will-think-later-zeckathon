@@ -139,3 +139,5 @@ Final evaluation is a separate, irreversible evaluation step, intentionally excl
 ```
 
 The final command verifies code/config/model/training hashes, atomically claims the evaluation once, validates reserved values against the cached official source, and writes `outputs/benchmark_metrics.csv`. It never prints reserved membership. A failed run consumes its claim too; no flag bypasses the once-only guard. Subsequent development is rejected. The separate Indian `configs/preregistration.lock` must be created and committed in its own commit before the later replay phase; it has not been created prematurely.
+
+Feature builds now record their exact public-source snapshot in per-artifact receipts. Scientific registration requires a fresh build with matching receipts after collection and code changes; older caches remain readiness inputs and are never retroactively certified. Direct review findings and remaining quality gates are in [docs/CODE_AUDIT.md](docs/CODE_AUDIT.md).

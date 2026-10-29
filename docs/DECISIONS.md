@@ -115,3 +115,10 @@
 - 2026-10-29: Extend candidate-report acquisition to the fiscal report covering the full forward survival endpoint; reject using a March-ending report to certify survival through a later month. All such documents remain unverified candidates until reviewed.
 - 2026-10-29: Add pinned openpyxl support for the original SEBI workbook, retaining every existing dependency version; the import reads pinned cells and venue headings rather than reconstructing counts from rounded turnover averages.
 - 2026-10-29: Preserve exact bytes for committed outputs with Git attributes; reject platform newline conversion because it invalidates census filenames and report provenance hashes after checkout.
+
+- 2026-10-29: Coffee Day current-period inventory is an exactly reconciled residual of its complete current-assets table, supported by the explicit current-year CARO absence assertion; reject converting dashes or omitted captions alone to zero, applying the assertion to comparatives, or generalizing it to other issuers.
+- 2026-10-29: Required narrative source assertions are checked on separate context pages and retained in the evidence chain; reject allowing unrelated narrative numeric rows to alter financial column matching.
+- 2026-10-29: Bind newly built feature caches to exact public-source and feature-code hashes, verify one immutable load and require matching receipts before registration; reject retroactively stamping older caches or registering corrected inputs against stale features.
+- 2026-10-29: Preserve unavailable HDM diagnostics while adjusting only observed probabilities; reject both batch-wide failure from intentional NaNs and substituting zeros for unavailable scores.
+- 2026-10-29: Extend exact-byte Git preservation to every tracked frozen input, not just outputs, and verify newline-only reindexing against prior content; exclude concurrent unreviewed data edits from the checkpoint.
+- 2026-10-29: Keep another session's pending RHFL interim imports intact while verifying accepted changes in a separate checkout; reject relabelling interim flows as annual observations or weakening the publication/date/schema guards merely to make tests green.

@@ -42,3 +42,10 @@ def test_unverified_rows_excluded(observations):
     observations.loc[0, "needs_verification"] = 1
     result = as_of(observations, "2018-09-30")
     assert len(result) == 3
+
+
+@pytest.mark.parametrize("blank", ["", " \t "])
+def test_visible_rows_require_nonblank_provenance(observations, blank):
+    observations.loc[0, "source_doc"] = blank
+    with pytest.raises(ValueError, match="provenance"):
+        as_of(observations, "2018-09-30")

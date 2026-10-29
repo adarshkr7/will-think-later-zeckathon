@@ -12,6 +12,7 @@ if __package__ in (None, ""):
 
 from prahari.config import Config
 from prahari.data.feature_inputs import load_feature_sources
+from prahari.data.feature_lineage import feature_input_fingerprint, write_feature_receipt
 from prahari.data.firewall import write_real_table
 from prahari.features.panel import build_features
 
@@ -26,12 +27,17 @@ def main() -> None:
     config.setup_logging()
     settings = config.section("feature_config")["dates"]
     dates = [pd.Timestamp(args.date)] if args.date else pd.date_range(settings["first_quarter"], settings["last_quarter"], freq="QE-MAR")
+    inputs = feature_input_fingerprint(config)
     sources = load_feature_sources(config)
+    if feature_input_fingerprint(config) != inputs:
+        raise RuntimeError("Public inputs changed while loading features; restart from one source snapshot")
     coverage = []
     history_cache = {}
     for day in dates:
         table = build_features(config, day, args.arena, sources=sources, history_cache=history_cache)
-        write_real_table(table, config.path("feature_cache") / args.arena / f"{day:%Y-%m-%d}.parquet")
+        artifact = config.path("feature_cache") / args.arena / f"{day:%Y-%m-%d}.parquet"
+        write_real_table(table, artifact)
+        write_feature_receipt(config, artifact, inputs)
         reasons = [name for name in table if name.endswith("__reason")]
         for column in reasons:
             coverage.append({"arena": args.arena, "quarter": day.date(), "feature": column.removesuffix("__reason"),

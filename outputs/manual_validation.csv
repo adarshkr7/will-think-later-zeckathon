@@ -6,7 +6,7 @@ groups,3,3,0,3,0
 entity_aliases,9,9,0,9,0
 event_evidence,24,24,0,0,0
 share_counts,15,15,0,0,0
-financial_evidence,923,913,10,851,0
+financial_evidence,1016,1005,11,944,0
 trading_calendar,4055,4055,0,4055,0
 entities,23,23,0,21,0
 peer_survival,0,0,0,0,0

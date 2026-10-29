@@ -6,6 +6,7 @@ import io
 import zipfile
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from prahari.config import Config
@@ -43,7 +44,8 @@ def parse_bse(payload: bytes, source_url: str, day: str, settings: dict) -> pd.D
     table["public_date"] = table.period_end + pd.Timedelta(days=settings["publication_lag_days"])
     table["close"] = pd.to_numeric(table.close, errors="raise")
     table["volume"] = pd.to_numeric(table.volume, errors="raise")
-    if table.close.isna().any() or table.close.le(0).any() or table.volume.lt(0).any():
+    if (not np.isfinite(table[["close", "volume"]].to_numpy(dtype=float)).all()
+            or table.close.le(0).any() or table.volume.lt(0).any()):
         raise ValueError("Invalid BSE prices or volumes")
     table["source_url"] = source_url
     table["needs_verification"], table["date_is_imputed"] = 1, 1
@@ -77,5 +79,7 @@ def cache_bse_session(config: Config, downloader: CachedDownloader, day: str, *,
             table["public_date"] = table.public_date.where(identity_dates.isna() | table.public_date.ge(identity_dates), identity_dates)
             identity_sources = table.exchange_code.map(eligible.set_index("exchange_code").source_url)
             table.loc[known, "source_url"] = table.loc[known, "source_url"] + ";" + identity_sources.loc[known]
+            identity_taint = table.exchange_code.map(eligible.set_index("exchange_code").is_synthetic)
+            table.loc[known & identity_taint.eq(1), "is_synthetic"] = 1
     write_real_table(table, config.path("market_cache") / f"bse_{pd.Timestamp(day):%Y%m%d}.parquet")
     return table

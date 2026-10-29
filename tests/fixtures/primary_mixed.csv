@@ -1,0 +1,4 @@
+entity_id,is_financial,financial_period_end,max_source_date,chs_standardized,delayed_filing_4q,nbfc_score,caro_default_flag,rating_default_grade,roa,hdm_probability,is_synthetic
+FIX_NONFINANCIAL,0,2018-03-31,2018-09-29,0,0,,0,0,0.1,0.2,1
+FIX_FINANCIAL,1,2018-03-31,2018-09-29,0,0,0.7,0,0,,,1
+FIX_MISSING,0,2018-03-31,2018-09-29,0,0,,0,0,,,1

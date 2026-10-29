@@ -1,2 +1,2 @@
 # Frozen inputs and output receipts hash exact bytes on every platform.
-* -text
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

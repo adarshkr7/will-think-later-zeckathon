@@ -20,10 +20,11 @@ def build_bundle(config: Config) -> dict:
     cases = read_manual(config, "events")
     write_real_table(cases, config.path("case_catalog"))
     registered = False
+    registration_hash = None
     registration_reason = "Pre-registration and accepted panel evidence are required before scored replay."
     if config.path("preregistration_lock").exists():
         try:
-            verify(config)
+            registration_hash = verify(config)
             registered = True
         except (ValueError, RuntimeError) as exc:
             registration_reason = str(exc)
@@ -45,7 +46,7 @@ def build_bundle(config: Config) -> dict:
         if registered and prediction_path.exists():
             predictions = pd.read_parquet(prediction_path)
             assert_real(predictions)
-            if not predictions.registration_hash.eq(verify(config)).all():
+            if not predictions.registration_hash.eq(registration_hash).all():
                 raise ValueError("Replay artifact registration differs from current protocol")
             snapshot = snapshot.drop(columns=["pd_4q", "pd_8q", "rank", "tier", "score_status"]).merge(
                 predictions[["entity_id", "pd_4q", "pd_8q", "rank", "tier"]], on="entity_id", validate="one_to_one")

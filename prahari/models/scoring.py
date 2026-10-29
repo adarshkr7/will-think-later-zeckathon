@@ -42,8 +42,16 @@ def score_snapshot(features: pd.DataFrame, models: dict, settings: dict, arena: 
         scores["group_stress"] = enriched.group_stress
     for horizon, probability in probabilities.items():
         new_prior = settings["primary"]["priors"].get(horizon)
-        scores["hdm_logit_" + horizon] = logit(np.clip(prior_shift(probability, priors[horizon], new_prior),
-            settings["primary"]["probability_epsilon"], 1-settings["primary"]["probability_epsilon"])) if new_prior is not None else np.nan
+        margins = np.full(len(probability), np.nan)
+        if new_prior is not None:
+            # Financial firms and incomplete rows deliberately have no HDM
+            # probability. Preserve those gaps without rejecting valid peers;
+            # observed invalid probabilities must still fail prior_shift.
+            observed = ~np.isnan(probability)
+            shifted = prior_shift(probability[observed], priors[horizon], new_prior)
+            epsilon = settings["primary"]["probability_epsilon"]
+            margins[observed] = logit(np.clip(shifted, epsilon, 1-epsilon))
+        scores["hdm_logit_" + horizon] = margins
     overlays = []
     for row in features.to_dict(orient="records"):
         try:

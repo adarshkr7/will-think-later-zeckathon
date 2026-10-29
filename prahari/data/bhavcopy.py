@@ -7,6 +7,7 @@ import logging
 import zipfile
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from prahari.config import Config
@@ -72,7 +73,10 @@ def parse_bhavcopy(payload: bytes, source_url: str, settings: dict) -> pd.DataFr
         table["entity_id"] = table.entity_id.str.strip()
     for column in ("close", "volume"):
         table[column] = pd.to_numeric(table[column], errors="raise")
-    if table.entity_id.isna().any() or table.close.le(0).any() or table.volume.lt(0).any():
+    if (table.entity_id.isna().any() or table.entity_id.eq("").any()
+            or table.symbol.isna().any() or table.symbol.eq("").any()
+            or not np.isfinite(table[["close", "volume"]].to_numpy(dtype=float)).all()
+            or table.close.le(0).any() or table.volume.lt(0).any()):
         raise ValueError("Invalid market observation; do not fill it with zero")
     if table.duplicated(["entity_id", "period_end", "series"]).any():
         raise ValueError("Duplicate bhavcopy security/session")
@@ -130,7 +134,7 @@ def parse_index(payload: bytes, source_url: str, settings: dict) -> pd.DataFrame
     table["period_end"] = pd.to_datetime(table.period_end.str.replace("/", "-", regex=False), format="%d-%m-%Y", utc=True)
     table["public_date"] = table.period_end + pd.Timedelta(days=settings["publication_lag_days"])
     table["close"] = pd.to_numeric(table.close, errors="raise")
-    if table.empty or table.close.isna().any() or table.close.le(0).any():
+    if table.empty or not np.isfinite(table.close).all() or table.close.le(0).any():
         raise ValueError("Requested historical index is absent or invalid")
     table["return_basis"] = "price_index"  # Never claim the archive is TRI.
     table["source_url"], table["date_is_imputed"] = source_url, 1

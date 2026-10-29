@@ -1,0 +1,7 @@
+{
+  "is_synthetic": 1,
+  "artifact_bytes": "test cache metadata only; no financial observations",
+  "changed_artifact_bytes": "modified test cache metadata; no financial observations",
+  "inputs": {"data/manual/fixture.csv": "fixture-source-version-one"},
+  "changed_inputs": {"data/manual/fixture.csv": "fixture-source-version-two"}
+}

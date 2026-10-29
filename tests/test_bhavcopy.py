@@ -25,6 +25,26 @@ def test_index_parser_does_not_claim_tri(config):
     assert table.is_synthetic.eq(1).all()
 
 
+@pytest.mark.parametrize("column", ["CLOSE", "TOTTRDQTY"])
+@pytest.mark.parametrize("token", ["", "inf", "-inf"])
+def test_nse_rejects_missing_or_nonfinite_observations(config, column, token):
+    frame = pd.read_csv(FIXTURES / "bhavcopy.csv", dtype=str)
+    frame.loc[0, column] = token
+    payload = io.BytesIO()
+    with zipfile.ZipFile(payload, "w") as archive:
+        archive.writestr("fixture.csv", frame.to_csv(index=False))
+    with pytest.raises(ValueError, match="Invalid market observation"):
+        parse_bhavcopy(payload.getvalue(), "fixture://invalid", config.section("india_config")["market"])
+
+
+@pytest.mark.parametrize("token", ["", "inf", "-inf"])
+def test_index_rejects_missing_or_nonfinite_closes(config, token):
+    frame = pd.read_csv(FIXTURES / "index.csv", dtype=str)
+    frame.loc[0, "Closing Index Value"] = token
+    with pytest.raises(ValueError, match="absent or invalid"):
+        parse_index(frame.to_csv(index=False).encode(), "fixture://invalid", config.section("india_config")["market"])
+
+
 def test_exchange_two_digit_year_keeps_dates_and_rejects_unreviewed_format(config):
     original = (FIXTURES / "bhavcopy_two_digit_year.csv").read_bytes()
     settings = config.section("india_config")["market"]
