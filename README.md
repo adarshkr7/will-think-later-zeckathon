@@ -1,145 +1,62 @@
 # PRAHARI
 
-Project documentation lives in docs/. Run commands from the repository root.
+Point-in-time corporate credit early warning, built for Zeckathon PS-02.
 
-For the offline demonstration and archive, start with [SUBMISSION_GUIDE.md](docs/SUBMISSION_GUIDE.md). Launch the exported interface with `./run_app.ps1`; its manifest states whether the release is readiness-only or a registered evaluation.
+## Submission files
 
-Team members collecting evidence: start with [TEAM_DATA_COLLECTION_PLAN.md](docs/TEAM_DATA_COLLECTION_PLAN.md). It includes assignments, company-specific historical cutoffs, source checks and CSV headers.
+- [Solution and results report](docs/report/final_report.md)
+- [Demo walkthrough](docs/DEMO_SCRIPT.md)
+- [Presentation outline](docs/slides_outline.md)
 
-**P**oint-in-time **R**isk & **A**ccounting **H**azard **A**lerts, **R**anked & **I**nterpretable. *Prahari* is Hindi for "sentinel".
+The generated report explains the method, implementation, benchmark results, review policy and limitations. Its numerical results trace to files under `outputs/`. Working research notes and collection plans are kept locally in gitignored `local_docs/`. README.md and AGENTS.md remain in the repository root.
 
-A submission for **Zeckathon PS-02 (Risk & Fraud)**: a point-in-time early-warning research system for Indian corporate credit. Detection performance remains unassessed until the data and registration gates pass.
+## Run the offline app
 
-## What it does
-
-PRAHARI is a "credit-desk time machine". Pick any past quarter and it rebuilds what the market and filings showed on that date, using only documents published by then. The intended debt-ranked universe uses a market-only membership fallback while financial coverage is incomplete. Registered scoring produces a watch-list under the configured review cap and deterministic credit memos; the current readiness view leaves unscored probabilities and ranks blank. We then check which later defaulters were already flagged 4 and 8 quarters before default.
-
-Key properties:
-
-- **No look-ahead.** Every feature row carries a `public_date`; scoring at date *t* only sees rows published before *t*, enforced by tests.
-- **Pre-registered evaluation.** Configs, weights and peer lists are hashed and committed before the first scored Indian replay. The reviewed public panel labels are already known; they never train the primary model.
-- **Cost-optimal policy under a hard cap.** Threshold minimises `20·FN + FP` while never exceeding the 5% review budget.
-- **Exact, auditable explanations.** Additive log-odds attributions grouped into credit pillars, rendered by deterministic templates. No LLMs in the pipeline.
-- **Separate scorecard for financial firms** (NBFCs, HFCs), where Altman/Beneish don't apply.
-
-## Repository guide
-
-| File | Purpose |
-|---|---|
-| `docs/ps.pdf` | Problem statement and judging criteria |
-| `docs/PROJECT_IDEA.md` | What we are building and why |
-| `docs/IMPLEMENTATION_PLAN.md` | Phases, modules, tests and acceptance checks |
-| `AGENTS.md` | Operating rules for coding agents working on this repo |
-
-## Status
-
-Phase 1 development is implemented: cached UCI ingestion, sealed stratified partitions, fold-local preprocessing, nested cross-validation, unweighted/weighted LightGBM, logistic regression, out-of-fold calibration, monotone harmonized models and a cross-country transfer test. Final benchmark hold-outs remain unopened. Development results are explicitly distinguished from final results.
-
-Phase 2 has public-source caching, reviewed financial-field extraction, NSE/BSE ingestion, dated market-cap joins, peer selection and explicit acceptance checks. Panel evidence remains incomplete. Dated feature builders, frozen primary scoring, capped replay, separate OOF ablations, explanation/memo exports, a four-tab app and a generated report are implemented. Production acceptance and Indian performance remain gated. See [PROGRESS.md](docs/PROGRESS.md) and [DATA_REQUESTS.md](docs/DATA_REQUESTS.md).
-
-Build the cached incomplete-data demo and launch it:
+From the project root on Windows, using Python 3.11:
 
 ```powershell
-./run_all.ps1 -Offline -Readiness
+py -3.11 -m venv .venv
+./.venv/Scripts/python.exe -m pip install -r requirements.txt
 ./run_app.ps1
 ```
 
-Readiness mode preserves missing values and makes no hit/miss claims. Strict `./run_all.ps1 -Offline` stops on incomplete panel acceptance. When the data gate eventually passes, the runner freezes and commits the Indian registration lock alone before replay. Final benchmark and sealed-envelope openings are always separate explicit commands. The app reads exported files under `outputs/` only; all documentation except this README and AGENTS.md lives under `docs/`.
+If the existing virtual environment is ready, run only `./run_app.ps1`. The interface reads exported outputs and performs no live scoring or exchange requests. It provides Time Machine, Case Timeline, Borrower Memo and Policy & Metrics tabs, historical cutoffs, company search and source-backed indicator histories.
 
-**Horizon correction:** UCI documents `5year.arff` as a one-year forecast and `4year.arff` as two years. The benchmark retains `3year` and `4year` comparisons, and uses `5year`/`4year` for the intended 4Q/8Q HDM heads. The original plan's horizon labels are off by one year. Source: [UCI Polish dataset documentation](https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data).
+## Current status
 
-## Environment
+The foreign benchmark has completed development validation and its once-only untouched hold-out evaluation after a committed code/model freeze. Results are in `outputs/benchmark_development_metrics.csv` and `outputs/benchmark_metrics.csv`, with evaluation splits and confidence intervals.
 
-Windows 11, Python 3.11, virtualenv at `.venv`.
+Indian peer integration is deferred for this submission. Calibrated Indian probabilities, Indian recall and independent sealed results remain unavailable. The app labels its readiness state explicitly. `outputs/panel_acceptance.csv` and `outputs/run_status.csv` give the current gates; no early-detection claim is made for an Indian case.
 
-```powershell
-uv python install 3.11
-uv venv --python 3.11 .venv
-uv pip install --python .venv/Scripts/python.exe -r requirements.txt
-.\run_tests.ps1
-.\run_all.ps1                  # Current implemented phases, downloads cached once
-.\run_all.ps1 -Offline         # Reuses official downloads and verified model artifacts
-.\run_all.ps1 -Offline -PrepareOnly
-```
-
-The full benchmark grid is deliberately substantial. Completed tasks are cached with code/config/data fingerprints in separate generation directories. A changed fingerprint creates a fresh generation, preserving earlier models and reserved partitions. Cached runs restore metric/calibration tables and missing calibration plots without refitting. Do not delete or recreate reserved partitions.
+## Reproduce and verify
 
 ```powershell
-.venv/Scripts/python.exe -m scripts.01_benchmark --offline
-.venv/Scripts/python.exe -m scripts.03_validate_manual --init-templates
-.venv/Scripts/python.exe -m scripts.03_validate_manual
+./run_tests.ps1
+./run_all.ps1 -Offline -Readiness
 ```
 
-Phase 2 public-source commands:
+A full cached rebuild additionally requires the local original-source and trained-model caches, which are excluded from GitHub and the demo archive. Strict execution with `./run_all.ps1 -Offline` preserves data acceptance and pre-registration checks. Final evaluations must never be reopened or used for tuning. Publication-dated Indian inputs pass through `as_of`; missing values remain explicit. Policy settings, including the review cap and error costs, live in `configs/policy.yaml`.
 
-```powershell
-.venv/Scripts/python.exe -m scripts.02_market_data --sample
-.venv/Scripts/python.exe -m scripts.02_market_data --sample --offline
-.venv/Scripts/python.exe -m scripts.02_market_data --start 2018-07-01 --end 2018-09-30
-.venv/Scripts/python.exe -m scripts.02b_collect_sources
-.venv/Scripts/python.exe -m scripts.02b_collect_sources --offline
-.venv/Scripts/python.exe -m scripts.02d_extract_financials
-.venv/Scripts/python.exe -m scripts.02e_collect_fx --offline
-.venv/Scripts/python.exe -m scripts.03d_apply_identities
-.venv/Scripts/python.exe -m scripts.03e_extract_metadata
-.venv/Scripts/python.exe -m scripts.02c_market_cap --as-of 2018-09-30
-.venv/Scripts/python.exe -m scripts.03c_collection_status
-.venv/Scripts/python.exe -m scripts.03_validate_manual --as-of 2018-09-30
-```
+`outputs/test_summary.json` and `outputs/ui_validation.json` record checks. `outputs/feature_lineage_audit.csv` verifies the source epochs of the exported feature artifacts. `outputs/delivery_manifest.json` records the optional offline archive and file hashes. Build that archive with `python -m scripts.11_package_demo` from the prepared local checkout.
 
-The market collector uses the configured historical range when no dates are supplied; collecting that entire range is a substantial rate-limited job. It retains original zipped downloads and receipts under `data/raw/`, with parsed session caches under `data/interim/market/`. Missing official files are logged as unknown gaps, never inferred to be holidays. The offline sample command uses only existing archives; an offline range containing uncached dates fails explicitly. A complete sourced exchange calendar is still required for the market-coverage acceptance audit. The index archive is explicitly tagged as a price index, not TRI.
+## Repository layout
 
-Repeated exchange blocks stop collection and persist a manual request. To register an actual manually downloaded archive without overwriting raw data:
+- `prahari/`: data access, features, models, evaluation, policy and deterministic explanations.
+- `scripts/`: pipeline stages and validation commands.
+- `app/`: output-only Streamlit interface.
+- `configs/`: settings and frozen benchmark lock.
+- `data/manual/`: public canonical source-backed CSVs; private sealed inputs are excluded.
+- `outputs/`: exported evidence, metrics, UI data and source hashes.
+- `tests/`: tests and explicitly synthetic fixtures.
+- `docs/`: submission documents only.
 
-```powershell
-.venv/Scripts/python.exe -m scripts.02_market_data --import-file <local-file> --import-url <original-source-url> --import-source nse
-```
+Raw downloads, received-file folders, local working notes, environments, credentials, model caches and local ZIPs are gitignored. Synthetic observations are confined to test fixtures and cannot enter production artifacts.
 
-`03_validate_manual` writes accounting, financial-history, market-coverage and panel acceptance checks. Its optional as-of audit writes `outputs/coverage_parity.csv`; empty cohorts are unresolved. Collection progress is in `outputs/collection_status.csv`, and original PDFs are indexed in `outputs/source_catalog.csv`. Human-verified event labels are imported with component publication dates in `data/manual/event_evidence.csv`; unknown components and classifications stay blank. The cured-D exclusion applies to every company. Complete historical coverage, security/classification metadata and independently sourced peer eligibility remain outstanding.
+## Official submission
 
-Market collection supports `--exchange auto`, `nse` or `bse`. Unmapped BSE identities remain quarantined. Market caps require dated quarterly share counts; missing counts remain unknown. The financial extractor uses only reviewed statement mappings and pinned document hashes, preserving later publication dates for comparative figures. `scripts.03b_select_peers --write-peers` publishes eligible matches only after its data checks pass and refuses changes after registration. It currently fails on the incomplete event cohort, as intended.
+The organiser accepts the Markdown report as the explanation document. Submit it together with this repository link in both destinations:
 
-Template initialization never overwrites an existing file. The validator rejects an incomplete panel at the acceptance gate. The configured historical pipeline is implemented; a production replay still requires accepted source coverage and pre-registration. Original-vintage H.10 FX releases rebuild offline with their actual publication dates.
+- [Zeckathon submission form](https://docs.google.com/forms/d/e/1FAIpQLSfPaLvsicO3wvoOI9cgMeoAdfem5TKW1W93My6NIJtFs-ql8w/viewform?usp=header)
+- [Zeckathon website](https://zeckathon.com/)
 
-Identity reconciliation reads the configured manual tables only, preserves event and publication dates, and refuses changes after registration. Classification imports verify pinned source bytes and reviewed profile text; their public date includes the later identity proof. A current classification does not imply availability at an earlier peer-matching cutoff. Older statements use explicit denomination and reviewed subtotal positions. Cash alone and finance costs remain separate reported inputs.
-
-Public-source recovery commands are available individually and use the same checked raw cache:
-
-```powershell
-.venv/Scripts/python.exe -m scripts.02g_collect_financial_indexes --offline
-.venv/Scripts/python.exe -m scripts.03f_import_filing_identities
-.venv/Scripts/python.exe -m scripts.03e_extract_metadata
-.venv/Scripts/python.exe -m scripts.02f_collect_shareholding --offline
-.venv/Scripts/python.exe -m scripts.02h_discover_reports --offline
-.venv/Scripts/python.exe -m scripts.02i_review_supplied_sources
-.venv/Scripts/python.exe -m scripts.02h_discover_reports --prepare-candidates
-.venv/Scripts/python.exe -m scripts.02h_discover_reports --candidates --offline
-.venv/Scripts/python.exe -m scripts.03g_import_listing_status
-.venv/Scripts/python.exe -m scripts.02j_audit_sessions --offline
-```
-
-Remove `--offline` only to acquire uncached public files. Financial indexes supply discovery claims and dissemination timestamps; their ISINs and tickers can be stale or retrospectively normalized, so they are quarantined as standalone identity proof. Verified crosswalks come from checked original NSE archives, retaining original ticker changes and conservative archive publication dates. Shareholding imports verify original XML counts and category-specific denominators. Report discovery caches original PDF candidates; every candidate still needs statement and publication review. Supplied-source suitability is recorded in [docs/SOURCE_REVIEW.md](docs/SOURCE_REVIEW.md). Ordinary collection is assigned to Codex in [docs/AUTOMATED_DATA_RECOVERY_PLAN.md](docs/AUTOMATED_DATA_RECOVERY_PLAN.md); independently prepared sealed cases remain private.
-
-Candidate search groups are research leads, not verified sectors or selected peers. `--prepare-candidates` uses dated identity evidence and cached original quotes before each matching cutoff; it never writes `peers.csv`. Filing/quote ISIN conflicts remain visible and unresolved, and security IDs are not counted as distinct verified issuers. Explicit document-only leads with unknown publication remain quarantined. Candidate report collection also acquires later survival-review documents; those financial inputs retain their later public dates. Retrospectively normalized exchange tickers are rejected when they disagree with the original sequence-qualified resource name.
-
-Development artifacts:
-
-- `outputs/benchmark_development_metrics.csv`: nested outer-fold metrics plus separately marked transfer development results; PR-AUC is average precision, with trapezoidal PR area also recorded.
-- `outputs/benchmark_audit.json`: outer-fold row counts, selected parameters and fit/validation overlap assertions.
-- `outputs/benchmark_calibration/`: reliability tables and plots.
-- `data/interim/models/`: local serialized models and task receipts, git-ignored.
-- `outputs/manual_validation.csv`: actual input coverage counts, including empty inputs.
-
-Uncertainty intervals are row-bootstrap intervals conditional on fitted predictions, not intervals over model selection or correlated firm histories. Polish files have neither usable row timestamps nor company identifiers, so these splits are not claimed to be temporal or entity-disjoint. Taiwan ratio values are normalized: transfer uses a separate unlabelled Taiwan-training-only rank reference, frozen with the Polish model. No target hold-out covariates fit it. Taiwan's forecast horizon is unspecified in the source; `horizon_quarters` describes the Polish source model, and the transfer result is not claimed to validate that horizon in Taiwan. Production SMOTE is excluded under the synthetic-data rule in AGENTS.md.
-
-Final evaluation is a separate, irreversible evaluation step, intentionally excluded from `run_all.ps1`. Once development is complete, freeze the benchmark and commit its lock before opening it:
-
-```powershell
-.venv/Scripts/python.exe -m prahari.eval.seal --freeze-benchmark
-# Commit configs/benchmark.lock and finish all intended modelling changes first.
-.venv/Scripts/python.exe -m prahari.eval.seal --final
-```
-
-The final command verifies code/config/model/training hashes, atomically claims the evaluation once, validates reserved values against the cached official source, and writes `outputs/benchmark_metrics.csv`. It never prints reserved membership. A failed run consumes its claim too; no flag bypasses the once-only guard. Subsequent development is rejected. The separate Indian `configs/preregistration.lock` must be created and committed in its own commit before the later replay phase; it has not been created prematurely.
-
-Feature builds now record their exact public-source snapshot in per-artifact receipts. Scientific registration requires a fresh build with matching receipts after collection and code changes; older caches remain readiness inputs and are never retroactively certified. Direct review findings and remaining quality gates are in [docs/CODE_AUDIT.md](docs/CODE_AUDIT.md).
+Submissions cannot be edited or replaced. The repository is currently private; it must be made public or shared with organisers before judging. No external submission has been made by the implementation agent.

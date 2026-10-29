@@ -4,7 +4,7 @@
     "configs/base.yaml": "d46f8b84f5c4c9faa6a3a28ae58b08f9a3a9c7361a5b34f3da47291a6afeb9ea",
     "configs/benchmark.yaml": "1a41b614852fe5b33dd5795c24fa6d431325c405c88a6d0c4815510080b200b6",
     "configs/calendar.yaml": "1f81df1f48cc41e2a96b60d30639ad102afd03f53b502444508bccb726b2b6ce",
-    "configs/delivery.yaml": "5d3f0e3b2144a795f1064d03164d5a7b82002195bba6e2d563ceef157d43733e",
+    "configs/delivery.yaml": "14780cf8cda1253e9504c90981179139104ddd80341bf710f105181f4a48a17f",
     "configs/diagnostics.yaml": "d85b2cd358c46701aaa2df04abdd9908ce18a602bea482ba6f74c9da179203fa",
     "configs/features.yaml": "4d78d16d484a2be3c110127b9c8a9540350450d4fd72704834b6237953a62048",
     "configs/financial_reconciliations.yaml": "b0ee665e5dc4337845ea8e98528a52818c7063e69079c08d942ccfc23c87c3e1",

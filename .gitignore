@@ -38,3 +38,12 @@ data/interim/
 *.partial
 tests/fixtures/_runtime/
 dist/
+
+# Local working documents; only submission documents belong in docs.
+/local_docs/
+/docs/*
+!/docs/report/
+!/docs/DEMO_SCRIPT.md
+!/docs/slides_outline.md
+/docs/report/*
+!/docs/report/final_report.md

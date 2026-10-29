@@ -1,5 +1,0 @@
-# Positive Reliance Group membership evidence
-
-The RCom FY2016 original annual report identifies the company as the flagship of Reliance Group (PDF page 4). Reliance Capital FY2015 identifies itself as a constituent of that group (PDF page 4). Both reports identify Anil Dhirubhai Ambani as chairman (PDF page 6), distinguishing these disclosures from an inference based only on a shared company-name word. RHFL's original FY2017 profile identifies Reliance Capital as its wholly owned parent at that period (PDF page 2).
-
-Three dated positive memberships are recorded in `data/manual/groups.csv`. The internal group ID is a project key, not a claimed legal registry identifier. Source FY-end plus the configured annual-report lag is applied; later changes in ownership require additional observations. This is not a complete roster of the group: `membership_complete=0` is retained for every row. No other company is assigned singleton or group status from absence of evidence, and the primary group overlay remains disabled.
