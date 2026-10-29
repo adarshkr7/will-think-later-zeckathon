@@ -131,3 +131,11 @@
 - 2026-10-29: Quarantine the three internally inconsistent April 2023 index archives in both live and offline builds; reject a global format switch or session relabelling that would silently change dates.
 - 2026-10-29: Cache the complete available public IBBI pagination as discovery metadata; require original debtor/commencement review and affirmative full-window survival evidence instead of deriving negative labels from an empty name search.
 - 2026-10-29: Preserve Can Fin's original issuer facts but withhold cross-ISIN market joins until a dated successor-security link is sourced; reject ticker-only continuity assumptions.
+
+- 2026-10-29: Resolve RHFL suspense applicability only through the original scheme-booking and full-allotment notes, retaining old unknown rows; reject a general dash-to-zero conversion or substitution of regulatory net worth for book equity.
+- 2026-10-29: Reconstruct Alok/Videocon annual income from exact signed original intervals, with a full boundary-coverage check and latest operand publication date; reject proportional annualisation of eighteen-/fifteen-month flows.
+- 2026-10-29: Preserve distinct flow lengths with period_start in as_of's row key; reject treating a quarter and an extended interval with the same closing date as duplicate observations.
+- 2026-10-29: Use original NSE dissemination timestamps where recorded, including Videocon's later FY2017 filing; reject allowing an earlier default publication lag to override known later availability.
+- 2026-10-29: Complete the later Alok Ind AS accounting triplet together at its later publication date; reject mixing restated assets with older GAAP equity/liabilities or changing the accounting-identity tolerance.
+- 2026-10-29: Preserve exact calendar-year feature lags across fiscal-end changes; reject substituting a nearer nonannual-gap observation to make growth features available.
+- 2026-10-29: Retain the truncated original RHFL half-year PDF and receipt without importing fields; use the complete reviewed annual notes for core coverage instead of repairing or guessing missing PDF content.

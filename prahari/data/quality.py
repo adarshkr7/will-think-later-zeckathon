@@ -110,6 +110,18 @@ def validate_table(table: pd.DataFrame, name: str, settings: dict) -> dict:
                 raise ValueError("Invalid survival window")
         if name == "security_crosswalk" and (row["exchange"] not in ("nse", "bse") or row["exchange_code"] is None):
             raise ValueError("Invalid sourced exchange identity mapping")
+        if name == "financial_intervals":
+            if any(row[key] is None for key in ("series_id", "period_start", "source_period_end", "field",
+                                                "numeric_value", "unit", "source_key", "source_page")):
+                raise ValueError("Verified flow intervals need complete source cells and bounds")
+            if (row["period_start"] > row["period_end"] or row["source_period_end"] < row["period_end"]
+                    or pd.to_datetime(row["public_date"], utc=True) < pd.to_datetime(row["source_period_end"], utc=True)):
+                raise ValueError("Invalid source financial interval bounds/publication")
+            if (row["source_page"] < 1 or row["source_page"] % 1
+                    or row["publication_kind"] not in ("results", "annual_report")
+                    or row["field"] not in settings["validation"]["flow_fields"]
+                    or row["basis"] not in settings["validation"]["fiscal_basis"]):
+                raise ValueError("Invalid sourced flow field, basis or page")
         if name == "financial_evidence":
             annual = settings["tables"]["annual_financials"]
             allowed = annual["numeric"] + ["auditor_opinion", "going_concern_flag", "caro_default_flag", "caro_fraud_flag"]

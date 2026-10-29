@@ -25,28 +25,28 @@ Source observations carry publication dates, conservative date-imputation flags 
 
 | item | observed | needs_verification | is_synthetic |
 | --- | --- | --- | --- |
-| market_sessions | 2763 | 0 | 0 |
-| market_observations | 4422192 | 0 | 0 |
-| distinct_isins | 2842 | 0 | 0 |
-| cached_source_pdfs | 73 | 0 | 0 |
+| market_sessions | 3166 | 0 | 0 |
+| market_observations | 5248967 | 0 | 0 |
+| distinct_isins | 3275 | 0 | 0 |
+| cached_source_pdfs | 83 | 0 | 0 |
 | unavailable_source_pdfs | 1 | 1 | 0 |
-| verified_financial_fields | 744 | 0 | 0 |
-| financial_entities | 12 | 0 | 0 |
-| financial_evidence_rows | 1016 | 0 | 0 |
-| verified_financial_evidence_rows | 1005 | 0 | 0 |
+| verified_financial_fields | 909 | 0 | 0 |
+| financial_entities | 15 | 0 | 0 |
+| financial_evidence_rows | 1232 | 0 | 0 |
+| verified_financial_evidence_rows | 1221 | 0 | 0 |
 | cached_original_report_candidates | 458 | 1 | 0 |
 | cached_financial_index_windows | 53 | 0 | 0 |
 | financial_index_records | 130478 | 0 | 0 |
-| verified_identity_mappings | 29 | 0 | 0 |
+| verified_identity_mappings | 85 | 0 | 0 |
 | verified_quarterly_share_counts | 15 | 0 | 0 |
 | verified_quarterly_shareholding | 14 | 0 | 0 |
 | verified_first_listing_certificates | 2 | 0 | 0 |
 | sourced_group_memberships | 3 | 0 | 0 |
 | complete_group_roster_memberships | 0 | 0 | 0 |
 | published_session_count_claims | 20 | 0 | 0 |
-| certified_session_census_periods | 11 | 0 | 0 |
-| sourced_exchange_calendar_rows | 4055 | 0 | 0 |
-| complete_core_financial_histories | 8 | 0 | 0 |
+| certified_session_census_periods | 13 | 0 | 0 |
+| sourced_exchange_calendar_rows | 4749 | 0 | 0 |
+| complete_core_financial_histories | 12 | 0 | 0 |
 | unselected_research_symbols | 52 | 1 | 0 |
 | unselected_research_security_ids | 54 | 1 | 0 |
 | unselected_research_pairs | 74 | 1 | 0 |
@@ -69,7 +69,7 @@ Source: [collection_status](../../outputs/collection_status.csv).
 | peers_per_case | 0 | 1 | 0 | 0 |
 | stressed_survivors | 0 | 0 | 0 | 0 |
 | panel_market_coverage | 0 | 1 | 0 | 0 |
-| financial_year_coverage | 0 | 1 | 0 | 0 |
+| financial_year_coverage | 1 | 1 | 1 | 0 |
 | accounting_identities | 1 | 1 | 1 | 0 |
 
 Source: [panel_acceptance](../../outputs/panel_acceptance.csv).

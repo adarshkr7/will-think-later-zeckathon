@@ -1,0 +1,11 @@
+{
+  "is_synthetic": 1,
+  "entity_id": "FIX_INTERVAL",
+  "basis": "standalone",
+  "fy_end": "2015-12-31",
+  "fields": ["revenue", "pat"],
+  "components": [
+    {"series_id": "extended", "coefficient": 1},
+    {"series_id": "prefix", "coefficient": -1}
+  ]
+}

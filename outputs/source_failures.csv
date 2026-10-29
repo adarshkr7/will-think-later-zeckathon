@@ -5,3 +5,4 @@ spicejet,https://corporate.spicejet.com/Content/pdf/2014-15AnnualReport.pdf,503.
 nse_index,https://nsearchives.nseindia.com/content/indices/ind_close_all_06042023.csv,,data/raw/nse_index/ind_close_all_06042023.csv,1,0,,,2023-04-06,archive_date_mismatch_no_index_values_imported
 nse_index,https://nsearchives.nseindia.com/content/indices/ind_close_all_10042023.csv,,data/raw/nse_index/ind_close_all_10042023.csv,1,0,,,2023-04-10,archive_date_mismatch_no_index_values_imported
 nse_index,https://nsearchives.nseindia.com/content/indices/ind_close_all_11042023.csv,,data/raw/nse_index/ind_close_all_11042023.csv,1,0,,,2023-04-11,archive_date_mismatch_no_index_values_imported
+rhfl,https://www.reliancehomefinance.com/documents/20142/147819/Half-yearly-results-March-2016.pdf,,data/raw/rhfl/half_yearly_results_201603.pdf,1,0,,,,truncated_original_pdf_missing_eof_no_fields_imported

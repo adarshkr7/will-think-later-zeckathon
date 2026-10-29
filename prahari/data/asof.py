@@ -33,7 +33,7 @@ def as_of(table: pd.DataFrame, t: str | pd.Timestamp) -> pd.DataFrame:
     ).any(axis=1)
     if not source_columns or (len(result) and not has_source.all()):
         raise ValueError("Every visible Indian observation needs source provenance")
-    key = [c for c in ("entity_id", "field", "period_end", "basis", "instrument", "agency", "event_type", "series", "exchange")
+    key = [c for c in ("entity_id", "field", "period_start", "period_end", "basis", "instrument", "agency", "event_type", "series", "exchange")
            if c in result]
     if result.duplicated(key + ["public_date"]).any():
         raise ValueError("Ambiguous duplicate source versions")

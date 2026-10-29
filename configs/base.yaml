@@ -19,6 +19,8 @@ paths:
   shareholding_config: configs/shareholding.yaml
   shareholding_import_review: outputs/shareholding_import_review.csv
   financial_index_config: configs/financial_results.yaml
+  financial_reconciliations_config: configs/financial_reconciliations.yaml
+  financial_reconciliations: outputs/financial_reconciliations.csv
   registry_config: configs/registry.yaml
   registry_pages: outputs/ibbi_registry_pages.csv
   registry_records: data/interim/ibbi_registry_records.csv
@@ -141,6 +143,7 @@ pipeline:
   - {module: scripts.03g_import_listing_status}
   - {module: scripts.02j_audit_sessions, offline: true}
   - {module: scripts.02d_extract_financials}
+  - {module: scripts.02l_reconcile_annual_flows}
   - {module: scripts.02f_collect_shareholding, offline: true}
   - {module: scripts.02e_collect_fx, offline: true}
   - {module: scripts.03c_collection_status}

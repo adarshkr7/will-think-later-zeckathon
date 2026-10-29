@@ -561,6 +561,38 @@ tables:
     - needs_verification
     - is_synthetic
     source: source_url
+  financial_intervals:
+    columns:
+    - series_id
+    - entity_id
+    - basis
+    - field
+    - period_start
+    - period_end
+    - source_period_end
+    - numeric_value
+    - unit
+    - publication_kind
+    - public_date
+    - source_key
+    - source_doc
+    - source_page
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    dates:
+    - period_start
+    - period_end
+    - source_period_end
+    - public_date
+    numeric:
+    - numeric_value
+    - source_page
+    flags:
+    - date_is_imputed
+    - needs_verification
+    - is_synthetic
+    source: source_doc
 validation:
   accounting_tolerance: 0.02
   minimum_events: 10
@@ -578,3 +610,11 @@ validation:
   - delayed_results
   - cfo_resignation
   - forensic_audit_ordered
+  flow_fields:
+  - revenue
+  - pat
+  - pbt
+  - finance_costs
+  - interest_expense
+  - depreciation
+  - cfo

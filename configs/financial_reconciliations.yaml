@@ -1,0 +1,106 @@
+sources:
+- key: alok_june2013_scan
+  source: alok_results
+  filename: Results_Q1_30062013.pdf
+  url: https://www.alokind.com/assets/pdf/investor-relations/financial-results/quaterly-financial-results/2013-14/Results_Q1_30062013.pdf
+  sha256: 9a642dfb4d4538a695cb23b58aec8b9d49806fd52063243cd27423a485cc2d75
+- key: alok_sept2013_scan
+  source: alok_results
+  filename: Results_Q2_30092013.pdf
+  url: https://www.alokind.com/assets/pdf/investor-relations/financial-results/quaterly-financial-results/2013-14/Results_Q2_30092013.pdf
+  sha256: 7b0cd5b46035e2d312d3b97ce81015f3480418387046f5d1ed3df9cc2b3d1c64
+- key: alok_march2014_scan
+  source: alok_results
+  filename: Results_Q4_31032014.pdf
+  url: https://www.alokind.com/assets/pdf/investor-relations/financial-results/quaterly-financial-results/2013-14/Results_Q4_31032014.pdf
+  sha256: 00febd2fa863924035a92db4f28e4547ec20a4de97544029f499ecc30660588a
+- key: alok_annual2013
+  source: bse_reports
+  filename: INE270A01011_annual_2013.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/521070/5210700913.pdf
+  sha256: 5739b14f41ae05fd481af284560f88c1afbd0e0cb5c383dd45b7219d51417b5f
+- key: alok_annual2015
+  source: alok
+  filename: alok_annual_2015.pdf
+  url: https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2013-15_18_Months.pdf
+  sha256: aa21e55dd1062b5b3b27a8a79d3acbdda3d1a7f168cf4e250b52a41317b634cc
+- key: videocon_annual2014
+  source: videocon
+  filename: videocon_annual_2014.pdf
+  url: https://www.videoconindustriesltd.com/Documents/10078.pdf
+  sha256: 34f059556fd9f03b94b04177c3c49f21e6216a2812d6c280fdd5d6c5c2c43570
+- key: videocon_annual2017
+  source: bse_reports
+  filename: INE703A01011_annual_2017.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/511389/5113890317.pdf
+  sha256: f35bca17c4a632588b42aefbf078995dc21137897fab5715d721427d32849afe
+- key: videocon_q_112665
+  source: nse_results
+  filename: VIDEOIND_112665.html
+  url: https://nsearchives.nseindia.com/archives/financial_results/financial_res_VIDEOIND_112665.html
+  sha256: f302d93a453fdc41e3d408344ed3e2fbc5062af78ed4ff7c9beb8cf08b6e6448
+- key: videocon_q_115369
+  source: nse_results
+  filename: VIDEOIND_115369.html
+  url: https://nsearchives.nseindia.com/archives/financial_results/financial_res_VIDEOIND_115369.html
+  sha256: ccc90c830a2a723d29db3b08be7d9bf2bcfcb4fa28172e42ee68c7162ec13ba7
+- key: videocon_q_1007194
+  source: nse_results
+  filename: VIDEOIND_1007194.html
+  url: https://nsearchives.nseindia.com/archives/financial_results/financial_res_VIDEOIND_1007194.html
+  sha256: c3961ca5274d23a22773cc8b2647247bd57d66734eb24e27b8e696f14f9f45c1
+rules:
+- entity_id: INE270A01011
+  basis: standalone
+  fy_end: '2013-09-30'
+  fields:
+  - revenue
+  - pat
+  components:
+  - series_id: alok_annual2013
+    coefficient: 1
+  - series_id: alok_2012_apr_jun
+    coefficient: -1
+  - series_id: alok_2012_jul_sep
+    coefficient: -1
+- entity_id: INE270A01011
+  basis: standalone
+  fy_end: '2015-03-31'
+  fields:
+  - revenue
+  - pat
+  components:
+  - series_id: alok_annual2015
+    coefficient: 1
+  - series_id: alok_2013_oct_2014_mar
+    coefficient: -1
+- entity_id: INE703A01011
+  basis: standalone
+  fy_end: '2014-12-31'
+  fields:
+  - revenue
+  - pat
+  components:
+  - series_id: videocon_annual2014
+    coefficient: 1
+  - series_id: videocon_q_112665
+    coefficient: -1
+  - series_id: videocon_q_115369
+    coefficient: -1
+- entity_id: INE703A01011
+  basis: standalone
+  fy_end: '2017-03-31'
+  fields:
+  - revenue
+  - pat
+  components:
+  - series_id: videocon_annual2017
+    coefficient: 1
+  - series_id: videocon_q_1007194
+    coefficient: -1
+review_notes:
+- Scanned comparative cells were visually checked against original period headings; no OCR guesses are imported.
+- Videocon FY2014 availability uses the later original NSE archive-date proxy plus one day; FY2017 uses actual exchange
+  dissemination.
+- Signed interval coverage must be exactly twelve months; these reconstructed TTM flows are not described as audited
+  twelve-month statements.

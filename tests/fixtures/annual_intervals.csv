@@ -1,0 +1,5 @@
+series_id,entity_id,basis,field,period_start,period_end,source_period_end,numeric_value,unit,publication_kind,public_date,source_key,source_doc,source_page,date_is_imputed,needs_verification,is_synthetic
+extended,FIX_INTERVAL,standalone,revenue,2014-07-01,2015-12-31,2015-12-31,150.25,INR,annual_report,2016-03-01,fixture_extended,fixture://extended,1,0,0,1
+prefix,FIX_INTERVAL,standalone,revenue,2014-07-01,2014-12-31,2014-12-31,0.000501,INR_lakh,results,2015-03-01,fixture_prefix,fixture://prefix,2,0,0,1
+extended,FIX_INTERVAL,standalone,pat,2014-07-01,2015-12-31,2015-12-31,-15,INR_lakh,annual_report,2016-03-01,fixture_extended,fixture://extended,1,0,0,1
+prefix,FIX_INTERVAL,standalone,pat,2014-07-01,2014-12-31,2014-12-31,-5,INR_lakh,results,2015-03-01,fixture_prefix,fixture://prefix,2,0,0,1
