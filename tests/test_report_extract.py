@@ -91,3 +91,27 @@ def test_continuation_pages_are_explicit_and_keep_source_order():
     for pages in [[1], [0], [4]]:
         with pytest.raises(ValueError, match="pages"):
             reviewed_table_text(Reader(), {"page": 1, "additional_pages": pages})
+
+
+def test_context_assertions_fail_closed_and_do_not_contaminate_amount_rows():
+    fixture = json.loads((FIXTURES / "statement_context.json").read_text())
+
+    class Page:
+        def __init__(self, value):
+            self.value = value
+
+        def extract_text(self, **kwargs):
+            return self.value
+
+    class Reader:
+        pages = [Page(value) for value in fixture["pages"]]
+
+    table = {"page": 1, "context_pages": [2], "context_markers": [fixture["context_marker"]]}
+    text, pages = reviewed_table_text(Reader(), table)
+    assert pages == [1, 2]
+    assert amount_columns(text, "Receivables", 1) == [60]
+    for invalid in [dict(table, context_markers=[fixture["absent_marker"]]),
+                    dict(table, context_markers=[]), dict(table, context_pages=[]),
+                    dict(table, context_pages=[1])]:
+        with pytest.raises(ValueError):
+            reviewed_table_text(Reader(), invalid)

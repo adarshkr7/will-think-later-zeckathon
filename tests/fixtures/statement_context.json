@@ -1,0 +1,9 @@
+{
+  "is_synthetic": 1,
+  "pages": [
+    "Total current assets 100\nCash 40\nReceivables 60",
+    "The year-end balance has no inventory.\nReceivables 900"
+  ],
+  "context_marker": "The year-end balance has no inventory.",
+  "absent_marker": "The year-end balance includes inventory."
+}

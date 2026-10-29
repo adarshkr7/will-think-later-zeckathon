@@ -2290,3 +2290,278 @@ documents:
     - equity shares were successfully listed on BSE and NSE
     - with effect from
     source_sha256: 6f7c0d8cfce16693c4cc57510b7c19156bfa0952b1ad107dfd79b6d4639275d7
+- name: Coffee Day Enterprises annual report FY2016
+  source: bse_reports
+  filename: INE335K01011_annual_2016.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/539436/5394360316.pdf
+  purpose: Reviewed standalone statements and earned deficit; current-period inventory
+    residual reconciles the complete asset table and explicit CARO year-end absence
+    assertion. Later comparatives retain later availability.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE335K01011
+    source_period_end: '2016-03-31'
+    fiscal_periods:
+    - '2016-03-31'
+    - '2015-03-31'
+    unit: INR_million
+    source_sha256: 0095a68bac7c73916fda88b4821de13c46153b302e6bf1318832e03e281e859c
+    tables:
+    - page: 100
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: Short-term Provisions
+          line_offset: 2
+        equity:
+          label: Reserves and surplus
+          line_offset: 1
+        total_liabilities:
+          sum:
+          - label: Long-term provisions
+            line_offset: 1
+          - label: Short-term Provisions
+            line_offset: 1
+        current_liabilities:
+          label: Short-term Provisions
+          line_offset: 1
+        lt_debt: Long-term borrowings
+        st_borrowings: Short-term borrowings
+        ppe_net:
+          label: Tangible assets
+          expected_matches: 2
+          occurrence: 0
+    - page: 101
+      basis: standalone
+      columns: 2
+      fields:
+        current_assets:
+          label: Other current assets
+          line_offset: 1
+        receivables: Trade receivables
+    - page: 102
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from operations
+        pat: Loss after tax
+        pbt: Loss before tax
+        finance_costs: Finance costs
+        cogs: Purchase of stock in trade
+        depreciation:
+          label: Depreciation and amortisation
+          line_offset: 2
+    - page: 114
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: At the close of the year
+          expected_matches: 2
+          occurrence: 1
+    - page: 101
+      basis: standalone
+      columns: 2
+      fields:
+        inventory:
+          difference:
+          - label: Other current assets
+            line_offset: 1
+          - sum:
+            - Trade receivables
+            - Cash and bank balances
+            - label: advances
+              line_offset: 1
+            - Other current assets
+      fiscal_periods:
+      - '2016-03-31'
+      context_pages:
+      - 96
+      context_markers:
+      - However, there is no physical inventory as at the year end.
+- name: Coffee Day Enterprises annual report FY2017
+  source: bse_reports
+  filename: coffee_day_annual_2017.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/539436/5394360317.pdf
+  purpose: Reviewed standalone statements and earned deficit; current-period inventory
+    residual reconciles the complete asset table and explicit CARO year-end absence
+    assertion. Later comparatives retain later availability.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE335K01011
+    source_period_end: '2017-03-31'
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
+    unit: INR_million
+    source_sha256: 0ef989cf9bdb704badce54c9fdb8fcc996c67bb02cb039f698aaf6b39277ffc2
+    tables:
+    - page: 89
+      basis: standalone
+      columns: 3
+      fields:
+        total_assets: TOTAL ASSETS
+        equity: Total equity
+        total_liabilities:
+          sum:
+          - Total non-current liabilities
+          - Total current liabilities
+        current_assets: Total current assets
+        current_liabilities: Total current liabilities
+        receivables: Trade receivables
+        ppe_net: Property, plant and equipment
+    - page: 90
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: REVENUE FROM OPERATIONS
+        pat: Loss for the period
+        pbt: Loss before tax
+        finance_costs: Finance costs
+        cogs: Purchase of stock in trade
+        depreciation: Depreciation and amortization expense
+    - page: 92
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: Balance as at 31st March 2017
+          columns: 4
+          positions:
+          - 1
+          expected_matches: 2
+          occurrence: 0
+      fiscal_periods:
+      - '2017-03-31'
+    - page: 92
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: Balance as at 31st March 2016
+          columns: 4
+          positions:
+          - 1
+          expected_matches: 2
+          occurrence: 1
+      fiscal_periods:
+      - '2016-03-31'
+    - page: 89
+      basis: standalone
+      columns: 3
+      fields:
+        inventory:
+          difference:
+          - Total current assets
+          - sum:
+            - Trade receivables
+            - label: Cash and cash equivalents
+              expected_matches: 2
+              occurrence: 0
+            - Bank balances other than cash and cash equivalents
+            - label: Loans 7-B
+            - label: Other financial assets 9-B
+            - label: Other assets 10-B
+      fiscal_periods:
+      - '2017-03-31'
+      context_pages:
+      - 86
+      context_markers:
+      - However, there is no physical inventory as at the year end.
+- name: Coffee Day Enterprises annual report FY2018
+  source: bse_reports
+  filename: INE335K01011_annual_2018.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/539436/5394360318.pdf
+  purpose: Reviewed standalone statements and earned deficit; current-period inventory
+    residual reconciles the complete asset table and explicit CARO year-end absence
+    assertion. Later comparatives retain later availability.
+  financial_extraction:
+    reviewed: true
+    entity_id: INE335K01011
+    source_period_end: '2018-03-31'
+    fiscal_periods:
+    - '2018-03-31'
+    - '2017-03-31'
+    unit: INR_million
+    source_sha256: c82d3724f929b68350d226d637e17b35d12dd6e77184b4e70118aed6ec736b45
+    tables:
+    - page: 93
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets: TOTAL ASSETS
+        equity: Total equity
+        current_assets: Total current assets
+        receivables: Trade receivables
+        ppe_net: Property, plant and equipment
+    - page: 94
+      basis: standalone
+      columns: 2
+      fields:
+        total_liabilities:
+          sum:
+          - Total non-current liabilities
+          - Total current liabilities
+        current_liabilities: Total current liabilities
+        lt_debt: Borrowings
+      additional_pages:
+      - 93
+    - page: 95
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from operations
+        pat: Loss for the period
+        pbt: Loss before tax
+        finance_costs: Finance costs
+        cogs: Purchase of stock in trade
+        depreciation: Depreciation and amortization expense
+    - page: 99
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: Balance as at 31 March 2018
+          columns: 4
+          positions:
+          - 1
+          expected_matches: 5
+          occurrence: 3
+      fiscal_periods:
+      - '2018-03-31'
+    - page: 99
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: Balance as at 31 March 2017
+          expected_matches: 5
+          occurrence: 4
+          columns: 4
+          positions:
+          - 1
+      fiscal_periods:
+      - '2017-03-31'
+    - page: 93
+      basis: standalone
+      columns: 2
+      fields:
+        inventory:
+          difference:
+          - Total current assets
+          - sum:
+            - Trade receivables
+            - label: Cash and cash equivalents
+              expected_matches: 2
+              occurrence: 0
+            - Bank balances other than cash and cash equivalents
+            - label: Loans 7-B
+            - label: Other financial assets 9-B
+            - label: Other assets 10-B
+      fiscal_periods:
+      - '2018-03-31'
+      context_pages:
+      - 89
+      context_markers:
+      - However, there is no physical inventory as at the year end.

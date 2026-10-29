@@ -18,13 +18,30 @@ LOG = logging.getLogger(__name__)
 
 
 def reviewed_table_text(reader: PdfReader, table: dict) -> tuple[str, list[int]]:
-    """Read explicit pages only; continuation notes retain every page reference."""
+    """Keep numeric pages separate from required contextual source assertions.
+
+    Context pages support scope without introducing unrelated numeric rows into
+    the column parser. All pages remain in the resulting evidence chain.
+    """
     pages = [table["page"], *table.get("additional_pages", [])]
-    if (len(set(pages)) != len(pages) or
-            any(not isinstance(page, int) or not 1 <= page <= len(reader.pages) for page in pages)):
+    context_pages = table.get("context_pages", [])
+    all_pages = [*pages, *context_pages]
+    if (len(set(all_pages)) != len(all_pages) or
+            any(not isinstance(page, int) or not 1 <= page <= len(reader.pages) for page in all_pages)):
         raise ValueError("Invalid reviewed statement pages")
+    if context_pages:
+        markers = table.get("context_markers")
+        if (not isinstance(markers, list) or not markers or
+                any(not isinstance(marker, str) or not marker.strip() for marker in markers)):
+            raise ValueError("Context pages require explicit source assertions")
+        normalize = lambda value: " ".join(unicodedata.normalize("NFKC", value).casefold().split())
+        context = normalize("\n".join(reader.pages[page-1].extract_text() for page in context_pages))
+        if any(normalize(marker) not in context for marker in markers):
+            raise ValueError("Required source assertion changed; review required")
+    elif table.get("context_markers"):
+        raise ValueError("Source assertions require explicit context pages")
     return "\n".join(reader.pages[page-1].extract_text(extraction_mode=table.get("text_mode", "plain"))
-                     for page in pages), pages
+                     for page in pages), all_pages
 
 
 def require_denomination(text: str, spec: dict, table: dict, markers: dict) -> None:
