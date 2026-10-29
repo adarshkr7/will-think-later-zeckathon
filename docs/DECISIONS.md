@@ -114,3 +114,4 @@
 - 2026-10-29: Separate source-availability coverage from full-window quote history for positively certified first equity listings; retain unavailable pre-listing features and all case denominators. Never use the first cached quote as an IPO certificate.
 - 2026-10-29: Extend candidate-report acquisition to the fiscal report covering the full forward survival endpoint; reject using a March-ending report to certify survival through a later month. All such documents remain unverified candidates until reviewed.
 - 2026-10-29: Add pinned openpyxl support for the original SEBI workbook, retaining every existing dependency version; the import reads pinned cells and venue headings rather than reconstructing counts from rounded turnover averages.
+- 2026-10-29: Preserve exact bytes for committed outputs with Git attributes; reject platform newline conversion because it invalidates census filenames and report provenance hashes after checkout.
