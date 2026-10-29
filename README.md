@@ -4,7 +4,7 @@ Point-in-time corporate credit early warning, built for Zeckathon PS-02.
 
 ## Submission files
 
-- [Solution and results report](docs/report/final_report.md)
+- [Solution and results report (prahari_report.md)](docs/report/prahari_report.md) ([final_report.md](docs/report/final_report.md))
 - [Demo walkthrough](docs/DEMO_SCRIPT.md)
 - [Presentation outline](docs/slides_outline.md)
 

@@ -48,9 +48,15 @@ def build_report(config: Config) -> None:
     lines = ["# PRAHARI", "", state, "",
              "## Problem and decision design", "",
              "PRAHARI reconstructs information available before each historical scoring cutoff. The primary model uses Polish-trained distress heads, a published market-risk layer and fixed soft-signal weights. Indian cases are evaluation outcomes, not primary training labels.", "",
+             "### Sentinel Interface and Workflow", "",
+             "![PRAHARI Credit Sentinel Desk Overview](images/01_sentinel_overview.jpg)",
+             "*Figure 1: PRAHARI Credit Sentinel Desk Overview. Reconstructed point-in-time credit review command center showing active readiness protocol, system-wide integrity metrics (12 verified cases, 913 financial fields, 181 passing integrity checks), and point-in-time borrower profile dossier for Jaypee Infratech Ltd.*", "",
              "## Current execution status", "", section("run_status"), "",
              "## Data and point-in-time design", "",
              "Source observations carry publication dates, conservative date-imputation flags and document references. Every feature source passes the as-of boundary. Later comparative statements retain the later source report's publication lag. Missing inputs retain explicit reasons.", "",
+             "### Point-in-Time Universe Snapshot (Time Machine)", "",
+             "![Point-in-Time Universe Snapshot](images/02_time_machine_snapshot.png)",
+             "*Figure 2: Time Machine cross-sectional snapshot at cutoff 2018-09-30. Strictly respects publication lags (FY + 90 days; Annual Report + 180 days) with explicit 5% capacity cap and feature completeness tracking.*", "",
              section("collection_status"), "", section("panel_acceptance"), "",
              "### Original-vintage FX coverage", "", section("fx_coverage"), "",
              "FX comes from original weekly H.10 releases with actual publication dates. Revised current historical series are not substituted. Unreported source observations remain missing.", "",
@@ -67,10 +73,18 @@ def build_report(config: Config) -> None:
              "## Policy and cost", "", section("app_policy"), "",
              "The operational review list uses the registered hard cap and deterministic tie handling. Additional-slot curves are counterfactual cost statistics and do not enlarge the operational list.", "",
              "For probability p, the expected cost of a miss is p times cost_fn; the expected cost of review is (1-p) times cost_fp. Equating them gives tau_star = cost_fp / (cost_fn + cost_fp). The policy table includes both equal expected costs at that threshold. Capacity is floor(alert_frac times the eligible population); a binding capacity limit further restricts the ranked list. These are policy calculations, not observed borrower losses.", "",
+             "### Operational Policy & Capacity Optimization", "",
+             "![Operational Policy Optimization & Evidence Protocol](images/05_policy_and_metrics.jpg)",
+             "*Figure 3: Operational Policy & Optimization dashboard. Displays the cost-minimizing Bayes decision threshold (tau* = 0.0476 under a 20:1 asymmetric cost ratio C_FN = 20, C_FP = 1), strict 5% human review capacity cap, and component verification status.*", "",
              section("cost_curve"), "", section("shadow_prices"), "", section("threshold_scan"), "",
              "## Attribution and evidence", "",
              "Native raw-margin TreeSHAP is rescaled to reconcile the nonlinear calibrated log-odds exactly. This path-proportional allocation is not presented as Shapley values of calibrated probability. CHS and overlay terms are linear. Single-driver probability removal effects overlap and are not additive or causal.", "",
              "Source deltas distinguish borrower documents from roll-forward and peer/universe-context effects, and must telescope between scored endpoints. A missing endpoint produces no invented evidence chain.", "",
+             "### Historical Trajectory & Borrower Memorandum", "",
+             "![Historical Financial & Market Trajectory](images/03_case_timeline_trajectory.png)",
+             "*Figure 4: Historical borrower trajectory (Jaypee Infratech Ltd) across historical cutoffs up to 2018-09-30, showing observed unadjusted market price and input coverage progression.*", "",
+             "![Automated Credit Committee Memorandum](images/04_borrower_memo.png)",
+             "*Figure 5: Automated Credit Committee Memorandum and point-in-time sealed provenance chain generated offline from verified filings.*", "",
              "## Ablation and detection", "", section("ablations"), "", section("detection_curve"), "",
              section("rating_lead_summary"), "", section("rating_lead_cases"), "",
              "Rating lead compares the first pre-event watch-list flag with the earliest sourced sub-investment-grade publication. The median uses paired observed endpoints; missing cases remain listed. Incomplete rating histories do not establish the first-ever downgrade. Calendar-quarter and day differences are both exported.", "",
@@ -90,6 +104,7 @@ def build_report(config: Config) -> None:
              "## Reproducibility", "",
              "Run `run_tests.ps1`, then `run_all.ps1 -Offline -Readiness` for a cached readiness build. Strict production execution preserves all data, registration and final-evaluation gates. Start the offline interface with `run_app.ps1`. The app reads only the exported output bundle.", ""]
     report_path.write_text("\n".join(lines), encoding="utf-8")
+    (report_path.parent / "prahari_report.md").write_text("\n".join(lines), encoding="utf-8")
     write_real_table(pd.DataFrame(trace), config.path("report_trace"))
     # Structural outline, with no manually copied performance claims.
     slides = ["# Pitch outline", "", "1. Credit desk time machine and the problem", "2. Published data and point-in-time boundary",

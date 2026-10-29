@@ -47,3 +47,6 @@ dist/
 !/docs/slides_outline.md
 /docs/report/*
 !/docs/report/final_report.md
+!/docs/report/prahari_report.md
+!/docs/report/images/
+!/docs/report/images/*
