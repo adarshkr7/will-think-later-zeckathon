@@ -21,6 +21,10 @@ paths:
   financial_index_config: configs/financial_results.yaml
   financial_reconciliations_config: configs/financial_reconciliations.yaml
   financial_reconciliations: outputs/financial_reconciliations.csv
+  peer_intake_config: configs/peer_intake.yaml
+  peer_intake_review: outputs/peer_intake_review.csv
+  delivery_config: configs/delivery.yaml
+  delivery_manifest: outputs/delivery_manifest.json
   registry_config: configs/registry.yaml
   registry_pages: outputs/ibbi_registry_pages.csv
   registry_records: data/interim/ibbi_registry_records.csv
@@ -132,6 +136,21 @@ dates:
   results_lag_days: 90
   annual_report_lag_days: 180
 pipeline:
+  readiness_benchmark_cache:
+    enabled: true
+    requirements: requirements.txt
+    learning_files:
+    - configs/benchmark.yaml
+    - configs/harmonized_map.yaml
+    - configs/policy.yaml
+    - prahari/data/benchmark_store.py
+    - prahari/data/uci.py
+    - prahari/models/benchmark.py
+    - prahari/models/preprocess.py
+    - prahari/models/calibrate.py
+    - prahari/features/harmonize.py
+    - prahari/eval/metrics.py
+    - scripts/01_benchmark.py
   arenas: [P, U]
   readiness_universe_dates: null
   auto_commit_registration: true

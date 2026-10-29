@@ -1,0 +1,8 @@
+directory: downloaded_files
+patterns:
+  entities: entities_*.csv
+  peer_survival: peer_survival_*.csv
+  annual_financials: annual_financials_*.csv
+identity_lookback_days: 14
+claimed_comparison_unit: INR_crore
+comparison_note: The draft guide suggests crores; files do not declare units, so comparisons cannot approve an input row.

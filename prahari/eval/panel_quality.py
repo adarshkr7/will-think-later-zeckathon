@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import math
+import html
+import re
 
 import pandas as pd
 
@@ -11,8 +13,11 @@ from prahari.data.asof import as_of
 from prahari.data.financials import financial_table
 from prahari.data.manual import read_manual
 from prahari.eval.coverage import coverage_parity
-from prahari.eval.market_coverage import market_coverage
+from prahari.eval.market_coverage import equity_calendar, market_coverage
 from prahari.data.bhavcopy import market_as_of
+from prahari.data.downloads import CachedDownloader
+from prahari.data.entity_review import require_reviewed_text
+from prahari.data.uci import sha256_file
 
 
 def panel_acceptance(events: pd.DataFrame, peers: pd.DataFrame, market: pd.DataFrame,
@@ -87,6 +92,23 @@ def audit_market(config: Config) -> pd.DataFrame:
     calendar = as_of(read_manual(config, "trading_calendar"), now)
     exchange = config.section("india_config")["market"]["exchange_preference"][0]
     calendar = calendar.loc[calendar.entity_id.str.casefold().eq(exchange)]
+    exceptions = []
+    client = CachedDownloader(config)
+    try:
+        for proof in config.section("calendar_config").get("equity_scope_exceptions", []):
+            raw = client.fetch(proof["source"], proof["url"], proof["filename"], offline=True)
+            if sha256_file(raw) != proof["sha256"]:
+                raise ValueError("Equity-session scope source changed")
+            text = html.unescape(re.sub(r"<[^>]+>", " ", raw.read_text(encoding=proof["encoding"])))
+            require_reviewed_text(text, proof["evidence_markers"])
+            exceptions.append({"entity_id": exchange, "period_end": proof["period_end"],
+                               "public_date": proof["public_date"], "source_url": proof["url"],
+                               "date_is_imputed": proof["date_is_imputed"], "needs_verification": 0,
+                               "is_synthetic": 0})
+    finally:
+        client.close()
+    if exceptions:
+        calendar = equity_calendar(calendar, as_of(pd.DataFrame(exceptions), now))
     listings = as_of(read_manual(config, "listing_events"), now)
     return market_coverage(windows, market_as_of(config, now), calendar, listings, exchange=exchange)
 

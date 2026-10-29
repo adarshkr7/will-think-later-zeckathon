@@ -2,6 +2,8 @@
 
 Project documentation lives in docs/. Run commands from the repository root.
 
+For the offline demonstration and archive, start with [SUBMISSION_GUIDE.md](docs/SUBMISSION_GUIDE.md). Launch the exported interface with `./run_app.ps1`; its manifest states whether the release is readiness-only or a registered evaluation.
+
 Team members collecting evidence: start with [TEAM_DATA_COLLECTION_PLAN.md](docs/TEAM_DATA_COLLECTION_PLAN.md). It includes assignments, company-specific historical cutoffs, source checks and CSV headers.
 
 **P**oint-in-time **R**isk & **A**ccounting **H**azard **A**lerts, **R**anked & **I**nterpretable. *Prahari* is Hindi for "sentinel".

@@ -2,12 +2,12 @@ item,observed,needs_verification,is_synthetic
 market_sessions,3166,0,0
 market_observations,5248967,0,0
 distinct_isins,3275,0,0
-cached_source_pdfs,83,0,0
+cached_source_pdfs,85,0,0
 unavailable_source_pdfs,1,1,0
-verified_financial_fields,909,0,0
+verified_financial_fields,913,0,0
 financial_entities,15,0,0
-financial_evidence_rows,1232,0,0
-verified_financial_evidence_rows,1221,0,0
+financial_evidence_rows,1243,0,0
+verified_financial_evidence_rows,1232,0,0
 cached_original_report_candidates,458,1,0
 cached_financial_index_windows,53,0,0
 financial_index_records,130478,0,0
@@ -24,6 +24,8 @@ complete_core_financial_histories,12,0,0
 unselected_research_symbols,52,1,0
 unselected_research_security_ids,54,1,0
 unselected_research_pairs,74,1,0
+verified_survival_candidates,3,0,0
+verified_survival_pairs,6,0,0
 verified_panel_events,12,0,0
 verified_case_isins,12,0,0
 verified_case_classifications,12,0,0
@@ -31,3 +33,6 @@ verified_event_components,24,0,0
 verified_fx_observations,210,0,0
 quarters_with_verified_fx,44,0,0
 verified_matched_peers,0,1,0
+received_peer_claims,208,0,0
+received_peer_files,9,0,0
+received_peer_claims_approved_for_model,0,0,0

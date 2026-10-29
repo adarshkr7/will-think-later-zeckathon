@@ -11,6 +11,8 @@ __pycache__/
 # Data that must never be committed (see AGENTS.md §2)
 data/raw/
 data/manual/sealed/
+downloaded_files/
+docs/SEALED_CASES_GUIDE.md
 
 # Credentials, cookies, secrets
 .env
@@ -24,9 +26,15 @@ secrets/
 Thumbs.db
 .vscode/
 .idea/
+.ruff_cache/
+.mypy_cache/
+.uv-cache/
+.coverage
+htmlcov/
 
 # Locally cached benchmark partitions/models; never inspect reserved membership.
 data/processed/
 data/interim/
 *.partial
 tests/fixtures/_runtime/
+dist/

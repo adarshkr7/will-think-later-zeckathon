@@ -88,3 +88,16 @@ count_sources:
   - No. of Trading Days
   row_pattern: ^\s*(?P<period>\d{4}-\d{2})\s+(?P<count>\d{1,3})\s
 method_id: cash_segment_exact_count_census_v1
+equity_scope_exceptions:
+- period_end: '2012-11-11'
+  public_date: '2026-10-29T14:34:00+00:00'
+  date_is_imputed: 1
+  source: nse_press
+  url: https://nsearchives.nseindia.com/content/press/11112012.htm
+  filename: gold_etf_session_20121111.htm
+  sha256: cc4f6b84e34042f79b0f57b6784a1af599bf2b2d747aa8458c114521f7324e0a
+  encoding: cp1252
+  evidence_markers:
+  - November 11, 2012
+  - Since Dhanteras fell on a Sunday, NSE had a special trading session in gold ETF
+  reason: gold_etf_only_special_session

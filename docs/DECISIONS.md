@@ -139,3 +139,12 @@
 - 2026-10-29: Complete the later Alok Ind AS accounting triplet together at its later publication date; reject mixing restated assets with older GAAP equity/liabilities or changing the accounting-identity tolerance.
 - 2026-10-29: Preserve exact calendar-year feature lags across fiscal-end changes; reject substituting a nearer nonannual-gap observation to make growth features available.
 - 2026-10-29: Retain the truncated original RHFL half-year PDF and receipt without importing fields; use the complete reviewed annual notes for core coverage instead of repairing or guessing missing PDF content.
+
+- 2026-10-29: Preserve every supplied peer CSV and the original research guide as immutable received evidence; audit each claim rather than treating supplied names, current IDs or rounded third-party values as verified historical inputs.
+- 2026-10-29: Use annual auditor repayment assertions across the full covered years, corroborated by public registry discovery, for three HFC survival candidates; reject absence-only survival labels and retain the frozen selection/stressed-survivor gates.
+- 2026-10-29: Exclude the original NSE gold-ETF-only Sunday from company-equity coverage while retaining its cash-segment census membership; reject inventing a Jaypee quote or treating all special sessions as equity sessions.
+- 2026-10-29: In readiness mode only, restore the complete cached foreign development epoch after checking model/training hashes, learning code, settings, seed and unchanged original dependency pins; reject mixing partial metric outputs or retraining solely because Indian collection/app code changed. Strict training/final boundaries remain unchanged.
+- 2026-10-29: Preserve the other tester's partial benchmark export with a raw receipt before restoring complete validated development receipts; reject silently discarding received working data.
+- 2026-10-29: Deliver an explicitly labelled offline readiness archive against the 21:00 deadline; reject fabricated company observations, arbitrary calibration inputs, relaxed peer rules or invented final performance as substitutes for unfinished scientific acceptance.
+
+- 2026-10-29: Validate the extracted offline archive independently of the main checkout; retain the explicit benchmark-cache-only test skip because raw caches are excluded, while the complete local suite passes that check.

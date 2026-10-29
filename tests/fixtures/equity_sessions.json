@@ -1,0 +1,10 @@
+{
+  "calendar": [
+    {"entity_id":"fixture_exchange","period_end":"2012-11-09","public_date":"2012-11-12","is_trading_day":1,"source_url":"fixture://cash","date_is_imputed":0,"needs_verification":0,"is_synthetic":1},
+    {"entity_id":"fixture_exchange","period_end":"2012-11-10","public_date":"2012-11-12","is_trading_day":0,"source_url":"fixture://cash","date_is_imputed":0,"needs_verification":0,"is_synthetic":1},
+    {"entity_id":"fixture_exchange","period_end":"2012-11-11","public_date":"2012-11-12","is_trading_day":1,"source_url":"fixture://cash","date_is_imputed":0,"needs_verification":0,"is_synthetic":1}
+  ],
+  "exceptions": [{"entity_id":"fixture_exchange","period_end":"2012-11-11","public_date":"2012-11-12","source_url":"fixture://gold-only-session","date_is_imputed":0,"needs_verification":0,"is_synthetic":1}],
+  "windows": [{"entity_id":"FIX_A","start":"2012-11-09","end":"2012-11-11","is_synthetic":1}],
+  "prices": [{"entity_id":"FIX_A","period_end":"2012-11-09","public_date":"2012-11-09","source_url":"fixture://quote","date_is_imputed":0,"needs_verification":0,"is_synthetic":1}]
+}

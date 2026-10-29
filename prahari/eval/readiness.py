@@ -82,6 +82,9 @@ def build_bundle(config: Config) -> dict:
     policy = config.section("policy_config")
     parameters = [{"parameter": key, "value": policy[key], "is_synthetic": 0} for key in ("cost_fn", "cost_fp", "alert_frac", "tier1_pd")]
     parameters.append({"parameter": "tau_star", "value": bayes_threshold(policy["cost_fn"], policy["cost_fp"]), "is_synthetic": 0})
+    tau = bayes_threshold(policy["cost_fn"], policy["cost_fp"])
+    parameters.extend([{"parameter": "expected_miss_cost_at_tau", "value": tau * policy["cost_fn"], "is_synthetic": 0},
+                       {"parameter": "expected_review_cost_at_tau", "value": (1-tau) * policy["cost_fp"], "is_synthetic": 0}])
     write_real_table(pd.DataFrame(parameters), config.path("app_policy"))
     workflow = config.section("workflow_config")
     records = [{"tier": tier, "action": workflow_text(row["action_code"]),
@@ -92,10 +95,19 @@ def build_bundle(config: Config) -> dict:
     write_real_table(pd.DataFrame(records), config.path("workflow"))
     checks = pd.read_csv(config.path("panel_acceptance"))
     assert_real(checks)
+    primary = config.section("model_config")["primary"]
+    calibration_gaps = [horizon + "_independent_prior" for horizon, value in primary["priors"].items()
+                        if value is None or not np.isfinite(value) or not 0 < value < 1]
+    if not primary.get("prior_source"):
+        calibration_gaps.append("prior_source")
+    if primary.get("nbfc_logit_scale") is None:
+        calibration_gaps.append("financial_track_probability_link")
     status = [
         {"component": "benchmark", "status": "development_only" if not config.path("benchmark_final_metrics").exists() else "final_evaluated", "reason": "Development results are not untouched hold-out performance."},
         {"component": "panel", "status": "accepted" if checks.passed.eq(1).all() else "incomplete", "reason": ", ".join(checks.loc[checks.passed.eq(0), "check"])},
         {"component": "features", "status": "partial_data" if not detail_table.empty and detail_table.reason.ne("").any() else "available", "reason": "Missing inputs remain explicit; existing quarter files do not imply complete coverage."},
+        {"component": "primary_calibration", "status": "incomplete" if calibration_gaps else "declared",
+         "reason": ", ".join(calibration_gaps) if calibration_gaps else "Declared calibration inputs do not certify observation completeness or final performance."},
         {"component": "registration", "status": "registered" if registered else "blocked", "reason": "" if registered else registration_reason},
         {"component": "india_evaluation", "status": "available" if registered and config.path("india_metrics").exists() else "not_run", "reason": "No unregistered performance claims."},
         {"component": "sealed_evaluation", "status": "not_opened" if not config.path("indian_sealed_ledger").exists() else "claimed", "reason": "Once-only final boundary; no sealed contents read for readiness."},
@@ -119,7 +131,7 @@ def build_bundle(config: Config) -> dict:
                          {"label": "Tests passed", "value": tests.get("passed")}],
                 "calibration_images": [path.name for path in sorted(config.path("benchmark_plots").glob("*.png"))],
                 "files": {key: relative(key) for key in ("app_snapshots", "app_features", "case_catalog", "run_status", "app_policy", "panel_acceptance", "collection_status", "fx_coverage", "source_catalog", "coverage_parity", "feature_coverage", "memos", "provenance", "case_cards", "india_metrics", "india_operating_metrics", "evaluation_status", "ablations", "cost_curve", "shadow_prices", "threshold_scan", "detection_curve", "placebo", "anti_gaming", "archetypes", "drift", "hysteresis", "policy_scenarios", "diagnostics_status", "workflow", "amendments", "benchmark_development_metrics", "benchmark_final_metrics", "benchmark_plots")}}
-    manifest["files"].update({key: relative(key) for key in ("rating_lead_cases", "rating_lead_summary")})
+    manifest["files"].update({key: relative(key) for key in ("rating_lead_cases", "rating_lead_summary", "peer_intake_review")})
     path = config.path("app_manifest")
     temporary = path.with_suffix(path.suffix+".partial")
     temporary.write_text(json.dumps(manifest, indent=2), encoding="utf-8")

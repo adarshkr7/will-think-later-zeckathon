@@ -1,6 +1,6 @@
 {
-  "measured_at": "2026-10-29T08:04:48.548844+00:00",
-  "cold_render_seconds": 3.7540467999933753,
+  "measured_at": "2026-10-29T15:11:30.359564+00:00",
+  "cold_render_seconds": 2.7829554000054486,
   "timing_scope": "AppTest construction and first render; Streamlit test-harness import excluded",
   "checks": {
     "cold_start_under_five_seconds": true,
@@ -9,11 +9,14 @@
     "reveal_outcomes": true,
     "reveal_snapshot_outcomes": true,
     "feature_evidence": true,
+    "indicator_history": true,
+    "peer_source_audit": true,
     "judge_search": true,
     "memo_control": true,
     "arena_P": true,
     "arena_U": true,
-    "historical_cutoff": true
+    "historical_cutoff": true,
+    "historical_indicator_cutoff": true
   },
   "passed": true,
   "is_synthetic": 0

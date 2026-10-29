@@ -13,6 +13,13 @@
       "amber": "#a85e00",
       "background": "#f5f7fb"
     },
+    "history_series": {
+      "tl_ta": "Liabilities / assets",
+      "roa": "Profit / assets",
+      "current_ratio": "Current ratio",
+      "sales_growth": "Revenue growth",
+      "pledge_pct": "Reported promoter encumbrance (%)"
+    },
     "tables": {
       "benchmark": [
         "dataset",
@@ -101,11 +108,11 @@
     },
     {
       "label": "Financial fields",
-      "value": 744
+      "value": 913
     },
     {
       "label": "Tests passed",
-      "value": 160
+      "value": 181
     }
   ],
   "calibration_images": [
@@ -160,6 +167,7 @@
     "benchmark_final_metrics": "benchmark_metrics.csv",
     "benchmark_plots": "benchmark_calibration",
     "rating_lead_cases": "rating_lead_cases.csv",
-    "rating_lead_summary": "rating_lead_summary.csv"
+    "rating_lead_summary": "rating_lead_summary.csv",
+    "peer_intake_review": "peer_intake_review.csv"
   }
 }

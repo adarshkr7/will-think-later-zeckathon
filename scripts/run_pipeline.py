@@ -10,6 +10,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from prahari.config import Config
+from prahari.models.development_cache import restore_development_cache
 
 
 def run(config, module, *arguments, allow_failure=False):
@@ -31,7 +32,11 @@ def main() -> None:
     config.setup_logging()
     stages = config.base["pipeline"]
     registered = config.path("preregistration_lock").exists()
-    if not config.path("benchmark_lock").exists() and not registered:
+    reuse_development = args.readiness and stages.get("readiness_benchmark_cache", {}).get("enabled", False)
+    if reuse_development:
+        restore_development_cache(config)
+        logging.info("Readiness build reuses the verified complete foreign development epoch; final data remain unopened")
+    if not config.path("benchmark_lock").exists() and not registered and not reuse_development:
         options = ["--offline"] if args.offline else []
         if args.prepare_only:
             options.append("--prepare-only")

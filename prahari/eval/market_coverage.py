@@ -5,6 +5,36 @@ from __future__ import annotations
 import pandas as pd
 
 
+def equity_calendar(calendar: pd.DataFrame, exceptions: pd.DataFrame) -> pd.DataFrame:
+    """Scope cash-segment sessions to company equities using positive evidence.
+
+    Cash-segment totals also include a gold-ETF-only Sunday. Retain the original
+    cash census and record equity scope separately. Absence of a company quote
+    never establishes an exception. These are retrospective coverage inputs,
+    not score features or historical publication-date overrides.
+    """
+    result = calendar.copy()
+    result["is_equity_trading_day"] = result.is_trading_day
+    result["equity_scope_source"] = ""
+    if exceptions.empty:
+        return result
+    if "as_of" not in exceptions.attrs:
+        raise ValueError("Equity scope evidence must pass through as_of")
+    if (exceptions.period_end.duplicated().any() or exceptions.source_url.isna().any()
+            or exceptions.source_url.astype(str).str.strip().eq("").any()):
+        raise ValueError("Equity scope needs unique dates and original provenance")
+    for proof in exceptions.itertuples():
+        selected = pd.to_datetime(result.period_end, utc=True).eq(proof.period_end)
+        if not selected.any():
+            continue
+        if result.loc[selected, "needs_verification"].ne(0).any():
+            raise ValueError("Unknown cash-session dates cannot be scoped as complete")
+        result.loc[selected, "is_equity_trading_day"] = 0
+        result.loc[selected, "equity_scope_source"] = proof.source_url
+        result.loc[selected, "is_synthetic"] = result.loc[selected, "is_synthetic"].astype(int) | int(proof.is_synthetic)
+    return result
+
+
 def market_coverage(windows: pd.DataFrame, prices: pd.DataFrame, calendar: pd.DataFrame,
                     listings: pd.DataFrame | None = None, *, exchange: str | None = None) -> pd.DataFrame:
     """A missing file is not evidence of an exchange holiday or a delisting.
@@ -35,6 +65,8 @@ def market_coverage(windows: pd.DataFrame, prices: pd.DataFrame, calendar: pd.Da
         required = {"period_end", "is_trading_day", "source_url", "needs_verification", "is_synthetic"}
         if not required.issubset(calendar) or not calendar.is_trading_day.isin([0, 1]).all():
             raise ValueError("Calendar needs sourced, explicit trading-day status")
+        if "is_equity_trading_day" in calendar and not calendar.is_equity_trading_day.isin([0, 1]).all():
+            raise ValueError("Equity-session scope must be explicit")
         verified = calendar.loc[calendar.needs_verification.eq(0)]
         if verified.source_url.isna().any() or verified.source_url.astype(str).str.strip().eq("").any():
             raise ValueError("Verified calendar rows lack provenance")
@@ -47,7 +79,9 @@ def market_coverage(windows: pd.DataFrame, prices: pd.DataFrame, calendar: pd.Da
         if not known.empty:
             known["period_end"] = pd.to_datetime(known.period_end, utc=True)
         calendar_ok = not known.empty and set(days).issubset(set(known.period_end))
-        full_expected = set(known.loc[known.is_trading_day.eq(1), "period_end"]) & set(days) if calendar_ok else set()
+        scope = "is_equity_trading_day" if "is_equity_trading_day" in known else "is_trading_day"
+        full_expected = set(known.loc[known[scope].eq(1), "period_end"]) & set(days) if calendar_ok else set()
+        non_equity = known.loc[known.is_trading_day.eq(1) & known[scope].eq(0) & known.period_end.isin(days)] if calendar_ok else known.iloc[:0]
         listed, listing_source = pd.NaT, None
         if not certificates.empty and window["entity_id"] in certificates.index:
             proof = certificates.loc[window["entity_id"]]
@@ -61,6 +95,8 @@ def market_coverage(windows: pd.DataFrame, prices: pd.DataFrame, calendar: pd.Da
                      "calendar_complete": int(calendar_ok), "observed_sessions": len(observed),
                      "first_listing_date": listed, "listing_source_url": listing_source,
                      "excluded_pre_listing_sessions": len(excluded) if calendar_ok else None,
+                     "excluded_non_equity_sessions": len(non_equity) if calendar_ok else None,
+                     "equity_scope_source_url": ";".join(dict.fromkeys(non_equity.equity_scope_source)) if "equity_scope_source" in non_equity else "",
                      "full_window_quote_history": int(calendar_ok and bool(full_expected) and full_expected == observed),
                      "expected_sessions": len(expected) if calendar_ok else None,
                      "missing_sessions": len(expected - observed) if calendar_ok else None,
@@ -70,5 +106,5 @@ def market_coverage(windows: pd.DataFrame, prices: pd.DataFrame, calendar: pd.Da
                                          (not calendar.empty and calendar.is_synthetic.eq(1).any()) or
                                          (listings is not None and not listings.empty and listings.is_synthetic.eq(1).any()))})
     return pd.DataFrame(rows, columns=["entity_id", "start", "end", "calendar_complete", "observed_sessions",
-                                      "first_listing_date", "listing_source_url", "excluded_pre_listing_sessions", "full_window_quote_history",
+                                      "first_listing_date", "listing_source_url", "excluded_pre_listing_sessions", "excluded_non_equity_sessions", "equity_scope_source_url", "full_window_quote_history",
                                       "expected_sessions", "missing_sessions", "unexpected_sessions", "complete", "needs_verification", "is_synthetic"])

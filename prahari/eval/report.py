@@ -34,14 +34,14 @@ def build_report(config: Config) -> None:
     report_path = config.path("final_report")
     report_path.parent.mkdir(parents=True, exist_ok=True)
     trace = []
-    def section(key: str, columns: list[str] | None = None) -> str:
+    def section(key: str, columns: list[str] | None = None, *, reference_only: bool = False) -> str:
         path = output.path(key)
         table = output.frame(key)
         if path.is_file():
             relative = os.path.relpath(path, report_path.parent).replace("\\", "/")
             trace.append({"section_source": key, "source_path": str(path.relative_to(config.root)).replace("\\", "/"),
                           "sha256": sha256_file(path), "rows": len(table), "is_synthetic": 0})
-            return markdown_table(table, columns) + f"\n\nSource: [{key}]({relative})."
+            return ("" if reference_only else markdown_table(table, columns) + "\n\n") + f"Source: [{key}]({relative})."
         return "Not run or not available. No numerical result is inferred."
     state = "Readiness report: production evaluation is incomplete" if manifest["mode"] == "readiness_only" else "Registered replay report"
     benchmark_columns = ["dataset", "representation", "variant", "horizon_quarters", "pr_auc", "pr_auc_ci_low", "pr_auc_ci_high", "base_rate", "brier", "evaluation_split"]
@@ -55,6 +55,9 @@ def build_report(config: Config) -> None:
              "### Original-vintage FX coverage", "", section("fx_coverage"), "",
              "FX comes from original weekly H.10 releases with actual publication dates. Revised current historical series are not substituted. Unreported source observations remain missing.", "",
              "The panel's current identity/classification catalog is distinct from historical matching-quarter availability. An empty event search does not establish a non-default peer or a negative governance signal.", "",
+             "### Received peer-source audit", "",
+             "Received candidate files are preserved separately and reviewed against original disclosures and historical exchange identities. Current identifiers, later financial years, rounded third-party observations and empty registry searches do not establish historical matching eligibility. Contrary original payment-status evidence is retained; the frozen selection rules are unchanged.", "",
+             section("peer_intake_review", reference_only=True), "",
              "## Benchmark development", "",
              "The following are nested outer-fold or explicitly marked transfer development results. They are not untouched hold-out estimates. Bootstrap intervals condition on fitted predictions and do not cover model-selection uncertainty or correlated firm histories.", "",
              section("benchmark_development_metrics", benchmark_columns), "",
@@ -63,6 +66,7 @@ def build_report(config: Config) -> None:
              "Scored production replay requires an accepted panel, independently sourced horizon priors and a matching pre-registration lock committed alone before replay. Unscored cases cannot be silently removed to flatter recall.", "",
              "## Policy and cost", "", section("app_policy"), "",
              "The operational review list uses the registered hard cap and deterministic tie handling. Additional-slot curves are counterfactual cost statistics and do not enlarge the operational list.", "",
+             "For probability p, the expected cost of a miss is p times cost_fn; the expected cost of review is (1-p) times cost_fp. Equating them gives tau_star = cost_fp / (cost_fn + cost_fp). The policy table includes both equal expected costs at that threshold. Capacity is floor(alert_frac times the eligible population); a binding capacity limit further restricts the ranked list. These are policy calculations, not observed borrower losses.", "",
              section("cost_curve"), "", section("shadow_prices"), "", section("threshold_scan"), "",
              "## Attribution and evidence", "",
              "Native raw-margin TreeSHAP is rescaled to reconcile the nonlinear calibrated log-odds exactly. This path-proportional allocation is not presented as Shapley values of calibrated probability. CHS and overlay terms are linear. Single-driver probability removal effects overlap and are not additive or causal.", "",

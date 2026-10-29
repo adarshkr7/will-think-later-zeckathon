@@ -27,6 +27,13 @@ def feature_frame(path: str, entity: str, arena: str, quarter: str) -> pd.DataFr
         ("arena", "==", arena), ("scoring_date", "==", pd.Timestamp(quarter, tz="UTC").to_pydatetime())])
 
 
+@st.cache_data
+def feature_history(path: str, entity: str, arena: str, feature: str, quarter: str) -> pd.DataFrame:
+    return OutputStore(path).filtered_frame("app_features", [("entity_id", "==", entity),
+        ("arena", "==", arena), ("feature", "==", feature),
+        ("scoring_date", "<=", pd.Timestamp(quarter, tz="UTC").to_pydatetime())]).sort_values("scoring_date")
+
+
 def main() -> None:
     path = os.environ.get("PRAHARI_APP_MANIFEST")
     if not path:
@@ -107,7 +114,7 @@ def main() -> None:
                 st.dataframe(borrower[[name for name in ["feature", "value", "reason", "max_source_date"] if name in borrower]], hide_index=True, width="stretch")
     with tabs[1]:
         st.subheader("Case timeline")
-        history = snapshots.loc[snapshots.entity_id.eq(entity) & snapshots.arena.eq(arena)]
+        history = snapshots.loc[snapshots.entity_id.eq(entity) & snapshots.arena.eq(arena) & snapshots.quarter.le(quarter)]
         if history.pd_4q.notna().any():
             figure = {"data": [{"type": "scatter", "mode": "lines", "x": history.quarter.tolist(), "y": history[name].tolist(), "name": name, "connectgaps": False} for name in ("pd_4q", "pd_8q")], "layout": {"yaxis": {"title": "Model probability"}, "xaxis": {"title": "Scoring cutoff"}}}
             parameters = frame(path, "app_policy").set_index("parameter").value
@@ -122,6 +129,21 @@ def main() -> None:
                 st.plotly_chart(figure, width="stretch")
                 st.caption("Actual cached raw closing prices, not corporate-action-adjusted returns or default probabilities. Missing quarters remain gaps.")
         st.dataframe(history[["quarter", "known_features", "missing_features", "score_status"]], hide_index=True, width="stretch")
+        if st.checkbox("Show indicator history"):
+            series = settings.get("history_series", {})
+            if series:
+                indicator = st.selectbox("Historical evidence series", list(series), format_func=series.get)
+                observations = feature_history(path, entity, arena, indicator, quarter)
+                st.caption("Source-backed indicators available at each historical cutoff. Gaps retain unavailable inputs.")
+                if not observations.empty and observations.value.notna().any():
+                    st.plotly_chart({"data": [{"type": "scatter", "mode": "lines+markers",
+                        "x": observations.scoring_date.dt.strftime("%Y-%m-%d").tolist(),
+                        "y": observations.value.tolist(), "connectgaps": False,
+                        "line": {"color": palette["teal"]}}],
+                        "layout": {"yaxis": {"title": series[indicator]}, "xaxis": {"title": "Scoring cutoff"}}}, width="stretch")
+                else:
+                    st.info("This indicator has no source-supported observations for the selected borrower.")
+                st.dataframe(observations[["scoring_date", "value", "reason", "max_source_date"]], hide_index=True, width="stretch")
         if st.checkbox("Reveal verified outcomes"):
             cases = frame(path, "case_catalog")
             outcome = cases.loc[cases.entity_id.eq(entity)]
@@ -174,6 +196,9 @@ def main() -> None:
                 st.write(key.replace("_", " ").title())
                 st.dataframe(frame(path, key), hide_index=True, width="stretch")
             st.text(output.text("amendments") or "No amendment log has been created.")
+            if st.checkbox("Show received peer audit"):
+                st.caption("Received claims remain pending unless their original historical sources and selection conditions pass review.")
+                st.dataframe(frame(path, "peer_intake_review"), hide_index=True, width="stretch")
         with st.expander("Registered diagnostics and internal review workflow"):
             for key in ("drift", "hysteresis", "policy_scenarios", "diagnostics_status", "archetypes", "workflow"):
                 table = frame(path, key)

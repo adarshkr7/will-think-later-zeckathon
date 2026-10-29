@@ -1,0 +1,7 @@
+archive: dist/PRAHARI_offline_demo.zip
+directories: [app, prahari, scripts, configs, outputs, tests]
+public_manual_tables: true
+feature_lineage_audit: outputs/feature_lineage_audit.csv
+files: [.gitignore, .gitattributes, README.md, AGENTS.md, pyproject.toml, requirements.in, requirements.txt, run_app.ps1, run_all.ps1, run_tests.ps1, docs/SUBMISSION_GUIDE.md, docs/SUBMISSION_CHECKLIST.md, docs/DEMO_SCRIPT.md, docs/slides_outline.md, docs/ps.pdf, docs/PROJECT_IDEA.md, docs/IMPLEMENTATION_PLAN.md, docs/report/final_report.md, docs/intake/PEER_DATA_REVIEW.md, docs/peer_research_guide.md, docs/PROGRESS.md, docs/DATA_REQUESTS.md, docs/DECISIONS.md, docs/CODE_AUDIT.md]
+excluded_parts: [__pycache__, .pytest_cache]
+excluded_suffixes: [.pyc, .partial]

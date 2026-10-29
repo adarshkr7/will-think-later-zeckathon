@@ -3479,3 +3479,73 @@ documents:
           - label: (f)
             expected_matches: 2
             occurrence: 0
+- name: Alok original FY2013 matching-date statements and profile
+  source: bse_reports
+  filename: INE270A01011_annual_2013.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/521070/5210700913.pdf
+  purpose: Original pre-matching profile and balance sheet; later comparative sources keep their own dates
+  classification_review:
+    reviewed: true
+    entity_id: INE270A01011
+    name: Alok Industries Ltd
+    page: 4
+    sector: textiles
+    is_financial: 0
+    period_end: '2013-09-30'
+    public_date: '2014-03-13T07:35:02+00:00'
+    evidence_markers:
+    - largest vertically integrated textile company in India
+    source_sha256: 5739b14f41ae05fd481af284560f88c1afbd0e0cb5c383dd45b7219d51417b5f
+  financial_extraction:
+    reviewed: true
+    entity_id: INE270A01011
+    source_period_end: '2013-09-30'
+    fiscal_periods:
+    - '2013-09-30'
+    unit: INR_crore
+    unit_marker: crores
+    public_date: '2014-03-13T07:35:02+00:00'
+    publication_source_url: https://www.nseindia.com/api/annual-reports?index=equities&symbol=ALOKTEXT
+    source_sha256: 5739b14f41ae05fd481af284560f88c1afbd0e0cb5c383dd45b7219d51417b5f
+    tables:
+    - page: 152
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets: &id015
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        equity: &id016
+          label: Reserves and surplus
+          line_offset: 1
+        total_liabilities:
+          difference:
+          - *id015
+          - *id016
+        current_assets:
+          label: Other current assets
+          line_offset: 1
+        current_liabilities:
+          label: Short-term provisions
+          line_offset: 1
+        inventory: Inventories
+        receivables: Trade receivables
+- name: RHFL original July 2016 housing-finance classification
+  source: brickwork
+  filename: rhfl_20160704.pdf
+  url: https://www.brickworkratings.com/Admin/PressRelease/Reliance-Home-Finance-NCD_1400Cr-Reaffirmation-Rationale-4Jul2016.pdf
+  purpose: Original pre-matching HFC profile; no AUM-to-assets substitution
+  classification_review:
+    reviewed: true
+    entity_id: INE217K01011
+    name: Reliance Home Finance Ltd
+    page: 1
+    sector: housing_finance
+    is_financial: 1
+    period_end: '2016-07-04'
+    public_date: '2016-07-04'
+    evidence_markers:
+    - Housing Finance Company
+    - registered with National Housing Bank
+    source_sha256: f45b20852066b640f82929732803414868b9b0975aca23bdf72292df6c841ee1

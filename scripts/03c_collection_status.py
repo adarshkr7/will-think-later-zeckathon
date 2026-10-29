@@ -13,7 +13,7 @@ from prahari.config import Config
 from prahari.data.bhavcopy import market_as_of
 from prahari.data.financials import financials_as_of
 from prahari.data.manual import read_manual
-from prahari.data.firewall import write_real_table
+from prahari.data.firewall import assert_real, write_real_table
 
 
 def main() -> None:
@@ -29,6 +29,7 @@ def main() -> None:
     cached = documents.status.eq("cached")
     events, peers = read_manual(config, "events"), read_manual(config, "peers")
     evidence = read_manual(config, "event_evidence")
+    survival = read_manual(config, "peer_survival")
     fx = read_manual(config, "fx_rates")
     identities = read_manual(config, "security_crosswalk")
     statements = read_manual(config, "financial_evidence")
@@ -69,6 +70,8 @@ def main() -> None:
             ("unselected_research_symbols", candidates.symbol.nunique(), 1),
             ("unselected_research_security_ids", candidates.entity_id.nunique(), 1),
             ("unselected_research_pairs", len(candidates), 1),
+            ("verified_survival_candidates", survival.loc[survival.needs_verification.eq(0), "entity_id"].nunique(), 0),
+            ("verified_survival_pairs", int(survival.needs_verification.eq(0).sum()), 0),
             ("verified_panel_events", events.loc[events.needs_verification.eq(0), "entity_id"].nunique(), 0),
             ("verified_case_isins", int((events.needs_verification.eq(0) & events["isin"].astype(str).str.fullmatch(r"IN[A-Z0-9]{10}")).sum()), 0),
             ("verified_case_classifications", int((events.needs_verification.eq(0) & events.sector.notna() & events.is_financial.isin([0, 1])).sum()), 0),
@@ -78,6 +81,14 @@ def main() -> None:
             ("verified_matched_peers", peers.loc[peers.needs_verification.eq(0), "entity_id"].nunique(), 1)]
     table = pd.DataFrame([{"item": name, "observed": value, "needs_verification": pending, "is_synthetic": 0}
                           for name, value, pending in rows])
+    if config.path("peer_intake_review").exists():
+        intake = pd.read_csv(config.path("peer_intake_review"))
+        assert_real(intake)
+        counts = {"received_peer_claims": len(intake),
+                  "received_peer_files": intake.received_file.nunique(),
+                  "received_peer_claims_approved_for_model": int(intake.approved_for_model.eq(1).sum())}
+        table = pd.concat([table, pd.DataFrame([{"item": name, "observed": value,
+            "needs_verification": 0, "is_synthetic": 0} for name, value in counts.items()])], ignore_index=True)
     write_real_table(table, config.path("collection_status"))
 
 

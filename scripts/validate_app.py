@@ -35,6 +35,12 @@ def main() -> None:
     control("checkbox", "Show observed features").check().run()
     checks["feature_evidence"] = not app.exception
     control("checkbox", "Show observed features").uncheck().run()
+    control("checkbox", "Show indicator history").check().run()
+    checks["indicator_history"] = not app.exception
+    control("checkbox", "Show indicator history").uncheck().run()
+    control("checkbox", "Show received peer audit").check().run()
+    checks["peer_source_audit"] = not app.exception
+    control("checkbox", "Show received peer audit").uncheck().run()
     snapshots = __import__("pandas").read_parquet(config.path("app_snapshots"))
     entity = str(snapshots.entity_id.iloc[0])
     control("text_input", "ISIN, symbol or company").set_value(entity).run()
@@ -46,6 +52,8 @@ def main() -> None:
         checks["arena_" + arena] = not app.exception
     control("select_slider", "Scoring cutoff").set_value(str(snapshots.quarter.min())).run()
     checks["historical_cutoff"] = not app.exception
+    control("checkbox", "Show indicator history").check().run()
+    checks["historical_indicator_cutoff"] = not app.exception
     payload = {"measured_at": __import__("pandas").Timestamp.now(tz="UTC").isoformat(),
                "cold_render_seconds": cold, "timing_scope": "AppTest construction and first render; Streamlit test-harness import excluded",
                "checks": checks, "passed": all(checks.values()), "is_synthetic": 0}

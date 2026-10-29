@@ -11,8 +11,9 @@ PRAHARI reconstructs information available before each historical scoring cutoff
 | component | status | reason | is_synthetic |
 | --- | --- | --- | --- |
 | benchmark | development_only | Development results are not untouched hold-out performance. | 0 |
-| panel | incomplete | unique_verified_peers, peers_per_case, stressed_survivors, panel_market_coverage, financial_year_coverage | 0 |
+| panel | incomplete | unique_verified_peers, peers_per_case, stressed_survivors | 0 |
 | features | partial_data | Missing inputs remain explicit; existing quarter files do not imply complete coverage. | 0 |
+| primary_calibration | incomplete | 4q_independent_prior, 8q_independent_prior, prior_source, financial_track_probability_link | 0 |
 | registration | blocked | Pre-registration and accepted panel evidence are required before scored replay. | 0 |
 | india_evaluation | not_run | No unregistered performance claims. | 0 |
 | sealed_evaluation | not_opened | Once-only final boundary; no sealed contents read for readiness. | 0 |
@@ -28,12 +29,12 @@ Source observations carry publication dates, conservative date-imputation flags 
 | market_sessions | 3166 | 0 | 0 |
 | market_observations | 5248967 | 0 | 0 |
 | distinct_isins | 3275 | 0 | 0 |
-| cached_source_pdfs | 83 | 0 | 0 |
+| cached_source_pdfs | 85 | 0 | 0 |
 | unavailable_source_pdfs | 1 | 1 | 0 |
-| verified_financial_fields | 909 | 0 | 0 |
+| verified_financial_fields | 913 | 0 | 0 |
 | financial_entities | 15 | 0 | 0 |
-| financial_evidence_rows | 1232 | 0 | 0 |
-| verified_financial_evidence_rows | 1221 | 0 | 0 |
+| financial_evidence_rows | 1243 | 0 | 0 |
+| verified_financial_evidence_rows | 1232 | 0 | 0 |
 | cached_original_report_candidates | 458 | 1 | 0 |
 | cached_financial_index_windows | 53 | 0 | 0 |
 | financial_index_records | 130478 | 0 | 0 |
@@ -50,6 +51,8 @@ Source observations carry publication dates, conservative date-imputation flags 
 | unselected_research_symbols | 52 | 1 | 0 |
 | unselected_research_security_ids | 54 | 1 | 0 |
 | unselected_research_pairs | 74 | 1 | 0 |
+| verified_survival_candidates | 3 | 0 | 0 |
+| verified_survival_pairs | 6 | 0 | 0 |
 | verified_panel_events | 12 | 0 | 0 |
 | verified_case_isins | 12 | 0 | 0 |
 | verified_case_classifications | 12 | 0 | 0 |
@@ -57,6 +60,9 @@ Source observations carry publication dates, conservative date-imputation flags 
 | verified_fx_observations | 210 | 0 | 0 |
 | quarters_with_verified_fx | 44 | 0 | 0 |
 | verified_matched_peers | 0 | 1 | 0 |
+| received_peer_claims | 208 | 0 | 0 |
+| received_peer_files | 9 | 0 | 0 |
+| received_peer_claims_approved_for_model | 0 | 0 | 0 |
 
 Source: [collection_status](../../outputs/collection_status.csv).
 
@@ -68,7 +74,7 @@ Source: [collection_status](../../outputs/collection_status.csv).
 | disjoint_cases_peers | 0 | 0 | 1 | 0 |
 | peers_per_case | 0 | 1 | 0 | 0 |
 | stressed_survivors | 0 | 0 | 0 | 0 |
-| panel_market_coverage | 0 | 1 | 0 | 0 |
+| panel_market_coverage | 1 | 1 | 1 | 0 |
 | financial_year_coverage | 1 | 1 | 1 | 0 |
 | accounting_identities | 1 | 1 | 1 | 0 |
 
@@ -129,6 +135,12 @@ FX comes from original weekly H.10 releases with actual publication dates. Revis
 
 The panel's current identity/classification catalog is distinct from historical matching-quarter availability. An empty event search does not establish a non-default peer or a negative governance signal.
 
+### Received peer-source audit
+
+Received candidate files are preserved separately and reviewed against original disclosures and historical exchange identities. Current identifiers, later financial years, rounded third-party observations and empty registry searches do not establish historical matching eligibility. Contrary original payment-status evidence is retained; the frozen selection rules are unchanged.
+
+Source: [peer_intake_review](../../outputs/peer_intake_review.csv).
+
 ## Benchmark development
 
 The following are nested outer-fold or explicitly marked transfer development results. They are not untouched hold-out estimates. Bootstrap intervals condition on fitted predictions and do not cover model-selection uncertainty or correlated firm histories.
@@ -173,10 +185,14 @@ Scored production replay requires an accepted panel, independently sourced horiz
 | alert_frac | 0.05 | 0 |
 | tier1_pd | 0.15 | 0 |
 | tau_star | 0.047619 | 0 |
+| expected_miss_cost_at_tau | 0.95238 | 0 |
+| expected_review_cost_at_tau | 0.95238 | 0 |
 
 Source: [app_policy](../../outputs/policy_parameters.csv).
 
 The operational review list uses the registered hard cap and deterministic tie handling. Additional-slot curves are counterfactual cost statistics and do not enlarge the operational list.
+
+For probability p, the expected cost of a miss is p times cost_fn; the expected cost of review is (1-p) times cost_fp. Equating them gives tau_star = cost_fp / (cost_fn + cost_fp). The policy table includes both equal expected costs at that threshold. Capacity is floor(alert_frac times the eligible population); a binding capacity limit further restricts the ranked list. These are policy calculations, not observed borrower losses.
 
 Not run or not available. No numerical result is inferred.
 
