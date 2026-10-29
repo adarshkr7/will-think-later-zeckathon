@@ -1,4 +1,9 @@
 entity_id,period_end,basis,total_assets,total_liabilities,equity,identity_relative_error,identity_status,source_doc,is_synthetic
+INE013A01015,2014-03-31 00:00:00+00:00,standalone,365150000000.0,248810000000.0,116340000000.0,0.0,pass,https://www.bseindia.com/bseplus/AnnualReport/500111/5001110315.pdf,0
+INE013A01015,2015-03-31 00:00:00+00:00,standalone,357020000000.0,231190000000.0,125830000000.0,0.0,pass,https://www.bseindia.com/bseplus/AnnualReport/500111/5001110315.pdf,0
+INE013A01015,2016-03-31 00:00:00+00:00,standalone,363540000000.0,230730000000.0,132810000000.0,0.0,pass,https://www.bseindia.com/bseplus/AnnualReport/500111/5001110317.pdf,0
+INE013A01015,2017-03-31 00:00:00+00:00,standalone,334370000000.0,197360000000.0,137010000000.0,0.0,pass,https://www.bseindia.com/bseplus/AnnualReport/500111/5001110318.pdf,0
+INE013A01015,2018-03-31 00:00:00+00:00,standalone,363520000000.0,221840000000.0,141680000000.0,0.0,pass,https://www.bseindia.com/bseplus/AnnualReport/500111/5001110318.pdf,0
 INE202B01012,2015-03-31 00:00:00+00:00,standalone,546148100000.0,499790300000.0,46357800000.0,0.0,pass,https://www.bseindia.com/bseplus/AnnualReport/511072/5110720316.pdf,0
 INE202B01012,2016-03-31 00:00:00+00:00,standalone,678531300000.0,628361300000.0,50170000000.0,0.0,pass,https://www.bseindia.com/bseplus/AnnualReport/511072/5110720317.pdf,0
 INE202B01012,2017-03-31 00:00:00+00:00,standalone,922979800000.0,843021800000.0,79958000000.0,0.0,pass,https://www.bseindia.com/bseplus/AnnualReport/511072/5110720318.pdf,0
@@ -11,9 +16,13 @@ INE270A01011,2017-03-31 00:00:00+00:00,standalone,323621700000.0,,,,missing_inpu
 INE703A01011,2013-06-30 00:00:00+00:00,standalone,369291580000.0,,101179980000.0,,missing_inputs,https://www.videoconindustriesltd.com/Documents/10078.pdf,0
 INE703A01011,2014-12-31 00:00:00+00:00,standalone,381661330000.0,,103625500000.0,,missing_inputs,https://www.videoconindustriesltd.com/Documents/Videocon%20Industries%20Ltd_2015.pdf,0
 INE703A01011,2015-12-31 00:00:00+00:00,standalone,378763680000.0,,103067450000.0,,missing_inputs,https://www.videoconindustriesltd.com/Documents/Videocon%20Industries%20Ltd_2015.pdf,0
-INE975G01012,2014-03-31 00:00:00+00:00,standalone,97270040000.0,,29821630000.0,,missing_inputs,https://ipv4.itnlindia.com/pdf/annual-reports/ITNL%20AR%202014-15.pdf,0
-INE975G01012,2015-03-31 00:00:00+00:00,standalone,131598799999.99998,,35795400000.0,,missing_inputs,https://ipv4.itnlindia.com/pdf/annual-reports/ITNLAnnualReport2015-16.pdf,0
+INE872A01014,2016-03-31 00:00:00+00:00,standalone,178543400000.0,150892000000.0,27651400000.0,0.0,pass,https://www.bseindia.com/bseplus/AnnualReport/523756/5237560317.pdf,0
+INE872A01014,2017-03-31 00:00:00+00:00,standalone,165213500000.0,136563700000.0,28649800000.0,0.0,pass,https://www.srei.com/storage/app/media/annual-report-and-agm-notice-of-srei-for-the-fy-2017-18.pdf,0
+INE872A01014,2018-03-31 00:00:00+00:00,standalone,181344500000.0,150546700000.0,30797800000.0,0.0,pass,https://www.srei.com/storage/app/media/annual-report-and-agm-notice-of-srei-for-the-fy-2018-19.pdf,0
+INE872A01014,2019-03-31 00:00:00+00:00,standalone,155709000000.0,125838200000.0,29870800000.0,0.0,pass,https://www.srei.com/storage/app/media/annual-report-and-agm-notice-of-srei-for-the-fy-2018-19.pdf,0
+INE975G01012,2014-03-31 00:00:00+00:00,standalone,97270040000.0,67448410000.0,29821630000.0,0.0,pass,https://ipv4.itnlindia.com/pdf/annual-reports/ITNL%20AR%202014-15.pdf,0
+INE975G01012,2015-03-31 00:00:00+00:00,standalone,131598799999.99998,95803400000.0,35795400000.0,1.1594930244424722e-16,pass,https://ipv4.itnlindia.com/pdf/annual-reports/ITNLAnnualReport2015-16.pdf,0
 INE975G01012,2016-03-31 00:00:00+00:00,consolidated,347864500000.0,300383500000.0,47481000000.0,0.0,pass,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf,0
-INE975G01012,2016-03-31 00:00:00+00:00,standalone,144052300000.0,,27062300000.0,,missing_inputs,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf,0
+INE975G01012,2016-03-31 00:00:00+00:00,standalone,144052300000.0,116990000000.0,27062300000.0,0.0,pass,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf,0
 INE975G01012,2017-03-31 00:00:00+00:00,consolidated,399767600000.0,353564100000.00006,46203500000.0,1.5267659572711745e-16,pass,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf,0
-INE975G01012,2017-03-31 00:00:00+00:00,standalone,162868500000.0,,28291200000.0,,missing_inputs,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf,0
+INE975G01012,2017-03-31 00:00:00+00:00,standalone,162868500000.0,134577300000.0,28291200000.0,0.0,pass,https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf,0

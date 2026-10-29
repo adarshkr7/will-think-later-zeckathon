@@ -8,7 +8,7 @@ Reviewed the rendered standalone balance sheet, income statement and both cash-f
 
 Balance-sheet equity, current liabilities and current assets use the printed subtotals interleaved with the final line item. No subtotal is inferred from absent components. Dash cells for comparative inventory and capital work in progress remain unknown and require verification.
 
-The cash-flow closing cash equivalent figure excludes restricted deposits. The larger balance-sheet cash caption includes restricted deposits and is not mapped to the narrow cash field. Finance costs remain separately named; they are not substituted for interest expense. Total liabilities, retained earnings, total debt, COGS and other unreviewed fields remain empty.
+The cash-flow closing cash equivalent figure excludes restricted deposits. The larger balance-sheet cash caption includes restricted deposits and is not mapped to the narrow cash field. Finance costs remain separately named; they are not substituted for interest expense. Total liabilities are derived only from the two printed liability subtotals on the same reviewed sheet, with the formula explicit in the pinned mapping. Retained earnings, total debt, COGS and other unreviewed fields remain empty.
 
 The report's signing date does not establish publication. Its publication date is unknown, so the configured annual-report lag applies to the source report's FY2016 end, including its FY2015 comparatives. Earlier original FY2015 evidence retains its own earlier availability.
 

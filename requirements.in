@@ -10,6 +10,6 @@ pytest
 joblib
 matplotlib
 pydantic
-pypdf
+pypdf[crypto]
 streamlit>=1.42,<2
 plotly>=5.24,<7

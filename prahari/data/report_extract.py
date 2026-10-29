@@ -17,6 +17,15 @@ from prahari.data.uci import sha256_file
 LOG = logging.getLogger(__name__)
 
 
+def join_spaced_thousands(text: str) -> str:
+    """Join reviewed single-space thousands groups, preserving column gaps.
+
+    This is opt-in for hash-pinned layout text whose amount columns are
+    separated by multiple spaces. It must not be applied to arbitrary tables.
+    """
+    return re.sub(r"(?<=\d) (?=\d{3}(?:\D|$))", "", text)
+
+
 def amount_columns(text: str, label: str, count: int, *, occurrence: int = 0,
                    expected_matches: int = 1) -> list[float | None]:
     """Read a reviewed statement row, preserving dash cells as unknown.
@@ -54,10 +63,17 @@ def reviewed_values(text: str, rule: str | dict, columns: int, periods: int) -> 
     Repeated labels require an exact expected count and a reviewed occurrence.
     """
     details = {"label": rule} if isinstance(rule, str) else rule
+    if "difference" in details:
+        operands = details["difference"]
+        if set(details) != {"difference"} or not isinstance(operands, list) or len(operands) != 2:
+            raise ValueError("Reviewed differences require exactly two source operands")
+        left, right = [reviewed_values(text, operand, columns, periods) for operand in operands]
+        return [None if a is None or b is None else float(Decimal(str(a))-Decimal(str(b)))
+                for a, b in zip(left, right, strict=True)]
     if "sum" in details:
         components = details["sum"]
-        if (not isinstance(components, list) or len(components) < 2
-                or any(isinstance(component, dict) and "sum" in component for component in components)):
+        if (set(details) != {"sum"} or not isinstance(components, list) or len(components) < 2
+                or any(isinstance(component, dict) and ("sum" in component or "difference" in component) for component in components)):
             raise ValueError("Reviewed sums require distinct non-nested source rows")
         labels = [component if isinstance(component, str) else component["label"] for component in components]
         if len(set(labels)) != len(labels):
@@ -103,7 +119,11 @@ def extract_reviewed_reports(config: Config) -> pd.DataFrame:
                 raise ValueError("Reviewed financial report bytes changed; source review required")
             reader = PdfReader(raw)
             for table in spec["tables"]:
-                text = reader.pages[table["page"] - 1].extract_text()
+                text = reader.pages[table["page"] - 1].extract_text(extraction_mode=table.get("text_mode", "plain"))
+                if table.get("spaced_thousands"):
+                    if table.get("text_mode") != "layout":
+                        raise ValueError("Space-grouped amounts require reviewed layout extraction")
+                    text = join_spaced_thousands(text)
                 markers = config.section("india_config")["financials"]["source_unit_markers"]
                 marker = table.get("unit_marker", spec.get("unit_marker", markers.get(spec["unit"])))
                 if not marker or marker not in re.sub("[^a-z]", "", text.lower()):

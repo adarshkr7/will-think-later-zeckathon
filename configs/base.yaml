@@ -25,6 +25,7 @@ paths:
   supplied_sources_document: docs/SOURCE_REVIEW.md
   report_discovery_config: configs/report_discovery.yaml
   report_discovery_audit: outputs/report_discovery.csv
+  peer_discovery_candidates: outputs/peer_discovery_candidates.csv
   workflow: outputs/workflow.csv
   drift: outputs/drift.csv
   hysteresis: outputs/hysteresis.csv
@@ -122,10 +123,9 @@ pipeline:
   auto_commit_registration: true
   preparation:
   - {module: scripts.02b_collect_sources, offline: true}
-  - {module: scripts.02g_collect_financial_indexes, offline: true}
+  - {module: scripts.02_market_data, arguments: [--cached-only]}
   - {module: scripts.03f_import_filing_identities}
   - {module: scripts.03e_extract_metadata}
-  - {module: scripts.02_market_data, arguments: [--cached-only]}
   - {module: scripts.02d_extract_financials}
   - {module: scripts.02f_collect_shareholding, offline: true}
   - {module: scripts.02e_collect_fx, offline: true}

@@ -5,3 +5,5 @@ period: Quarterly
 window_days: 90
 filename: 'results_{start}_{end}_quarterly.json'
 timezone: Asia/Kolkata
+legacy_host: nsearchives.nseindia.com
+legacy_filename_pattern: '^financial_res_(?P<symbol>.+)_{sequence}\.html$'

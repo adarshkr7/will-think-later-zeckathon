@@ -1,5 +1,17 @@
 # Decisions
 
+- 2026-10-29: Supersede the earlier filing-index identity decision: raw archives reveal stale index ISINs and retrospectively normalized tickers, including DEWANHOUS/DHFL. Quarantine all imported index-only claims, use receipt-checked original bhavcopy identities, and choose the latest evidenced ticker available by each profile's publication. No registered replay or sealed evaluation used the superseded claims.
+- 2026-10-29: Keep the first observed quote date distinct from the true listing/rename date; never infer a listing interval from the first cached record. Preserve earlier unknown source gaps. Financial-index collection is optional discovery and cannot block the original-archive MVP path.
+
+- 2026-10-29: Preserve and flag disagreements between NSE filing-index ISINs and original pre-cutoff bhavcopy ISINs in the unselected research pool; prefer the original quote identifier for discovery but never promote it to verified sector, issuer-continuity or survival evidence. Count research symbols and security IDs separately, and count cached report URLs uniquely to avoid alias inflation.
+
+- 2026-10-29: Cross-check historical NSE index symbols against their sequence-qualified original resource filenames; reject retrospectively normalized tickers when they disagree. The existing imported case mappings pass this additional check; new peer leads remain unresolved research candidates, never selected peers.
+- 2026-10-29: Acquire original reports for an explicitly unselected research pool, including later reports needed for independent survival review. Search groups are hypotheses, not verified sector memberships; matching still uses the unchanged historical asset-distance and survivor rules. Later financial disclosures retain their later availability.
+- 2026-10-29: Add the PDF reader's pinned AES dependency after original public annual reports required it; retain every pre-existing dependency version. No password guessing, protected benchmark access or downloaded reference-code execution is involved.
+- 2026-10-29: Use layout extraction and reviewed single-space thousands normalization only for pinned Reliance Capital tables; preserve wider column gaps, printed subtotals and missing operands. Retain its original FY2015 matching-period source and later restated vintages separately.
+
+- 2026-10-29: For Srei's reviewed standalone Ind AS sheet, derive liabilities as stated total assets minus the complete stated equity components; retain the calculation in the pinned mapping and disclose that its accounting-identity pass is algebraic, not independent liability verification. Preserve the transition column's actual date, later restatement availability and unknown-input propagation.
+
 - 2026-10-29: Derive DHFL total liabilities only as the exact sum of printed current and non-current liability subtotals on the same reviewed page/basis/year, retaining the source mapping and missing-component propagation; reject guessing absent components or calling the aggregate independently reported. Preserve original and later reclassified vintages separately and exclude the FY2016 income statement's ambiguously headed comparative column.
 
 - 2026-10-29: Use receipted original NSE financial-filing indexes to append exact ISIN/symbol mappings at the latest stated dissemination timestamp, localized from India to UTC; reject fuzzy name matching and retroactive availability of a later identity master. Missing timestamps remain unusable.

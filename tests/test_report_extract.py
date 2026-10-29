@@ -1,6 +1,6 @@
 import pytest
 
-from prahari.data.report_extract import amount_columns, reviewed_values
+from prahari.data.report_extract import amount_columns, join_spaced_thousands, reviewed_values
 from conftest import FIXTURES
 
 
@@ -46,3 +46,17 @@ def test_reviewed_sum_uses_only_complete_printed_components():
         reviewed_values(text, {"sum": ["Total current liabilities", "Total current liabilities"]}, 3, 3)
     with pytest.raises(ValueError, match="ambiguous"):
         reviewed_values(text, {"sum": ["Absent component", "Total current liabilities"]}, 3, 3)
+
+
+def test_reviewed_liability_identity_preserves_missing_operands():
+    text = (FIXTURES / "statement_sum.txt").read_text()
+    rule = {"difference": ["Total assets", {"sum": ["Equity share capital", "Other equity"]}]}
+    assert reviewed_values(text, rule, 3, 3) == [70.75, 60, None]
+    with pytest.raises(ValueError, match="exactly two"):
+        reviewed_values(text, {"difference": ["Total assets"]}, 3, 3)
+
+
+def test_opt_in_layout_grouping_preserves_distinct_columns_and_dash():
+    text = (FIXTURES / "statement_sum.txt").read_text()
+    normalized = join_spaced_thousands(text)
+    assert amount_columns(normalized, "Layout grouped values", 3) == [13915, 14168, None]

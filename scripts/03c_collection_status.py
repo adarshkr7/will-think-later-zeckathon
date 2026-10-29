@@ -37,6 +37,7 @@ def main() -> None:
     discovery = pd.read_csv(config.path("report_discovery_audit")) if config.path("report_discovery_audit").exists() else pd.DataFrame(columns=["status"])
     indexes = pd.read_csv(config.path("financial_index_coverage")) if config.path("financial_index_coverage").exists() else pd.DataFrame(columns=["status", "rows"])
     histories = pd.read_csv(config.path("financial_coverage")) if config.path("financial_coverage").exists() else pd.DataFrame(columns=["complete"])
+    candidates = pd.read_csv(config.path("peer_discovery_candidates")) if config.path("peer_discovery_candidates").exists() else pd.DataFrame(columns=["entity_id", "symbol"])
     fx_coverage = pd.read_csv(config.path("fx_coverage")) if config.path("fx_coverage").exists() else pd.DataFrame(columns=["available"])
     rows = [("market_sessions", market.period_end.nunique(), 0),
             ("market_observations", len(market), 0),
@@ -47,13 +48,16 @@ def main() -> None:
             ("financial_entities", fields.entity_id.nunique(), 0),
             ("financial_evidence_rows", len(statements), 0),
             ("verified_financial_evidence_rows", int(statements.needs_verification.eq(0).sum()), 0),
-            ("cached_original_report_candidates", int(discovery.status.eq("cached_original_candidate").sum()), 1),
+            ("cached_original_report_candidates", int(discovery.loc[discovery.status.eq("cached_original_candidate"), "source_url"].nunique()) if "source_url" in discovery else 0, 1),
             ("cached_financial_index_windows", int(indexes.status.eq("cached_index").sum()), 0),
             ("financial_index_records", int(indexes.loc[indexes.status.eq("cached_index"), "rows"].sum()), 0),
             ("verified_identity_mappings", int(identities.needs_verification.eq(0).sum()), 0),
             ("verified_quarterly_share_counts", int(shares.needs_verification.eq(0).sum()), 0),
             ("verified_quarterly_shareholding", int(holdings.needs_verification.eq(0).sum()), 0),
             ("complete_core_financial_histories", int(histories.complete.eq(1).sum()), 0),
+            ("unselected_research_symbols", candidates.symbol.nunique(), 1),
+            ("unselected_research_security_ids", candidates.entity_id.nunique(), 1),
+            ("unselected_research_pairs", len(candidates), 1),
             ("verified_panel_events", events.loc[events.needs_verification.eq(0), "entity_id"].nunique(), 0),
             ("verified_case_isins", int((events.needs_verification.eq(0) & events["isin"].astype(str).str.fullmatch(r"IN[A-Z0-9]{10}")).sum()), 0),
             ("verified_case_classifications", int((events.needs_verification.eq(0) & events.sector.notna() & events.is_financial.isin([0, 1])).sum()), 0),

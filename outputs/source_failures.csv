@@ -1,3 +1,4 @@
 source,source_url,status,target,needs_verification,is_synthetic,resolution,resolved_on
 nse,https://nsearchives.nseindia.com/content/historical/EQUITIES/2019/JUL/cm01JUL2019bhav.csv.zip,,data\raw\nse\cm01JUL2019bhav.csv.zip,0,0,DNS recovered; original archive cached with verified receipt,2026-10-28T19:37:58.602963+00:00
-coffee_day,https://www.coffeeday.com/stakeholders.html,,data\raw\coffee_day\stakeholders_20261029.html,1,0,,
+coffee_day,https://www.coffeeday.com/stakeholders.html,,data\raw\coffee_day\stakeholders_20261029.html,0,0,Issuer host remains unavailable; original BSE annual report cached with verified receipt: https://www.bseindia.com/bseplus/AnnualReport/539436/5394360316.pdf; publication and statement review still required,2026-10-29T01:35:36.216106+00:00
+spicejet,https://corporate.spicejet.com/Content/pdf/2014-15AnnualReport.pdf,503.0,data\raw\spicejet\spicejet_annual_2015.pdf,0,0,Issuer host remains unavailable; original BSE annual report cached with verified receipt: https://www.bseindia.com/bseplus/AnnualReport/500285/5002850315.pdf; publication and statement review still required,2026-10-29T01:35:36.220105+00:00

@@ -1,4 +1,4 @@
-"""Import exact historical security mappings from cached original NSE indexes."""
+"""Quarantine index claims and import identities checked in original NSE archives."""
 
 import argparse
 import sys

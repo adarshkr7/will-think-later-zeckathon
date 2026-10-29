@@ -21,7 +21,7 @@ def merge_reviewed_entities(current: pd.DataFrame, fresh: pd.DataFrame) -> pd.Da
     """Append earlier proven metadata while preserving existing equivalent rows.
 
     Another identity source can support the same classification at the same
-    instant. Preserve the existing provenance in that case; changed company
+    instant. Retain and augment the existing provenance; changed company
     classifications or symbols at an identical key require an explicit review.
     """
     keys = ["entity_id", "period_end", "public_date"]
@@ -30,7 +30,11 @@ def merge_reviewed_entities(current: pd.DataFrame, fresh: pd.DataFrame) -> pd.Da
     for _, versions in joined.groupby(keys, dropna=False):
         if len(versions[content].drop_duplicates()) > 1:
             raise ValueError("Classification conflicts with existing metadata; no human inputs replaced")
-    return joined.drop_duplicates(keys, keep="first")
+    result = joined.drop_duplicates(keys, keep="first").copy()
+    sources = joined.groupby(keys, dropna=False).source_url.agg(
+        lambda values: ";".join(dict.fromkeys(part for value in values for part in value.split(";") if part)))
+    result["source_url"] = [sources.loc[tuple(row)] for row in result[keys].itertuples(index=False, name=None)]
+    return result
 
 
 def require_reviewed_text(text: str, markers: list[str]) -> None:
@@ -60,14 +64,16 @@ def reviewed_entities(config: Config, t: str | pd.Timestamp) -> pd.DataFrame:
                 raise ValueError("Reviewed classification source bytes changed")
             text = PdfReader(path).pages[spec["page"] - 1].extract_text()
             require_reviewed_text(text, spec["evidence_markers"])
-            identity = identities.loc[identities.entity_id.eq(spec["entity_id"])].sort_values("public_date").head(1)
+            identity = identities.loc[identities.entity_id.eq(spec["entity_id"])].sort_values("public_date")
             if identity.empty:
                 raise ValueError("Classification lacks a dated, sourced NSE identity")
-            identity = identity.iloc[0]
             end = pd.to_datetime(spec["period_end"], utc=True)
             imputed = int(not spec.get("public_date"))
             publication = (end + pd.Timedelta(days=config.base["dates"]["annual_report_lag_days"])) if imputed else pd.to_datetime(spec["public_date"], utc=True)
-            publication = max(publication, identity.public_date)
+            publication = max(publication, identity.public_date.iloc[0])
+            # Symbols change. Choose the latest observed mapping available by
+            # this profile's publication, not the firm's first-ever ticker.
+            identity = identity.loc[identity.public_date.le(publication)].sort_values(["period_end", "public_date"]).iloc[-1]
             rows.append({"entity_id": spec["entity_id"], "name": spec["name"], "symbols": identity.exchange_code,
                          "sector": spec["sector"], "is_financial": spec["is_financial"], "period_end": end,
                          "public_date": publication, "source_url": f"{document['url']}#page={spec['page']};{identity.source_url}",

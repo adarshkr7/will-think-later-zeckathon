@@ -17,7 +17,7 @@ def test_recovered_identity_appends_earlier_classification_without_replacing_hum
     rows = pd.read_csv(FIXTURES / "entity_merge.csv")
     merged = merge_reviewed_entities(rows.iloc[:1], rows.iloc[1:])
     assert len(merged) == 2
-    assert merged.iloc[0].source_url == "fixture://old_identity"
+    assert merged.iloc[0].source_url == "fixture://old_identity;fixture://alternate_identity"
     changed = rows.iloc[1:2].copy()
     changed["sector"] = "fixture_different_sector"
     with pytest.raises(ValueError, match="conflicts"):

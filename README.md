@@ -110,9 +110,13 @@ Public-source recovery commands are available individually and use the same chec
 .venv/Scripts/python.exe -m scripts.02f_collect_shareholding --offline
 .venv/Scripts/python.exe -m scripts.02h_discover_reports --offline
 .venv/Scripts/python.exe -m scripts.02i_review_supplied_sources
+.venv/Scripts/python.exe -m scripts.02h_discover_reports --prepare-candidates
+.venv/Scripts/python.exe -m scripts.02h_discover_reports --candidates --offline
 ```
 
-Remove `--offline` only to acquire uncached public files. Financial indexes establish exact historical security identities and dissemination timestamps; they do not certify statement values. Shareholding imports verify original XML counts and use the promoter denominator stated by the filing categories, preserving unavailable components. Report discovery uses public document lists to cache original PDF candidates; every candidate still needs statement and publication review. Supplied-source suitability and integrity are recorded in [docs/SOURCE_REVIEW.md](docs/SOURCE_REVIEW.md). Ordinary collection is assigned to Codex in [docs/AUTOMATED_DATA_RECOVERY_PLAN.md](docs/AUTOMATED_DATA_RECOVERY_PLAN.md); independently prepared sealed cases remain private.
+Remove `--offline` only to acquire uncached public files. Financial indexes supply discovery claims and dissemination timestamps; their ISINs and tickers can be stale or retrospectively normalized, so they are quarantined as standalone identity proof. Verified crosswalks come from checked original NSE archives, retaining original ticker changes and conservative archive publication dates. Shareholding imports verify original XML counts and category-specific denominators. Report discovery caches original PDF candidates; every candidate still needs statement and publication review. Supplied-source suitability is recorded in [docs/SOURCE_REVIEW.md](docs/SOURCE_REVIEW.md). Ordinary collection is assigned to Codex in [docs/AUTOMATED_DATA_RECOVERY_PLAN.md](docs/AUTOMATED_DATA_RECOVERY_PLAN.md); independently prepared sealed cases remain private.
+
+Candidate search groups are research leads, not verified sectors or selected peers. `--prepare-candidates` uses dated identity evidence and cached original quotes before each matching cutoff; it never writes `peers.csv`. Filing/quote ISIN conflicts remain visible and unresolved, and security IDs are not counted as distinct verified issuers. Explicit document-only leads with unknown publication remain quarantined. Candidate report collection also acquires later survival-review documents; those financial inputs retain their later public dates. Retrospectively normalized exchange tickers are rejected when they disagree with the original sequence-qualified resource name.
 
 Development artifacts:
 
