@@ -4,7 +4,7 @@ This release is a working research prototype. The user has deferred peer integra
 
 | Required deliverable | Delivered evidence | Remaining limitation |
 |---|---|---|
-| Benchmark distress model and class-imbalance methodology | `outputs/benchmark_development_metrics.csv`, generated report, benchmark configuration and reproducible training code | Final-access status is recorded in `outputs/run_status.csv`; only results produced by the once-only evaluator may be called untouched hold-out results. |
+| Benchmark distress model and class-imbalance methodology | `outputs/benchmark_development_metrics.csv`, generated report, benchmark configuration and reproducible training code | Untouched hold-out evaluation is complete in `outputs/benchmark_metrics.csv`, after a separate committed code/model freeze. No model tuning followed the final opening. |
 | Indian case test and matched non-default peers | Reviewed event catalog, original-source financial evidence, financial/accounting/market audits, case cards | Peer integration is deferred. The minimum matched cohort and stressed-survivor acceptance requirements remain unmet; Indian recall is unavailable. |
 | Manipulation and soft-signal screen | Guarded Altman, Beneish and Piotroski implementations; publication-dated ratings, promoter encumbrance and governance feature paths | Required source coverage is incomplete. Missing observations remain unknown and individual scores can be unavailable. |
 | Credit-officer explanations | Deterministic memo templates, reconciled attribution and evidence-chain code; offline memo/evidence controls | Scored Indian explanations require accepted inputs and registered replay. Readiness memos state that a score is unavailable. |

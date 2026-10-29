@@ -1,5 +1,5 @@
 component,status,reason,is_synthetic
-benchmark,development_only,Development results are not untouched hold-out performance.,0
+benchmark,final_evaluated,Development results are not untouched hold-out performance.,0
 panel,incomplete,"unique_verified_peers, peers_per_case, stressed_survivors",0
 features,partial_data,Missing inputs remain explicit; existing quarter files do not imply complete coverage.,0
 primary_calibration,incomplete,"4q_independent_prior, 8q_independent_prior, prior_source, financial_track_probability_link",0

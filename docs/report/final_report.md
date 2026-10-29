@@ -10,7 +10,7 @@ PRAHARI reconstructs information available before each historical scoring cutoff
 
 | component | status | reason | is_synthetic |
 | --- | --- | --- | --- |
-| benchmark | development_only | Development results are not untouched hold-out performance. | 0 |
+| benchmark | final_evaluated | Development results are not untouched hold-out performance. | 0 |
 | panel | incomplete | unique_verified_peers, peers_per_case, stressed_survivors | 0 |
 | features | partial_data | Missing inputs remain explicit; existing quarter files do not imply complete coverage. | 0 |
 | primary_calibration | incomplete | 4q_independent_prior, 8q_independent_prior, prior_source, financial_track_probability_link | 0 |
@@ -168,7 +168,26 @@ Source: [benchmark_development_metrics](../../outputs/benchmark_development_metr
 
 ## Final benchmark
 
-Not run or not available. No numerical result is inferred.
+| n | positives | base_rate | pr_auc | pr_auc_ci_low | pr_auc_ci_high | pr_auc_definition | trapezoid_pr_auc | roc_auc | brier | ece | capacity | recall_at_cap | precision_at_cap | tau_star | cost_at_tau_star_uncapped | cost_at_cap | descriptive_tau_grid_min | descriptive_grid_min_cost_uncapped | bootstrap_valid_resamples | is_synthetic | dataset | representation | variant | horizon_quarters | evaluation_dataset | evaluation_split | is_transfer |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1959 | 103 | 0.052578 | 0.63639 | 0.55442 | 0.71784 | average_precision | 0.67022 | 0.91664 | 0.02751 | 0.008373 | 97 | 0.5534 | 0.58763 | 0.047619 | 664 | 960 | 0.019899 | 657 | 1000 | 0 | polish_4year | full | none | 8 | polish_4year | untouched_holdout | 0 |
+| 1959 | 103 | 0.052578 | 0.65794 | 0.57865 | 0.73668 | average_precision | 0.67379 | 0.91866 | 0.026832 | 0.0066991 | 97 | 0.60194 | 0.63918 | 0.047619 | 716 | 855 | 0.039697 | 705 | 1000 | 0 | polish_4year | full | class_weight | 8 | polish_4year | untouched_holdout | 0 |
+| 1959 | 103 | 0.052578 | 0.45231 | 0.35799 | 0.55254 | average_precision | 0.49754 | 0.86758 | 0.035621 | 0.0073272 | 97 | 0.49515 | 0.52577 | 0.047619 | 765 | 1086 | 0.034747 | 728 | 1000 | 0 | polish_4year | full | logistic | 8 | polish_4year | untouched_holdout | 0 |
+| 1959 | 103 | 0.052578 | 0.1542 | 0.11017 | 0.21549 | average_precision | 0.17811 | 0.74556 | 0.047099 | 0.0021345 | 97 | 0.23301 | 0.24742 | 0.047619 | 1238 | 1653 | 0.049596 | 1184 | 1000 | 0 | polish_4year | harmonized | none | 8 | polish_4year | untouched_holdout | 0 |
+| 1364 | 44 | 0.032258 | 0.25393 | 0.16459 | 0.38763 | average_precision | 0.29841 | 0.91346 | 0.027548 | 0.025641 | 68 | 0.45455 | 0.29412 | 0.047619 | 445 | 528 | 0.049596 | 372 | 1000 | 0 | polish_4year | harmonized | none | 8 | taiwan | untouched_holdout | 1 |
+| 2101 | 99 | 0.04712 | 0.55181 | 0.45696 | 0.64695 | average_precision | 0.58415 | 0.90948 | 0.028758 | 0.0064629 | 105 | 0.54545 | 0.51429 | 0.047619 | 709 | 951 | 0.084242 | 671 | 1000 | 0 | polish_3year | full | none | 12 | polish_3year | untouched_holdout | 0 |
+| 2101 | 99 | 0.04712 | 0.49163 | 0.39989 | 0.58439 | average_precision | 0.52228 | 0.8963 | 0.030742 | 0.0054997 | 105 | 0.48485 | 0.45714 | 0.047619 | 730 | 1077 | 0.044646 | 730 | 1000 | 0 | polish_3year | full | class_weight | 12 | polish_3year | untouched_holdout | 0 |
+| 2101 | 99 | 0.04712 | 0.25842 | 0.18713 | 0.34341 | average_precision | 0.26251 | 0.82074 | 0.038921 | 0.0051451 | 105 | 0.39394 | 0.37143 | 0.047619 | 1057 | 1266 | 0.054545 | 982 | 1000 | 0 | polish_3year | full | logistic | 12 | polish_3year | untouched_holdout | 0 |
+| 1182 | 82 | 0.069374 | 0.75342 | 0.65964 | 0.83217 | average_precision | 0.77475 | 0.9457 | 0.028096 | 0.0088074 | 59 | 0.62195 | 0.86441 | 0.047619 | 394 | 628 | 0.039697 | 369 | 1000 | 0 | polish_5year | full | none | 4 | polish_5year | untouched_holdout | 0 |
+| 1182 | 82 | 0.069374 | 0.75364 | 0.6648 | 0.83415 | average_precision | 0.76959 | 0.94457 | 0.029233 | 0.0096057 | 59 | 0.62195 | 0.86441 | 0.047619 | 369 | 628 | 0.034747 | 369 | 1000 | 0 | polish_5year | full | class_weight | 4 | polish_5year | untouched_holdout | 0 |
+| 1182 | 82 | 0.069374 | 0.63443 | 0.52279 | 0.72967 | average_precision | 0.66108 | 0.88427 | 0.037367 | 0.012482 | 59 | 0.53659 | 0.74576 | 0.047619 | 498 | 775 | 0.079293 | 475 | 1000 | 0 | polish_5year | full | logistic | 4 | polish_5year | untouched_holdout | 0 |
+| 1182 | 82 | 0.069374 | 0.30784 | 0.22249 | 0.40062 | average_precision | 0.33156 | 0.81971 | 0.05518 | 0.0093427 | 59 | 0.2561 | 0.35593 | 0.047619 | 670 | 1258 | 0.049596 | 670 | 1000 | 0 | polish_5year | harmonized | none | 4 | polish_5year | untouched_holdout | 0 |
+| 1364 | 44 | 0.032258 | 0.31366 | 0.20315 | 0.45288 | average_precision | 0.34569 | 0.90958 | 0.02725 | 0.036381 | 68 | 0.56818 | 0.36765 | 0.047619 | 469 | 423 | 0.14364 | 344 | 1000 | 0 | polish_5year | harmonized | none | 4 | taiwan | untouched_holdout | 1 |
+| 1364 | 44 | 0.032258 | 0.48644 | 0.34564 | 0.64408 | average_precision | 0.49694 | 0.94545 | 0.021196 | 0.011662 | 68 | 0.68182 | 0.44118 | 0.047619 | 255 | 318 | 0.064444 | 253 | 1000 | 0 | taiwan | full | none | unavailable | taiwan | untouched_holdout | 0 |
+| 1364 | 44 | 0.032258 | 0.52532 | 0.38216 | 0.66558 | average_precision | 0.55995 | 0.95405 | 0.020267 | 0.010848 | 68 | 0.72727 | 0.47059 | 0.047619 | 275 | 276 | 0.16838 | 239 | 1000 | 0 | taiwan | full | class_weight | unavailable | taiwan | untouched_holdout | 0 |
+| 1364 | 44 | 0.032258 | 0.41127 | 0.2796 | 0.55441 | average_precision | 0.45426 | 0.93229 | 0.023502 | 0.0085743 | 68 | 0.5 | 0.32353 | 0.047619 | 278 | 486 | 0.054545 | 258 | 1000 | 0 | taiwan | full | logistic | unavailable | taiwan | untouched_holdout | 0 |
+
+Source: [benchmark_final_metrics](../../outputs/benchmark_metrics.csv).
 
 ## Indian panel evaluation
 

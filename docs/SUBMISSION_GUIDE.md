@@ -29,3 +29,14 @@ The received peer batches have a separate row-level source audit in `outputs/pee
 ## Delivery checks
 
 Run `./run_tests.ps1`, inspect `outputs/ui_validation.json`, and generate the report from output artifacts. After these checks, `python -m scripts.11_package_demo` creates the offline demo archive and its SHA-256 receipt. `outputs/delivery_manifest.json` records engineering checks, source hashes, release mode and outstanding scientific gates.
+
+
+## Official submission handoff
+
+The received organiser instructions require submission in both the final Zeckathon Google Form and the Zetheta website at https://zeckathon.com. Submissions are final and cannot be edited or replaced. The team should complete these two external submissions after reviewing the final document and repository link. No external form has been submitted by this implementation agent.
+
+Upload `docs/report/final_report.md` as the explanation document. Markdown is an accepted format; accepted files must be no larger than 20 MB. The document explains the solution, implementation, benchmark results, policy and remaining limitations. A PDF, if later exported, must contain selectable text. A presentation file is optional under the received instructions; `docs/slides_outline.md` and `docs/DEMO_SCRIPT.md` support a shortlisted presentation.
+
+Repository: https://github.com/adarshkr7/will-think-later-zeckathon . Keep it public or grant organiser access until judging ends. The local ZIP is an optional offline demo handoff, not a replacement for the accepted explanation document or repository field. Original received instructions remain in the ignored download/raw cache.
+
+Direct organiser form: https://docs.google.com/forms/d/e/1FAIpQLSfPaLvsicO3wvoOI9cgMeoAdfem5TKW1W93My6NIJtFs-ql8w/viewform?usp=header . The repository was confirmed PRIVATE with the authenticated GitHub CLI; make it public or grant organiser access before submitting.

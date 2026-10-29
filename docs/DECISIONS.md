@@ -148,3 +148,6 @@
 - 2026-10-29: Deliver an explicitly labelled offline readiness archive against the 21:00 deadline; reject fabricated company observations, arbitrary calibration inputs, relaxed peer rules or invented final performance as substitutes for unfinished scientific acceptance.
 
 - 2026-10-29: Validate the extracted offline archive independently of the main checkout; retain the explicit benchmark-cache-only test skip because raw caches are excluded, while the complete local suite passes that check.
+
+- 2026-10-29: At the user's submission-first scope change, defer peer integration while completing the untouched foreign benchmark once after a separate committed code/model freeze; no model tuning follows the final opening. Indian replay and sealed scoring remain gated.
+- 2026-10-29: Use the generated Markdown report as the official explanation document because the organiser explicitly accepts Markdown; retain both required external submission destinations and final/no-replacement rules in the handoff.
