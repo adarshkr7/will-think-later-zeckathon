@@ -2,6 +2,7 @@ import io
 import zipfile
 
 import pandas as pd
+import pytest
 
 from prahari.data.asof import as_of
 from prahari.data.bhavcopy import archive_url, bounded_forward_fill, parse_bhavcopy, parse_index
@@ -22,6 +23,23 @@ def test_index_parser_does_not_claim_tri(config):
     table = parse_index((FIXTURES / "index.csv").read_bytes(), "fixture://index", config.section("india_config")["market"])
     assert table.return_basis.eq("price_index").all()
     assert table.is_synthetic.eq(1).all()
+
+
+def test_exchange_two_digit_year_keeps_dates_and_rejects_unreviewed_format(config):
+    original = (FIXTURES / "bhavcopy_two_digit_year.csv").read_bytes()
+    settings = config.section("india_config")["market"]
+    for content, valid in [(original, True), (original.replace(b"13-Jul-20", b"2020/07/13"), False)]:
+        payload = io.BytesIO()
+        with zipfile.ZipFile(payload, "w") as archive:
+            archive.writestr("fixture.csv", content)
+        if valid:
+            table = parse_bhavcopy(payload.getvalue(), "fixture://two_digit_year", settings)
+            assert table.period_end.eq(pd.Timestamp("2020-07-13", tz="UTC")).all()
+            assert table.public_date.eq(pd.Timestamp("2020-07-14", tz="UTC")).all()
+            assert table.is_synthetic.eq(1).all()
+        else:
+            with pytest.raises(ValueError, match="date format"):
+                parse_bhavcopy(payload.getvalue(), "fixture://unknown_date", settings)
 
 
 def test_configured_url_uses_locale_independent_month(config):

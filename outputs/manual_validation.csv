@@ -4,9 +4,9 @@ groups,0,0,0,0,0
 entity_aliases,9,9,0,9,0
 event_evidence,24,24,0,0,0
 share_counts,15,15,0,0,0
-financial_evidence,477,472,5,405,0
+financial_evidence,793,783,10,721,0
 trading_calendar,0,0,0,0,0
-entities,19,19,0,17,0
+entities,22,22,0,20,0
 peer_survival,0,0,0,0,0
 security_crosswalk,40,29,11,29,0
 events,12,12,0,0,0

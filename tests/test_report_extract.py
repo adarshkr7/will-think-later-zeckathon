@@ -1,6 +1,9 @@
+import json
+
 import pytest
 
-from prahari.data.report_extract import amount_columns, join_spaced_thousands, reviewed_values
+from prahari.data.report_extract import (amount_columns, join_spaced_thousands,
+                                       require_denomination, reviewed_table_text, reviewed_values)
 from conftest import FIXTURES
 
 
@@ -60,3 +63,31 @@ def test_opt_in_layout_grouping_preserves_distinct_columns_and_dash():
     text = (FIXTURES / "statement_sum.txt").read_text()
     normalized = join_spaced_thousands(text)
     assert amount_columns(normalized, "Layout grouped values", 3) == [13915, 14168, None]
+
+
+def test_literal_currency_guard_never_accepts_absent_or_empty_marker():
+    text = json.loads((FIXTURES / "statement_pages.json").read_text())["pages"][0]
+    require_denomination(text, {"unit": "INR", "unit_marker_literal": "`"}, {}, {})
+    for marker in ["", " ", "Rs"]:
+        with pytest.raises(ValueError, match="denomination"):
+            require_denomination(text, {"unit": "INR", "unit_marker_literal": marker}, {}, {})
+    with pytest.raises(ValueError, match="denomination"):
+        require_denomination(text, {"unit": "INR"}, {}, {})
+
+
+def test_continuation_pages_are_explicit_and_keep_source_order():
+    fixture = json.loads((FIXTURES / "statement_pages.json").read_text())
+    class Page:
+        def __init__(self, value):
+            self.value = value
+
+        def extract_text(self, **kwargs):
+            return self.value
+
+    class Reader:
+        pages = [Page(value) for value in fixture["pages"]]
+
+    assert reviewed_table_text(Reader(), {"page": 1, "additional_pages": [2]}) == ("\n".join(fixture["pages"][:2]), [1, 2])
+    for pages in [[1], [0], [4]]:
+        with pytest.raises(ValueError, match="pages"):
+            reviewed_table_text(Reader(), {"page": 1, "additional_pages": pages})

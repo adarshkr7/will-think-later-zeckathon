@@ -3,7 +3,8 @@ documents:
   source: crisil_studies
   filename: crisil_default_study_2024.pdf
   url: https://www.crisilratings.com/content/dam/crisil/our-analysis/publications/default-study/crisil-ratings-annual-default-and-ratings-transition-study-fy-2024.pdf
-  purpose: Independent prior-source candidate; rated-cohort population and horizon compatibility unresolved, no prior values imported
+  purpose: Independent prior-source candidate; rated-cohort population and horizon compatibility unresolved, no
+    prior values imported
 - name: Reliance Capital annual report FY2014-15
   source: bse_reports
   filename: INE013A01015_annual_2015.pdf
@@ -17,13 +18,17 @@ documents:
     sector: nonbank_finance
     is_financial: 1
     period_end: '2015-03-31'
-    evidence_markers: [non-banking financial services companies, home finance]
+    evidence_markers:
+    - non-banking financial services companies
+    - home finance
     source_sha256: 7fc3ef6759de3a3129940c7f95e026198bc7a7c7c07e59f4d0184d1da37292dc
   financial_extraction:
     reviewed: true
     entity_id: INE013A01015
     source_period_end: '2015-03-31'
-    fiscal_periods: ['2015-03-31', '2014-03-31']
+    fiscal_periods:
+    - '2015-03-31'
+    - '2014-03-31'
     unit: INR_crore
     source_sha256: 7fc3ef6759de3a3129940c7f95e026198bc7a7c7c07e59f4d0184d1da37292dc
     tables:
@@ -33,17 +38,46 @@ documents:
       text_mode: layout
       spaced_thousands: true
       fields:
-        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
-        equity: {label: Reserves and surplus, columns: 4, positions: [1, 3]}
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Reserves and surplus
+          columns: 4
+          positions:
+          - 1
+          - 3
         total_liabilities:
           sum:
-          - {label: Long-term provisions, columns: 4, positions: [1, 3]}
-          - {label: Short-term provisions, columns: 4, positions: [1, 3]}
-        current_assets: {label: Other current assets, columns: 4, positions: [1, 3]}
-        current_liabilities: {label: Short-term provisions, columns: 4, positions: [1, 3]}
+          - label: Long-term provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Short-term provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+        current_assets:
+          label: Other current assets
+          columns: 4
+          positions:
+          - 1
+          - 3
+        current_liabilities:
+          label: Short-term provisions
+          columns: 4
+          positions:
+          - 1
+          - 3
         lt_debt: Long-term borrowings
         st_borrowings: Short-term borrowings
-        ppe_net: {label: Tangible assets, expected_matches: 2, occurrence: 0}
+        ppe_net:
+          label: Tangible assets
+          expected_matches: 2
+          occurrence: 0
 - name: Reliance Capital annual report FY2016-17
   source: bse_reports
   filename: INE013A01015_annual_2017.pdf
@@ -53,7 +87,9 @@ documents:
     reviewed: true
     entity_id: INE013A01015
     source_period_end: '2017-03-31'
-    fiscal_periods: ['2017-03-31', '2016-03-31']
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
     unit: INR_crore
     source_sha256: 1aac5b1998e1eff5d5dd02a39f2d1799266442f9cee5f670e2b4ee41e41f5f55
     tables:
@@ -63,17 +99,46 @@ documents:
       text_mode: layout
       spaced_thousands: true
       fields:
-        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
-        equity: {label: Reserves and surplus, columns: 4, positions: [1, 3]}
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Reserves and surplus
+          columns: 4
+          positions:
+          - 1
+          - 3
         total_liabilities:
           sum:
-          - {label: Long-term provisions, columns: 4, positions: [1, 3]}
-          - {label: Short-term provisions, columns: 4, positions: [1, 3]}
-        current_assets: {label: Other current assets, columns: 4, positions: [1, 3]}
-        current_liabilities: {label: Short-term provisions, columns: 4, positions: [1, 3]}
+          - label: Long-term provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Short-term provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+        current_assets:
+          label: Other current assets
+          columns: 4
+          positions:
+          - 1
+          - 3
+        current_liabilities:
+          label: Short-term provisions
+          columns: 4
+          positions:
+          - 1
+          - 3
         lt_debt: Long-term borrowings
         st_borrowings: Short-term borrowings
-        ppe_net: {label: Tangible assets, expected_matches: 2, occurrence: 0}
+        ppe_net:
+          label: Tangible assets
+          expected_matches: 2
+          occurrence: 0
     - page: 68
       basis: standalone
       columns: 2
@@ -94,7 +159,9 @@ documents:
     reviewed: true
     entity_id: INE013A01015
     source_period_end: '2018-03-31'
-    fiscal_periods: ['2018-03-31', '2017-03-31']
+    fiscal_periods:
+    - '2018-03-31'
+    - '2017-03-31'
     unit: INR_crore
     source_sha256: 8c128bbc5527410eb02f87ce32e93e6760a8f8b31815b6e0493dac849c629b95
     tables:
@@ -104,17 +171,46 @@ documents:
       text_mode: layout
       spaced_thousands: true
       fields:
-        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
-        equity: {label: Reserves and surplus, columns: 4, positions: [1, 3]}
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Reserves and surplus
+          columns: 4
+          positions:
+          - 1
+          - 3
         total_liabilities:
           sum:
-          - {label: Long-term provisions, columns: 4, positions: [1, 3]}
-          - {label: Short-term provisions, columns: 4, positions: [1, 3]}
-        current_assets: {label: Other current assets, columns: 4, positions: [1, 3]}
-        current_liabilities: {label: Short-term provisions, columns: 4, positions: [1, 3]}
+          - label: Long-term provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Short-term provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+        current_assets:
+          label: Other current assets
+          columns: 4
+          positions:
+          - 1
+          - 3
+        current_liabilities:
+          label: Short-term provisions
+          columns: 4
+          positions:
+          - 1
+          - 3
         lt_debt: Long-term borrowings
         st_borrowings: Short-term borrowings
-        ppe_net: {label: Tangible assets, expected_matches: 2, occurrence: 0}
+        ppe_net:
+          label: Tangible assets
+          expected_matches: 2
+          occurrence: 0
     - page: 68
       basis: standalone
       columns: 2
@@ -135,7 +231,9 @@ documents:
     reviewed: true
     entity_id: INE975G01012
     source_period_end: '2016-03-31'
-    fiscal_periods: ['2016-03-31', '2015-03-31']
+    fiscal_periods:
+    - '2016-03-31'
+    - '2015-03-31'
     unit: INR_crore
     unit_marker: crore
     source_sha256: 827e8ab0bd996be11cd7df4a3d0c157c8ec97f6bce03e56a4de3b346bacfaa3b
@@ -144,17 +242,46 @@ documents:
       basis: standalone
       columns: 2
       fields:
-        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
         total_liabilities:
           sum:
-          - {label: Long-term provisions, columns: 4, positions: [1, 3]}
-          - {label: Short-term provisions, columns: 4, positions: [1, 3]}
-        current_assets: {label: Other current assets (net), columns: 4, positions: [1, 3]}
-        current_liabilities: {label: Short-term provisions, columns: 4, positions: [1, 3]}
-        equity: {label: Reserves and surplus, columns: 4, positions: [1, 3]}
+          - label: Long-term provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Short-term provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+        current_assets:
+          label: Other current assets (net)
+          columns: 4
+          positions:
+          - 1
+          - 3
+        current_liabilities:
+          label: Short-term provisions
+          columns: 4
+          positions:
+          - 1
+          - 3
+        equity:
+          label: Reserves and surplus
+          columns: 4
+          positions:
+          - 1
+          - 3
         inventory: Inventories
         receivables: Trade receivables (net)
-        ppe_net: {label: Tangible assets (net), expected_matches: 2, occurrence: 0}
+        ppe_net:
+          label: Tangible assets (net)
+          expected_matches: 2
+          occurrence: 0
         cwip: Capital work-in-progress
         lt_debt: Long-term borrowings
         st_borrowings: Short-term borrowings
@@ -186,7 +313,8 @@ documents:
   source: iifcl
   filename: iifcl_user_annual_report.pdf
   url: https://www.iifcl.in/images/FileUploaded/AnnualReport1pdf05122019132624.pdf
-  purpose: User-supplied original India Infrastructure Finance Company report; separate legal entity from IL&FS and ITNL
+  purpose: User-supplied original India Infrastructure Finance Company report; separate legal entity from IL&FS
+    and ITNL
 - name: Srei Infrastructure Finance annual report FY2017-18
   source: srei
   filename: srei_annual_2018.pdf
@@ -196,7 +324,9 @@ documents:
     reviewed: true
     entity_id: INE872A01014
     source_period_end: '2018-03-31'
-    fiscal_periods: ['2018-03-31', '2017-03-31']
+    fiscal_periods:
+    - '2018-03-31'
+    - '2017-03-31'
     unit: INR_lakh
     unit_marker: inlacs
     source_sha256: f4a4e2b16a0aefc34dadea4085be866e3b3987d99d68cda38f9c181fc26b7ac4
@@ -205,16 +335,31 @@ documents:
       basis: standalone
       columns: 2
       fields:
-        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
         total_liabilities:
           sum:
-          - {label: Long-Term Provisions, line_offset: 1}
-          - {label: Short-Term Provisions, line_offset: 1}
-        equity: {label: Reserves and Surplus, line_offset: 1}
-        current_liabilities: {label: Short-Term Provisions, line_offset: 1}
-        lt_debt: {label: Long-Term Borrowings, expected_matches: 2, occurrence: 0}
+          - label: Long-Term Provisions
+            line_offset: 1
+          - label: Short-Term Provisions
+            line_offset: 1
+        equity:
+          label: Reserves and Surplus
+          line_offset: 1
+        current_liabilities:
+          label: Short-Term Provisions
+          line_offset: 1
+        lt_debt:
+          label: Long-Term Borrowings
+          expected_matches: 2
+          occurrence: 0
         st_borrowings: Short-Term Borrowings
-        ppe_net: {label: Tangible Assets, expected_matches: 2, occurrence: 0}
+        ppe_net:
+          label: Tangible Assets
+          expected_matches: 2
+          occurrence: 0
         cwip: Capital Work-in-Progress
         receivables: Trade Receivables
     - page: 145
@@ -238,13 +383,17 @@ documents:
     sector: nonbank_finance
     is_financial: 1
     period_end: '2017-03-31'
-    evidence_markers: [non-banking financial institution, Infrastructure Finance Company]
+    evidence_markers:
+    - non-banking financial institution
+    - Infrastructure Finance Company
     source_sha256: f3c5a1b10891875441e652a9a6de0350614e6ea910c1a3610e3825a3381a8ec3
   financial_extraction:
     reviewed: true
     entity_id: INE872A01014
     source_period_end: '2017-03-31'
-    fiscal_periods: ['2017-03-31', '2016-03-31']
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
     unit: INR_lakh
     unit_marker: inlacs
     source_sha256: f3c5a1b10891875441e652a9a6de0350614e6ea910c1a3610e3825a3381a8ec3
@@ -253,16 +402,31 @@ documents:
       basis: standalone
       columns: 2
       fields:
-        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
         total_liabilities:
           sum:
-          - {label: Long-Term Provisions, line_offset: 1}
-          - {label: Short-Term Provisions, line_offset: 1}
-        equity: {label: Reserves and Surplus, line_offset: 1}
-        current_liabilities: {label: Short-Term Provisions, line_offset: 1}
-        lt_debt: {label: Long-Term Borrowings, expected_matches: 2, occurrence: 0}
+          - label: Long-Term Provisions
+            line_offset: 1
+          - label: Short-Term Provisions
+            line_offset: 1
+        equity:
+          label: Reserves and Surplus
+          line_offset: 1
+        current_liabilities:
+          label: Short-Term Provisions
+          line_offset: 1
+        lt_debt:
+          label: Long-Term Borrowings
+          expected_matches: 2
+          occurrence: 0
         st_borrowings: Short-Term Borrowings
-        ppe_net: {label: Tangible Assets, expected_matches: 2, occurrence: 0}
+        ppe_net:
+          label: Tangible Assets
+          expected_matches: 2
+          occurrence: 0
         cwip: Capital Work-in-Progress
         receivables: Trade Receivables
     - page: 152
@@ -282,7 +446,9 @@ documents:
     reviewed: true
     entity_id: INE872A01014
     source_period_end: '2019-03-31'
-    fiscal_periods: ['2019-03-31', '2018-03-31']
+    fiscal_periods:
+    - '2019-03-31'
+    - '2018-03-31'
     unit: INR_lakh
     unit_marker: inlacs
     source_sha256: af70d06c9b06a4f569ab73a13ea47d5816ab10c7a0fd5a5045b16837ff7157a8
@@ -292,11 +458,16 @@ documents:
       columns: 3
       fields:
         total_assets: Total Assets
-        equity: {sum: [Equity Share Capital, Other Equity]}
+        equity:
+          sum:
+          - Equity Share Capital
+          - Other Equity
         total_liabilities:
           difference:
           - Total Assets
-          - {sum: [Equity Share Capital, Other Equity]}
+          - sum:
+            - Equity Share Capital
+            - Other Equity
         ppe_net: Property, Plant and Equipment
         cwip: Capital Work-in-Progress
         receivables: Trade Receivables
@@ -318,7 +489,9 @@ documents:
     reviewed: true
     entity_id: INE202B01012
     source_period_end: '2016-03-31'
-    fiscal_periods: ['2016-03-31', '2015-03-31']
+    fiscal_periods:
+    - '2016-03-31'
+    - '2015-03-31'
     unit: INR_lakh
     source_sha256: dc64db91f0207a247024fbb9fb9b4896d4c40a7c1d7ca50ef1d438dedb9f56f1
     tables:
@@ -326,20 +499,30 @@ documents:
       basis: standalone
       columns: 2
       fields:
-        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
-        total_liabilities: {sum: [Total Non-Current Liabilities, Total Current Liabilities]}
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        total_liabilities:
+          sum:
+          - Total Non-Current Liabilities
+          - Total Current Liabilities
         equity: Total Shareholders' Funds
         current_assets: Total Current Assets
         current_liabilities: Total Current Liabilities
         lt_debt: Long-Term Borrowings
         st_borrowings: Short Term Borrowings
-        ppe_net: {label: Tangible Assets, expected_matches: 2, occurrence: 0}
+        ppe_net:
+          label: Tangible Assets
+          expected_matches: 2
+          occurrence: 0
         cwip: Capital Work in Progress
         receivables: Trade Receivables
     - page: 146
       basis: standalone
       columns: 2
-      fiscal_periods: ['2016-03-31']
+      fiscal_periods:
+      - '2016-03-31'
       fields:
         revenue: Revenue from Operations
         pat: Profit For The Year
@@ -359,13 +542,16 @@ documents:
     sector: housing_finance
     is_financial: 1
     period_end: '2015-03-31'
-    evidence_markers: [deposit-taking housing finance, registered with the National Housing Bank]
+    evidence_markers:
+    - deposit-taking housing finance
+    - registered with the National Housing Bank
     source_sha256: 2c4190ef1f0e0485ef4266764ea26e86fb760a37ad9b089583f74d86b269db08
   financial_extraction:
     reviewed: true
     entity_id: INE202B01012
     source_period_end: '2015-03-31'
-    fiscal_periods: ['2015-03-31']
+    fiscal_periods:
+    - '2015-03-31'
     unit: INR_lakh
     source_sha256: 2c4190ef1f0e0485ef4266764ea26e86fb760a37ad9b089583f74d86b269db08
     tables:
@@ -373,8 +559,14 @@ documents:
       basis: standalone
       columns: 2
       fields:
-        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
-        total_liabilities: {sum: [Total Non-Current Liabilities, Total Current Liabilities]}
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        total_liabilities:
+          sum:
+          - Total Non-Current Liabilities
+          - Total Current Liabilities
         equity: Total Shareholders' Funds
         current_assets: Total Current Assets
         current_liabilities: Total Current Liabilities
@@ -389,7 +581,9 @@ documents:
     reviewed: true
     entity_id: INE202B01012
     source_period_end: '2017-03-31'
-    fiscal_periods: ['2017-03-31', '2016-03-31']
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
     unit: INR_lakh
     source_sha256: ee226c8cc7a852d5cd37764fa8682e86f12c238b0b1fc3ade1274e9f59ab6e57
     tables:
@@ -397,14 +591,23 @@ documents:
       basis: standalone
       columns: 2
       fields:
-        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
-        total_liabilities: {sum: [Total Non-Current Liabilities, Total Current Liabilities]}
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        total_liabilities:
+          sum:
+          - Total Non-Current Liabilities
+          - Total Current Liabilities
         equity: Total Shareholders' Funds
         current_assets: Total Current Assets
         current_liabilities: Total Current Liabilities
         lt_debt: Long-Term Borrowings
         st_borrowings: Short-Term Borrowings
-        ppe_net: {label: Tangible Assets, expected_matches: 2, occurrence: 0}
+        ppe_net:
+          label: Tangible Assets
+          expected_matches: 2
+          occurrence: 0
         cwip: Capital Work-in-Progress
         receivables: Trade Receivables
     - page: 163
@@ -425,7 +628,9 @@ documents:
     reviewed: true
     entity_id: INE202B01012
     source_period_end: '2018-03-31'
-    fiscal_periods: ['2018-03-31', '2017-03-31']
+    fiscal_periods:
+    - '2018-03-31'
+    - '2017-03-31'
     unit: INR_lakh
     source_sha256: 02316ea93c96179b08fad690e928912c19936ecc3d31388e0e43291cf3e9cf59
     tables:
@@ -433,8 +638,14 @@ documents:
       basis: standalone
       columns: 2
       fields:
-        total_assets: {label: Total, expected_matches: 2, occurrence: 1}
-        total_liabilities: {sum: [Total Non-Current Liabilities, Total Current Liabilities]}
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        total_liabilities:
+          sum:
+          - Total Non-Current Liabilities
+          - Total Current Liabilities
         equity: Total Shareholders' Funds
         current_assets: Total Current Assets
         current_liabilities: Total Current Liabilities
@@ -487,8 +698,16 @@ documents:
           occurrence: 1
         total_liabilities:
           sum:
-          - {label: Long-term provisions, columns: 4, positions: [1, 3]}
-          - {label: Short-term provisions, columns: 4, positions: [1, 3]}
+          - label: Long-term provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
+          - label: Short-term provisions
+            columns: 4
+            positions:
+            - 1
+            - 3
         current_assets:
           label: Other current assets (net)
           columns: 4
@@ -545,8 +764,7 @@ documents:
   source: itnl
   filename: itnl_annual_2017.pdf
   url: https://www.itnlindia.com/pdf/annual-reports/ITNL%20Annual%20Report%202016-17.pdf
-  purpose: Original annual financial statements; comparative restatements retain this
-    report's publication timing
+  purpose: Original annual financial statements; comparative restatements retain this report's publication timing
   financial_extraction:
     reviewed: true
     entity_id: INE975G01012
@@ -561,7 +779,10 @@ documents:
       columns: 3
       fields:
         total_assets: Total Assets
-        total_liabilities: {sum: [Total Non-Current Liabilities, Total Current Liabilities]}
+        total_liabilities:
+          sum:
+          - Total Non-Current Liabilities
+          - Total Current Liabilities
         current_assets: Total Current Assets
         current_liabilities: Total Current Liabilities
         equity: Total Equity
@@ -569,8 +790,14 @@ documents:
         receivables: Trade Receivables
         ppe_net: Property, Plant and Equipment
         cwip: Capital Work-In-Progress
-        lt_debt: {label: Borrowings, expected_matches: 2, occurrence: 0}
-        st_borrowings: {label: Borrowings, expected_matches: 2, occurrence: 1}
+        lt_debt:
+          label: Borrowings
+          expected_matches: 2
+          occurrence: 0
+        st_borrowings:
+          label: Borrowings
+          expected_matches: 2
+          occurrence: 1
         cash_and_cash_equivalents: Cash and Cash Equivalents
     - page: 115
       basis: standalone
@@ -612,14 +839,12 @@ documents:
   source: ibbi
   filename: jaypee_form_a.pdf
   url: https://ibbi.gov.in/webadmin/pdf/announcement/2017/Aug/Form-A-Public-JAYPEE%20Infra.pdf
-  purpose: CIRP component evidence; earliest payment default and CRA D still need
-    verification
+  purpose: CIRP component evidence; earliest payment default and CRA D still need verification
 - name: Jet Airways original NCLT order
   source: jet_airways
   filename: jet_nclt_order.pdf
   url: https://www.jetairways.com/information/Documents/NCLT-Order.pdf
-  purpose: CIRP component evidence; retrospective default statements are not contemporaneous
-    disclosures
+  purpose: CIRP component evidence; retrospective default statements are not contemporaneous disclosures
 - name: Jet Airways public announcement
   source: jet_airways
   filename: jet_public_announcement.pdf
@@ -629,8 +854,7 @@ documents:
   source: icra
   filename: itnl_icra_72468.pdf
   url: https://www.icra.in/Rating/GetRationalReportFilePdf?id=72468
-  purpose: Soft-signal evidence; INC is not a D rating and does not establish a default
-    date
+  purpose: Soft-signal evidence; INC is not a D rating and does not establish a default date
 - name: ITNL CARE D release 2018-09-28
   source: care
   filename: verified_event_01.pdf
@@ -1007,8 +1231,8 @@ documents:
   source: alok
   filename: alok_annual_2016.pdf
   url: https://www.alokind.com/assets/pdf/investor-relations/annual-reports/Annual_Report_2015-16.pdf
-  purpose: Reviewed standalone statements; prior balance-sheet comparatives only,
-    excluding eighteen-month comparative flows
+  purpose: Reviewed standalone statements; prior balance-sheet comparatives only, excluding eighteen-month comparative
+    flows
   financial_extraction:
     reviewed: true
     entity_id: INE270A01011
@@ -1068,3 +1292,667 @@ documents:
         cfo: Net cash (used in) / generated from operating activities
         interest_expense: Interest expense
         cash_and_cash_equivalents: Cash and Cash equivalents at the end of the year/period
+- name: Jaypee Infratech annual report FY2010-11
+  source: bse_reports
+  filename: jaypee_original_2011.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/533207/5332070311.pdf
+  purpose: Reviewed original standalone statements; printed INR units, liability subtotals and retained profit reserves
+    with source-page evidence
+  classification_review:
+    reviewed: true
+    entity_id: INE099J01015
+    name: Jaypee Infratech Ltd
+    page: 9
+    sector: infrastructure_development
+    is_financial: 0
+    period_end: '2011-03-31'
+    evidence_markers:
+    - construction of Yamuna Expressway
+    - Real estate development
+    source_sha256: 8b925ffbf1b9a4ae54257c955fe9f979db0f09638b9f9ddce8c4c614a8b79f10
+  financial_extraction:
+    reviewed: true
+    entity_id: INE099J01015
+    source_period_end: '2011-03-31'
+    fiscal_periods:
+    - '2011-03-31'
+    - '2010-03-31'
+    unit: INR
+    unit_marker_literal: '`'
+    source_sha256: 8b925ffbf1b9a4ae54257c955fe9f979db0f09638b9f9ddce8c4c614a8b79f10
+    tables:
+    - page: 21
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          sum:
+          - TOTAL FUNDS EMPLOYED
+          - Current Liabilities
+          - Provisions
+        equity:
+          sum:
+          - Share Capital A
+          - Reserves & Surplus B
+        current_assets:
+          label: Loans & Advances
+          line_offset: 1
+        current_liabilities:
+          label: Provisions
+          line_offset: 1
+        receivables: Sundry Debtors
+        ppe_net: Net Block
+        cwip: Capital Work-In- Progress
+    - page: 22
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Sales J
+        pat: Profit after Tax
+        pbt: Profit before Tax
+        interest_expense: Interest N
+        depreciation: Depreciation
+        cogs: Cost of Sales
+- name: Jaypee Infratech annual report FY2011-12
+  source: bse_reports
+  filename: jaypee_original_2012.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/533207/5332070312.pdf
+  purpose: Reviewed original standalone statements; printed INR units, liability subtotals and retained profit reserves
+    with source-page evidence
+  financial_extraction:
+    reviewed: true
+    entity_id: INE099J01015
+    source_period_end: '2012-03-31'
+    fiscal_periods:
+    - '2012-03-31'
+    - '2011-03-31'
+    unit: INR
+    unit_marker_literal: '`'
+    source_sha256: 6772a5b4275b46cd1f3a9b5eb8406e3df6551d7a3e1f40dfa694a7bc2f96e0c7
+    tables:
+    - page: 20
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Money received against share warrants
+          line_offset: 1
+        total_liabilities:
+          sum:
+          - label: Long term provisions
+            line_offset: 1
+          - label: Short-term provisions
+            line_offset: 1
+        current_assets:
+          label: Other current assets
+          line_offset: 1
+        current_liabilities:
+          label: Short-term provisions
+          line_offset: 1
+        inventory: Inventories
+        receivables: Trade receivables
+        ppe_net:
+          label: Tangible assets
+          expected_matches: 2
+          occurrence: 0
+        lt_debt:
+          sum:
+          - Long-term borrowings - Secured
+          - Long-term borrowings - Unsecured
+    - page: 21
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: Profit for the period
+        pbt: Profit Before Tax
+        finance_costs: Finance Costs
+        depreciation: Depreciation and Amortization Expenses
+        cogs: Cost of Sales
+    - page: 20
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          difference:
+          - Reserves and Surplus
+          - label: 'Less: Initial Public Offer Expenses'
+            line_offset: 1
+      additional_pages:
+      - 23
+    - page: 33
+      basis: standalone
+      columns: 2
+      fields:
+        cfo: CASH INFLOW/(OUTFLOW) FROM OPERATING ACTIVITIES
+- name: Jaypee Infratech annual report FY2012-13
+  source: bse_reports
+  filename: jaypee_original_2013.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/533207/5332070313.pdf
+  purpose: Reviewed original standalone statements; printed INR units, liability subtotals and retained profit reserves
+    with source-page evidence
+  financial_extraction:
+    reviewed: true
+    entity_id: INE099J01015
+    source_period_end: '2013-03-31'
+    fiscal_periods:
+    - '2013-03-31'
+    - '2012-03-31'
+    unit: INR
+    unit_marker_literal: '`'
+    source_sha256: 653adfec299037a678df023e25c9006fe956780230ad8c9c605db6ded7fb9e5e
+    tables:
+    - page: 23
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Money received against share warrants
+          line_offset: 1
+        total_liabilities:
+          sum:
+          - label: Long term provisions
+            line_offset: 1
+          - label: Short-term provisions
+            line_offset: 1
+        current_assets:
+          label: Other current assets
+          line_offset: 1
+        current_liabilities:
+          label: Short-term provisions
+          line_offset: 1
+        inventory: Inventories
+        receivables: Trade receivables
+        ppe_net:
+          label: Tangible assets
+          expected_matches: 2
+          occurrence: 0
+        lt_debt:
+          sum:
+          - Long-term borrowings - Secured
+          - Long-term borrowings - Unsecured
+    - page: 24
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: Profit for the period
+        pbt: Profit Before Tax
+        finance_costs: Finance Costs
+        depreciation: Depreciation and Amortization Expenses
+        cogs: Cost of Sales
+    - page: 23
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          difference:
+          - Reserves and Surplus
+          - label: Non Convertible Debentures
+            line_offset: 1
+      additional_pages:
+      - 27
+    - page: 38
+      basis: standalone
+      columns: 2
+      fields:
+        cfo: CASH INFLOW/(OUTFLOW) FROM OPERATING ACTIVITIES
+- name: Jaypee Infratech annual report FY2013-14
+  source: bse_reports
+  filename: jaypee_original_2014.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/533207/5332070314.pdf
+  purpose: Reviewed original standalone statements; printed INR units, liability subtotals and retained profit reserves
+    with source-page evidence
+  financial_extraction:
+    reviewed: true
+    entity_id: INE099J01015
+    source_period_end: '2014-03-31'
+    fiscal_periods:
+    - '2014-03-31'
+    - '2013-03-31'
+    unit: INR
+    unit_marker_literal: '`'
+    source_sha256: 44727bc9293fdcaad95a753cc411d0e447200dcdeea21f15dd003907a235d2e1
+    tables:
+    - page: 26
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: Total
+          expected_matches: 2
+          occurrence: 1
+        equity:
+          label: Money received against share warrants
+          line_offset: 1
+        total_liabilities:
+          sum:
+          - label: Long term provisions
+            line_offset: 1
+          - label: Short-term provisions
+            line_offset: 1
+        current_assets:
+          label: Other current assets
+          line_offset: 1
+        current_liabilities:
+          label: Short-term provisions
+          line_offset: 1
+        inventory: Inventories
+        receivables: Trade receivables
+        ppe_net:
+          label: Tangible assets
+          expected_matches: 2
+          occurrence: 1
+        lt_debt:
+          sum:
+          - Long-term borrowings - Secured
+          - Long-term borrowings - Unsecured
+    - page: 27
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: Profit for the period
+        pbt: Profit Before Tax
+        finance_costs: Finance Costs
+        depreciation: Depreciation and Amortization Expenses
+        cogs: Cost of Sales
+    - page: 26
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          difference:
+          - Reserves and Surplus
+          - label: Convertible Debentures
+            line_offset: 1
+      additional_pages:
+      - 30
+    - page: 42
+      basis: standalone
+      columns: 2
+      fields:
+        cfo: CASH INFLOW/(OUTFLOW) FROM OPERATING ACTIVITIES
+- name: Jet Airways annual report FY2014-15
+  source: bse_reports
+  filename: INE802G01018_annual_2015.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/532617/5326170315.pdf
+  purpose: Reviewed original standalone annual statements; later Ind AS comparatives retain later availability
+  financial_extraction:
+    reviewed: true
+    entity_id: INE802G01018
+    source_period_end: '2015-03-31'
+    fiscal_periods:
+    - '2015-03-31'
+    - '2014-03-31'
+    unit: INR_lakh
+    source_sha256: b6a6d66a5b6077f4d914bbc18b7e66b5fc4cbfcf74bff1d86aef0f18b51af6e2
+    tables:
+    - page: 72
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        total_liabilities:
+          sum:
+          - label: Long term provisions
+            line_offset: 1
+          - label: Short term provisions
+            line_offset: 1
+        equity:
+          label: Reserves and Surplus
+          line_offset: 1
+        current_assets:
+          label: Short Term Loans and Advances
+          line_offset: 1
+        current_liabilities:
+          label: Short term provisions
+          line_offset: 1
+        inventory: Inventories
+        receivables: Trade receivables
+        ppe_net:
+          label: Tangible assets
+          expected_matches: 2
+          occurrence: 0
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 73
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: Loss for the Year
+        pbt: Loss Before Tax
+        finance_costs: Finance Cost
+        depreciation: Depreciation and Amortisation
+  classification_review:
+    reviewed: true
+    entity_id: INE802G01018
+    name: Jet Airways (India) Ltd
+    page: 4
+    sector: airlines
+    is_financial: 0
+    period_end: '2015-03-31'
+    evidence_markers:
+    - Indian aviation sector
+    - Your Company
+    source_sha256: b6a6d66a5b6077f4d914bbc18b7e66b5fc4cbfcf74bff1d86aef0f18b51af6e2
+- name: Jet Airways annual report FY2016-17
+  source: bse_reports
+  filename: INE802G01018_annual_2017.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/532617/5326170317.pdf
+  purpose: Reviewed original standalone annual statements; later Ind AS comparatives retain later availability
+  financial_extraction:
+    reviewed: true
+    entity_id: INE802G01018
+    source_period_end: '2017-03-31'
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
+    unit: INR_lakh
+    source_sha256: 6d55f89b1da65c4be808a19f0ac636e008b1804d276ce5680a6fa47b7484f24a
+    tables:
+    - page: 85
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        total_liabilities:
+          sum:
+          - label: Long term provisions
+            line_offset: 1
+          - label: Short term provisions
+            line_offset: 1
+        equity:
+          label: Reserves and Surplus
+          line_offset: 1
+        current_assets:
+          label: Other current assets
+          line_offset: 1
+        current_liabilities:
+          label: Short term provisions
+          line_offset: 1
+        inventory: Inventories
+        receivables: Trade receivables
+        ppe_net: Property plant and equipment
+        lt_debt: Long Term Borrowings
+        st_borrowings: Short Term Borrowings
+    - page: 93
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: 'Less: Transfer to Debenture Redemption Reserve'
+          line_offset: 1
+    - page: 86
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from operations
+        pat: Profit for the year
+        pbt: Profit before tax
+        finance_costs: Finance cost
+        depreciation: Depreciation and amortisation
+- name: Jet Airways annual report FY2017-18
+  source: bse_reports
+  filename: INE802G01018_annual_2018.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/532617/5326170318.pdf
+  purpose: Reviewed original standalone annual statements; later Ind AS comparatives retain later availability
+  financial_extraction:
+    reviewed: true
+    entity_id: INE802G01018
+    source_period_end: '2018-03-31'
+    fiscal_periods:
+    - '2018-03-31'
+    - '2017-03-31'
+    unit: INR_lakh
+    source_sha256: 1d1f20d4f0bb3eaa4ac3ee369536f22229e2aa4980eaa5165f24f3c8fd016e12
+    tables:
+    - page: 91
+      basis: standalone
+      columns: 3
+      fields:
+        total_assets: TOTAL ASSETS
+        total_liabilities: Total Liabilities
+        equity: Total equity
+        current_assets: Total current assets
+        current_liabilities: Total Current liabilities
+        inventory: Inventories
+        receivables: Trade receivables
+        ppe_net: Property, plant and equipment
+        cwip:
+          label: Capital work-in-progress C
+        cash_and_cash_equivalents: Cash and cash equivalents a
+        lt_debt:
+          label: Borrowings
+          expected_matches: 2
+          occurrence: 0
+        st_borrowings:
+          label: Borrowings
+          expected_matches: 2
+          occurrence: 1
+    - page: 115
+      basis: standalone
+      columns: 3
+      fields:
+        retained_earnings: Retained earnings
+    - page: 92
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from Operations
+        pat: (Loss)/Profit for the year
+        pbt: (Loss)/Profit before Tax
+        finance_costs: Finance cost
+        depreciation: Depreciation and Amortization Expenses
+    unit_marker: inrlakhs
+- name: Future Retail annual report FY2016-17
+  source: bse_reports
+  filename: INE752P01024_annual_2017.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/540064/5400640317.pdf
+  purpose: Reviewed original standalone statements; explicitly separated equity components, opening balance excluded
+    and later comparative availability preserved
+  financial_extraction:
+    reviewed: true
+    entity_id: INE752P01024
+    source_period_end: '2017-03-31'
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
+    unit: INR_crore
+    source_sha256: e441e01d8a94cfdb642fbf372888f38e3c54cc6cd5f98159846b8f662f265aea
+    tables:
+    - page: 89
+      basis: standalone
+      columns: 3
+      fields:
+        total_assets: Total Assets
+        equity: Total Equity
+        total_liabilities:
+          sum:
+          - Total Non-Current Liabilities
+          - Total Current Liabilities
+        current_assets: Total Current Assets
+        current_liabilities: Total Current Liabilities
+        inventory: Inventories
+        receivables: Trade Receivables
+        ppe_net: Property, Plant and Equipment
+        cwip: Capital Work-in-Progress
+        lt_debt:
+          label: Borrowings
+          expected_matches: 2
+          occurrence: 0
+        st_borrowings:
+          label: Borrowings
+          expected_matches: 2
+          occurrence: 1
+    - page: 90
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue From Operations
+        pat: Profit For The Year
+        pbt: Profit Before Tax
+        finance_costs: Finance Costs
+        depreciation:
+          label: Depreciation and Amortization Expense
+          columns: 4
+          positions:
+          - 2
+        cogs:
+          sum:
+          - Purchase of Stock-In-Trade
+          - Change in Inventories of Stock-In-Trade
+      fiscal_periods:
+      - '2017-03-31'
+    - page: 91
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: Closing Balance
+          expected_matches: 6
+          occurrence: 3
+  classification_review:
+    reviewed: true
+    entity_id: INE752P01024
+    name: Future Retail Ltd
+    page: 25
+    sector: retail
+    is_financial: 0
+    period_end: '2017-03-31'
+    evidence_markers:
+    - Retail business
+    - 136 stores
+    source_sha256: e441e01d8a94cfdb642fbf372888f38e3c54cc6cd5f98159846b8f662f265aea
+- name: Future Retail annual report FY2018-19
+  source: bse_reports
+  filename: INE752P01024_annual_2019.pdf
+  url: https://www.bseindia.com/bseplus/AnnualReport/540064/5400640319.pdf
+  purpose: Reviewed original standalone statements; explicitly separated equity components, opening balance excluded
+    and later comparative availability preserved
+  financial_extraction:
+    reviewed: true
+    entity_id: INE752P01024
+    source_period_end: '2019-03-31'
+    fiscal_periods:
+    - '2019-03-31'
+    - '2018-03-31'
+    unit: INR_crore
+    source_sha256: aece1c168aeb91ac615c4011129445fca405e7887066fa4048bc40186b18ee02
+    tables:
+    - page: 146
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets: Total Assets
+        equity: Total Equity
+        total_liabilities:
+          sum:
+          - Total Non-Current Liabilities
+          - Total Current Liabilities
+        current_assets: Total Current Assets
+        current_liabilities: Total Current Liabilities
+        inventory: Inventories
+        receivables: Trade Receivables
+        ppe_net: Property, Plant and Equipment
+        cwip: Capital Work-in-Progress
+        lt_debt:
+          label: Borrowings
+          expected_matches: 2
+          occurrence: 0
+        st_borrowings:
+          label: Borrowings
+          expected_matches: 2
+          occurrence: 1
+        cash_and_cash_equivalents: Cash and Cash Equivalents
+    - page: 147
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue From Operations
+        pat: Profit For The Year
+        pbt: Profit Before Tax
+        finance_costs: Finance Costs
+        depreciation:
+          label: Depreciation and Amortization Expense
+          columns: 4
+          positions:
+          - 2
+          - 3
+        cogs:
+          sum:
+          - Purchase of Stock-In-Trade
+          - Change in Inventories of Stock-In-Trade
+    - page: 164
+      basis: standalone
+      columns: 2
+      fields:
+        retained_earnings:
+          label: Closing Balance
+          expected_matches: 7
+          occurrence: 1
+- name: Reliance Home Finance annual report FY2016-17
+  source: rhfl
+  filename: rhfl_annual_2017.pdf
+  url: https://www.reliancehomefinance.com/documents/20142/141572/Annual-Report-2016-17.pdf
+  purpose: Original publisher report; partial standalone inputs; comparative equity/liabilities remain unknown because
+    a component is a dash
+  financial_extraction:
+    reviewed: true
+    entity_id: INE217K01011
+    source_period_end: '2017-03-31'
+    fiscal_periods:
+    - '2017-03-31'
+    - '2016-03-31'
+    unit: INR_crore
+    source_sha256: 4d554a587df7e087c03bb85507fa6eb622f621964526c13350361110409fa63e
+    tables:
+    - page: 26
+      basis: standalone
+      columns: 2
+      fields:
+        total_assets:
+          label: TOTAL
+          expected_matches: 2
+          occurrence: 1
+        equity: &id002
+          sum:
+          - Share capital
+          - Reserves and Surplus
+          - Share capital suspense Refer Note No ii
+        total_liabilities:
+          difference:
+          - label: TOTAL
+            expected_matches: 2
+            occurrence: 1
+          - *id002
+        lt_debt: Long-term borrowings
+        st_borrowings: Short-term borrowings
+        ppe_net:
+          label: Tangible assets
+          expected_matches: 2
+          occurrence: 0
+    - page: 27
+      basis: standalone
+      columns: 2
+      fields:
+        revenue: Revenue from operations
+        pat: PROFIT AFTER TAX (V-VI)
+        pbt: PROFIT BEFORE TAX (III-IV)
+        finance_costs: Finance cost
+        depreciation: Depreciation and amortisation

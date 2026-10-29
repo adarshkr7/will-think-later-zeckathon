@@ -17,6 +17,32 @@ from prahari.data.uci import sha256_file
 LOG = logging.getLogger(__name__)
 
 
+def reviewed_table_text(reader: PdfReader, table: dict) -> tuple[str, list[int]]:
+    """Read explicit pages only; continuation notes retain every page reference."""
+    pages = [table["page"], *table.get("additional_pages", [])]
+    if (len(set(pages)) != len(pages) or
+            any(not isinstance(page, int) or not 1 <= page <= len(reader.pages) for page in pages)):
+        raise ValueError("Invalid reviewed statement pages")
+    return "\n".join(reader.pages[page-1].extract_text(extraction_mode=table.get("text_mode", "plain"))
+                     for page in pages), pages
+
+
+def require_denomination(text: str, spec: dict, table: dict, markers: dict) -> None:
+    """Check reviewed printed units, including a literal rupee symbol for INR.
+
+    A literal marker is opt-in for a hash-pinned, visually reviewed statement;
+    it must not be inferred from the numerical scale of its amounts.
+    """
+    literal = table.get("unit_marker_literal", spec.get("unit_marker_literal"))
+    if literal is not None:
+        if not isinstance(literal, str) or not literal.strip() or literal not in text:
+            raise ValueError("Source table denomination changed; review required")
+        return
+    marker = table.get("unit_marker", spec.get("unit_marker", markers.get(spec["unit"])))
+    if not marker or marker not in re.sub("[^a-z]", "", text.lower()):
+        raise ValueError("Source table denomination changed; review required")
+
+
 def join_spaced_thousands(text: str) -> str:
     """Join reviewed single-space thousands groups, preserving column gaps.
 
@@ -119,15 +145,16 @@ def extract_reviewed_reports(config: Config) -> pd.DataFrame:
                 raise ValueError("Reviewed financial report bytes changed; source review required")
             reader = PdfReader(raw)
             for table in spec["tables"]:
-                text = reader.pages[table["page"] - 1].extract_text(extraction_mode=table.get("text_mode", "plain"))
+                text, pages = reviewed_table_text(reader, table)
                 if table.get("spaced_thousands"):
                     if table.get("text_mode") != "layout":
                         raise ValueError("Space-grouped amounts require reviewed layout extraction")
                     text = join_spaced_thousands(text)
                 markers = config.section("india_config")["financials"]["source_unit_markers"]
-                marker = table.get("unit_marker", spec.get("unit_marker", markers.get(spec["unit"])))
-                if not marker or marker not in re.sub("[^a-z]", "", text.lower()):
-                    raise ValueError("Source table denomination changed; review required")
+                require_denomination(text, spec, table, markers)
+                source = document["url"]
+                if len(pages) > 1:
+                    source = ";".join(f"{source}#page={page}" for page in pages)
                 for field, label in table["fields"].items():
                     periods = table.get("fiscal_periods", spec["fiscal_periods"])
                     values = reviewed_values(text, label, table["columns"], len(periods))
@@ -136,7 +163,7 @@ def extract_reviewed_reports(config: Config) -> pd.DataFrame:
                                      "source_period_end": spec["source_period_end"], "basis": table["basis"],
                                      "field": field, "numeric_value": value, "text_value": None,
                                      "unit": spec["unit"], "publication_kind": "annual_report", "public_date": spec.get("public_date"),
-                                     "source_doc": ";".join(filter(None, [document["url"], spec.get("publication_source_url")])), "source_page": table["page"],
+                                     "source_doc": ";".join(filter(None, [source, spec.get("publication_source_url")])), "source_page": table["page"],
                                      "date_is_imputed": int(not spec.get("public_date")), "needs_verification": int(value is None), "is_synthetic": 0})
             LOG.info("Extracted reviewed report %s; no publication date inferred from audit signing date", document["name"])
     finally:

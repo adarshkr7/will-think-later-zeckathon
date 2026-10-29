@@ -1,13 +1,13 @@
 entity_id,matched_to,cutoff,complete_years,required_years,complete,needs_verification,missing_reason,is_synthetic
 INE975G01012,INE975G01012,2018-09-28 00:00:00+00:00,0,3,0,1,insufficient_complete_financial_years,0
 INE202B01012,INE202B01012,2019-06-04 00:00:00+00:00,3,3,1,0,,0
-INE802G01018,INE802G01018,2018-12-31 00:00:00+00:00,0,3,0,1,insufficient_complete_financial_years,0
+INE802G01018,INE802G01018,2018-12-31 00:00:00+00:00,3,3,1,0,,0
 INE013A01015,INE013A01015,2019-09-09 00:00:00+00:00,3,3,1,0,,0
-INE217K01011,INE217K01011,2019-09-09 00:00:00+00:00,0,3,0,1,insufficient_complete_financial_years,0
-INE752P01024,INE752P01024,2020-10-28 00:00:00+00:00,0,3,0,1,insufficient_complete_financial_years,0
+INE217K01011,INE217K01011,2019-09-09 00:00:00+00:00,1,3,0,1,insufficient_complete_financial_years,0
+INE752P01024,INE752P01024,2020-10-28 00:00:00+00:00,3,3,1,0,,0
 INE335K01011,INE335K01011,2019-09-10 00:00:00+00:00,0,3,0,1,insufficient_complete_financial_years,0
 INE330H01018,INE330H01018,2017-05-30 00:00:00+00:00,0,3,0,1,insufficient_complete_financial_years,0
 INE872A01014,INE872A01014,2021-03-06 00:00:00+00:00,3,3,1,0,,0
 INE703A01011,INE703A01011,2018-06-06 00:00:00+00:00,0,3,0,1,insufficient_complete_financial_years,0
-INE099J01015,INE099J01015,2015-09-25 00:00:00+00:00,0,3,0,1,insufficient_complete_financial_years,0
+INE099J01015,INE099J01015,2015-09-25 00:00:00+00:00,3,3,1,0,,0
 INE270A01011,INE270A01011,2017-07-18 00:00:00+00:00,0,3,0,1,insufficient_complete_financial_years,0

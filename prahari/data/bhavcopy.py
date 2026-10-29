@@ -24,6 +24,24 @@ def archive_url(day: str | pd.Timestamp, settings: dict) -> tuple[str, str]:
     return url, url.rsplit("/", 1)[-1]
 
 
+def exchange_dates(values: pd.Series, formats: list[str]) -> pd.Series:
+    """Accept only reviewed exchange formats; never infer ambiguous dates.
+
+    Original archives include both four- and two-digit year strings. The
+    session collector additionally checks every parsed date against the
+    requested archive date, so an incorrect century cannot be cached.
+    """
+    result = pd.Series(pd.NaT, index=values.index, dtype="datetime64[ns, UTC]")
+    for pattern in formats:
+        parsed = pd.to_datetime(values.astype(str).str.strip(), format=pattern, errors="coerce", utc=True)
+        if (result.notna() & parsed.notna() & result.ne(parsed)).any():
+            raise ValueError("Ambiguous exchange observation date")
+        result = result.fillna(parsed)
+    if result.isna().any():
+        raise ValueError("Unrecognized exchange observation date format")
+    return result
+
+
 def parse_bhavcopy(payload: bytes, source_url: str, settings: dict) -> pd.DataFrame:
     with zipfile.ZipFile(io.BytesIO(payload)) as archive:
         members = [name for name in archive.namelist() if name.lower().endswith(".csv")]
@@ -44,7 +62,7 @@ def parse_bhavcopy(payload: bytes, source_url: str, settings: dict) -> pd.DataFr
     table = table[keep].rename(columns=mapping)
     table["series"] = table.series.str.strip()
     table = table.loc[table.series.isin(settings["series"])].copy()
-    table["period_end"] = pd.to_datetime(table.period_end, format="%d-%b-%Y", utc=True)
+    table["period_end"] = exchange_dates(table.period_end, settings["legacy_date_formats"])
     table["public_date"] = table.period_end + pd.Timedelta(days=settings["publication_lag_days"])
     table["symbol"] = table.symbol.str.strip()
     if symbol_only:

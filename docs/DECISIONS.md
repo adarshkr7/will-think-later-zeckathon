@@ -100,3 +100,10 @@
 - 2026-10-28: Restrict statistically significant missingness differences with unknown collection causes to Arena P until verified; reject passing an unresolved collection difference into Arena U.
 - 2026-10-28: Reserve the stressed-survivor quota before filling nearest-asset peer slots, with deterministic entity-ID ties; reject silently relaxing the one-third stressed-survivor rule. Eligibility must be independently sourced, not inferred from missing default records.
 - 2026-10-28: Use fingerprinted benchmark generation directories and restore outputs from receipts; reject overwriting prior models or forcing manual directory edits when unrelated development makes a cache stale. Rebuilt development models use the same grid, training splits and seed; final hold-outs remain unopened.
+
+- 2026-10-29: Jaypee gross assets in its old-format FY2011 balance sheet include printed current liabilities and provisions added back to total funds employed; reject mistaking a net-current-assets funds total for gross total assets.
+- 2026-10-29: For the fully reviewed Jaypee FY2012?FY2014 notes, retained earnings are reserves and surplus less securities premium, retaining allocations of earned profits into general/debenture/special reserves; reject both paid-in premium and a surplus-only measure distorted by the FY2014 transfer. Both source pages are retained and later comparatives keep later availability.
+
+- 2026-10-29: Preserve Jet FY2017 original and FY2018 Ind AS restated comparatives at their separate publication proxies; reject backdating the restatement or mapping opening transition columns to annual observations.
+- 2026-10-29: Future Retail COGS is the signed sum of printed purchases and stock-in-trade inventory changes; distinguish retained earnings from restructuring reserves and restrict unreviewed comparative flow periods.
+- 2026-10-29: Accept only configured four-/two-digit exchange date formats after the original July 2020 bhavcopy changed to a two-digit year; retain the requested-archive-date check and reject generic mixed date inference.
